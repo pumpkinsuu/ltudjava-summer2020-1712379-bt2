@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+    "-//Hibernate/Hibernate Configuration DTD//EN"
+    "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <session-factory>
+    <property name="connection.url">jdbc:mysql://localhost:3306/qlsv</property>
+    <property name="connection.driver_class">com.mysql.cj.jdbc.Driver</property>
+    <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+    <property name="hibernate.current_session_context_class">thread</property>
+
+    <property name="hibernate.connection.username">root</property>
+    <property name="hibernate.connection.password">root</property>
+
+    <mapping class="pojo.Diem"/>
+    <mapping class="pojo.Lop"/>
+    <mapping class="pojo.LopHoc"/>
+    <mapping class="pojo.Mon"/>
+    <mapping class="pojo.SinhVien"/>
+
+
+  </session-factory>
+</hibernate-configuration>
