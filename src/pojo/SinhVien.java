@@ -8,7 +8,7 @@ import java.util.Objects;
  * pojo
  *
  * @Created by pumpk - StudentID : 1712379
- * @Date 17-Jun-20 - 7:14 PM
+ * @Date 17-Jun-20 - 10:52 PM
  * @Description
  */
 @Entity
@@ -88,7 +88,7 @@ public class SinhVien {
         return Objects.hash(mssv, hoTen, gioiTinh, cmnd, maLop);
     }
 
-    @OneToMany(mappedBy = "sinhvien")
+    @OneToMany(mappedBy = "sinhvienByMssv")
     public Collection<LopHoc> getLopHocs() {
         return lopHocs;
     }

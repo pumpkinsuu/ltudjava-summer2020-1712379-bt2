@@ -8,27 +8,27 @@ import java.util.Objects;
  * pojo
  *
  * @Created by pumpk - StudentID : 1712379
- * @Date 17-Jun-20 - 7:14 PM
+ * @Date 17-Jun-20 - 10:52 PM
  * @Description
  */
 @Entity
 public class LopHoc {
-    private int maLopHoc;
+    private String maLopHoc;
     private String maLop;
     private String maMon;
-    private String MSSV;
+    private String mssv;
     private Collection<Diem> diems;
     private Lop lop;
     private Mon mon;
-    private SinhVien sinhvien;
+    private SinhVien sinhvienByMssv;
 
     @Id
     @Column(name = "maLopHoc")
-    public int getMaLopHoc() {
+    public String getMaLopHoc() {
         return maLopHoc;
     }
 
-    public void setMaLopHoc(int maLopHoc) {
+    public void setMaLopHoc(String maLopHoc) {
         this.maLopHoc = maLopHoc;
     }
 
@@ -54,12 +54,12 @@ public class LopHoc {
 
     @Basic
     @Column(name = "MSSV")
-    public String getMSSV() {
-        return MSSV;
+    public String getMssv() {
+        return mssv;
     }
 
-    public void setMSSV(String MSSV) {
-        this.MSSV = MSSV;
+    public void setMssv(String mssv) {
+        this.mssv = mssv;
     }
 
     @Override
@@ -67,15 +67,15 @@ public class LopHoc {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         LopHoc lopHoc = (LopHoc) o;
-        return maLopHoc == lopHoc.maLopHoc &&
+        return Objects.equals(maLopHoc, lopHoc.maLopHoc) &&
                 Objects.equals(maLop, lopHoc.maLop) &&
                 Objects.equals(maMon, lopHoc.maMon) &&
-                Objects.equals(MSSV, lopHoc.MSSV);
+                Objects.equals(mssv, lopHoc.mssv);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(maLopHoc, maLop, maMon, MSSV);
+        return Objects.hash(maLopHoc, maLop, maMon, mssv);
     }
 
     @OneToMany(mappedBy = "lopHoc")
@@ -109,11 +109,11 @@ public class LopHoc {
 
     @ManyToOne
     @JoinColumn(name = "MSSV", referencedColumnName = "MSSV", nullable = false)
-    public SinhVien getSinhvien() {
-        return sinhvien;
+    public SinhVien getSinhvienByMssv() {
+        return sinhvienByMssv;
     }
 
-    public void setSinhvien(SinhVien sinhvien) {
-        this.sinhvien = sinhvien;
+    public void setSinhvienByMssv(SinhVien sinhvienByMssv) {
+        this.sinhvienByMssv = sinhvienByMssv;
     }
 }

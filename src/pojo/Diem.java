@@ -7,17 +7,17 @@ import java.util.Objects;
  * pojo
  *
  * @Created by pumpk - StudentID : 1712379
- * @Date 17-Jun-20 - 7:14 PM
+ * @Date 17-Jun-20 - 10:52 PM
  * @Description
  */
 @Entity
 public class Diem {
     private int maDiem;
-    private Object diemGk;
-    private Object diemCk;
-    private Object diemKhac;
-    private Object diemTong;
-    private Object maLopHoc;
+    private double diemGk;
+    private double diemCk;
+    private double diemKhac;
+    private double diemTong;
+    private String maLopHoc;
     private LopHoc lopHoc;
 
     @Id
@@ -32,51 +32,51 @@ public class Diem {
 
     @Basic
     @Column(name = "diemGK")
-    public Object getDiemGk() {
+    public double getDiemGk() {
         return diemGk;
     }
 
-    public void setDiemGk(Object diemGk) {
+    public void setDiemGk(double diemGk) {
         this.diemGk = diemGk;
     }
 
     @Basic
     @Column(name = "diemCK")
-    public Object getDiemCk() {
+    public double getDiemCk() {
         return diemCk;
     }
 
-    public void setDiemCk(Object diemCk) {
+    public void setDiemCk(double diemCk) {
         this.diemCk = diemCk;
     }
 
     @Basic
     @Column(name = "diemKhac")
-    public Object getDiemKhac() {
+    public double getDiemKhac() {
         return diemKhac;
     }
 
-    public void setDiemKhac(Object diemKhac) {
+    public void setDiemKhac(double diemKhac) {
         this.diemKhac = diemKhac;
     }
 
     @Basic
     @Column(name = "diemTong")
-    public Object getDiemTong() {
+    public double getDiemTong() {
         return diemTong;
     }
 
-    public void setDiemTong(Object diemTong) {
+    public void setDiemTong(double diemTong) {
         this.diemTong = diemTong;
     }
 
     @Basic
     @Column(name = "maLopHoc")
-    public Object getMaLopHoc() {
+    public String getMaLopHoc() {
         return maLopHoc;
     }
 
-    public void setMaLopHoc(Object maLopHoc) {
+    public void setMaLopHoc(String maLopHoc) {
         this.maLopHoc = maLopHoc;
     }
 
@@ -86,10 +86,10 @@ public class Diem {
         if (o == null || getClass() != o.getClass()) return false;
         Diem diem = (Diem) o;
         return maDiem == diem.maDiem &&
-                Objects.equals(diemGk, diem.diemGk) &&
-                Objects.equals(diemCk, diem.diemCk) &&
-                Objects.equals(diemKhac, diem.diemKhac) &&
-                Objects.equals(diemTong, diem.diemTong) &&
+                Double.compare(diem.diemGk, diemGk) == 0 &&
+                Double.compare(diem.diemCk, diemCk) == 0 &&
+                Double.compare(diem.diemKhac, diemKhac) == 0 &&
+                Double.compare(diem.diemTong, diemTong) == 0 &&
                 Objects.equals(maLopHoc, diem.maLopHoc);
     }
 
