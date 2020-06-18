@@ -39,24 +39,35 @@ public class ImportCsvGUI {
             File file = jFileChooser.getSelectedFile();
 
             boolean flag = false;
-            if (this.type == 0)
-                flag = ImportCsv.importSv(file);
+            switch (this.type) {
+                case 0 -> flag = ImportCsv.importSv(file);
+                case 1 -> flag = ImportCsv.importMon(file);
+                case 2 -> flag = ImportCsv.importLopHoc(file);
+                case 3 -> flag = ImportCsv.importDiem(file);
+            }
 
             if (flag)
                 JOptionPane.showMessageDialog(importPanel, "Import thành công!");
             else
                 JOptionPane.showMessageDialog(importPanel, "Import thất bại!");
         });
-        closeBtn.addActionListener(e -> {
-            this.frame.dispose();
-        });
+        closeBtn.addActionListener(e -> this.frame.dispose());
     }
 
     public void init() {
-        frame = new JFrame("Menu");
+        String name = "";
+        switch (this.type) {
+            case 0 -> name = "sinh viên";
+            case 1 -> name = "thời khóa biểu";
+            case 2 -> name = "lớp học";
+            case 3 -> name = "điểm";
+        }
+
+        frame = new JFrame("Import " + name);
         frame.setContentPane(importPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
+        frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
 

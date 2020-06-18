@@ -12,7 +12,7 @@ import java.util.Objects;
  */
 @Entity
 public class Diem {
-    private int maDiem;
+    private String maDiem;
     private double diemGk;
     private double diemCk;
     private double diemKhac;
@@ -22,11 +22,11 @@ public class Diem {
 
     @Id
     @Column(name = "maDiem")
-    public int getMaDiem() {
+    public String getMaDiem() {
         return maDiem;
     }
 
-    public void setMaDiem(int maDiem) {
+    public void setMaDiem(String maDiem) {
         this.maDiem = maDiem;
     }
 

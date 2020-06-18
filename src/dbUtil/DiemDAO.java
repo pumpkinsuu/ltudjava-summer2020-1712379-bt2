@@ -19,7 +19,7 @@ public class DiemDAO {
         return QLSinhVienDAO.getList(hql);
     }
 
-    public static Diem get(int maDiem) {
+    public static Diem get(String maDiem) {
         Diem Diem = null;
         try {
             Session session = HibernateUtil.getSessionFactory()
@@ -49,7 +49,7 @@ public class DiemDAO {
         return QLSinhVienDAO.update(Diem);
     }
 
-    public static boolean remove(int maDiem) {
+    public static boolean remove(String maDiem) {
         Diem Diem = DiemDAO.get(maDiem);
         if (Diem == null)
             return false;

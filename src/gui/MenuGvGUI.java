@@ -1,7 +1,11 @@
 package gui;
 
+import gui.sv.ListSvGUI;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * PACKAGE_NAME
@@ -12,15 +16,21 @@ import java.awt.*;
  */
 public class MenuGvGUI {
     private JPanel menuGv;
-    private JTabbedPane tabbedPane1;
     private JButton newPWsBtn;
     private JButton logoutBtn;
-    private JButton searchSvBtn;
     private JButton listSvBtn;
     private JButton importSvBtn;
     private JButton addSvBtn;
     private JButton updateSvBtn;
     private JButton removeSvBtn;
+    private JButton listTkbBtn;
+    private JButton importTkbBtn;
+    private JButton listSvLopBtn;
+    private JButton listSvLopHocBtn;
+    private JButton importLopHocBtn;
+    private JButton diemLopHocBtn;
+    private JButton updateSvDiemBtn;
+    private JButton importDiemBtn;
     private JFrame frame;
     private final String username;
 
@@ -41,6 +51,22 @@ public class MenuGvGUI {
             ImportCsvGUI importCsvGUI = new ImportCsvGUI(0);
             importCsvGUI.init();
         });
+        importTkbBtn.addActionListener(e -> {
+            ImportCsvGUI importCsvGUI = new ImportCsvGUI(1);
+            importCsvGUI.init();
+        });
+        importLopHocBtn.addActionListener(e -> {
+            ImportCsvGUI importCsvGUI = new ImportCsvGUI(2);
+            importCsvGUI.init();
+        });
+        importDiemBtn.addActionListener(e -> {
+            ImportCsvGUI importCsvGUI = new ImportCsvGUI(3);
+            importCsvGUI.init();
+        });
+        listSvBtn.addActionListener(e -> {
+            ListSvGUI listSvGUI = new ListSvGUI();
+            listSvGUI.init();
+        });
     }
 
     public void init() {
@@ -48,6 +74,7 @@ public class MenuGvGUI {
         frame.setContentPane(menuGv);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
+        frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
 
@@ -68,7 +95,7 @@ public class MenuGvGUI {
     private void $$$setupUI$$$() {
         menuGv = new JPanel();
         menuGv.setLayout(new GridBagLayout());
-        tabbedPane1 = new JTabbedPane();
+        final JTabbedPane tabbedPane1 = new JTabbedPane();
         GridBagConstraints gbc;
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
@@ -80,13 +107,6 @@ public class MenuGvGUI {
         final JPanel panel1 = new JPanel();
         panel1.setLayout(new GridBagLayout());
         tabbedPane1.addTab("Sinh Viên", panel1);
-        searchSvBtn = new JButton();
-        searchSvBtn.setText("Tra cứu");
-        gbc = new GridBagConstraints();
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        panel1.add(searchSvBtn, gbc);
         final JPanel spacer1 = new JPanel();
         gbc = new GridBagConstraints();
         gbc.gridx = 1;
@@ -100,35 +120,35 @@ public class MenuGvGUI {
         gbc.fill = GridBagConstraints.VERTICAL;
         panel1.add(spacer2, gbc);
         listSvBtn = new JButton();
-        listSvBtn.setText("Xem danh sách");
+        listSvBtn.setText("Xem danh sách sinh viên");
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 1;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         panel1.add(listSvBtn, gbc);
         importSvBtn = new JButton();
-        importSvBtn.setText("Import csv");
+        importSvBtn.setText("Import sinh viên");
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 2;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         panel1.add(importSvBtn, gbc);
         addSvBtn = new JButton();
-        addSvBtn.setText("Thêm");
+        addSvBtn.setText("Thêm sinh viên");
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 3;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         panel1.add(addSvBtn, gbc);
         updateSvBtn = new JButton();
-        updateSvBtn.setText("Sửa");
+        updateSvBtn.setText("Sửa thông tin sinh viên");
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 4;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         panel1.add(updateSvBtn, gbc);
         removeSvBtn = new JButton();
-        removeSvBtn.setText("Xóa");
+        removeSvBtn.setText("Xóa sinh viên");
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 5;
@@ -136,42 +156,131 @@ public class MenuGvGUI {
         panel1.add(removeSvBtn, gbc);
         final JPanel panel2 = new JPanel();
         panel2.setLayout(new GridBagLayout());
-        tabbedPane1.addTab("Môn học", panel2);
+        tabbedPane1.addTab("Thời khóa biểu", panel2);
+        final JPanel spacer3 = new JPanel();
+        gbc = new GridBagConstraints();
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        panel2.add(spacer3, gbc);
+        final JPanel spacer4 = new JPanel();
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        gbc.fill = GridBagConstraints.VERTICAL;
+        panel2.add(spacer4, gbc);
+        listTkbBtn = new JButton();
+        listTkbBtn.setText("Xem thời khóa biểu");
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        panel2.add(listTkbBtn, gbc);
+        importTkbBtn = new JButton();
+        importTkbBtn.setText("Import thời khóa biểu");
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        panel2.add(importTkbBtn, gbc);
         final JPanel panel3 = new JPanel();
         panel3.setLayout(new GridBagLayout());
         tabbedPane1.addTab("Lớp", panel3);
+        listSvLopBtn = new JButton();
+        listSvLopBtn.setText("Xem danh sách lớp");
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        panel3.add(listSvLopBtn, gbc);
+        final JPanel spacer5 = new JPanel();
+        gbc = new GridBagConstraints();
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        panel3.add(spacer5, gbc);
+        final JPanel spacer6 = new JPanel();
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        gbc.fill = GridBagConstraints.VERTICAL;
+        panel3.add(spacer6, gbc);
+        listSvLopHocBtn = new JButton();
+        listSvLopHocBtn.setText("Xem danh sách lớp học");
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        panel3.add(listSvLopHocBtn, gbc);
+        importLopHocBtn = new JButton();
+        importLopHocBtn.setText("Import lớp học");
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        panel3.add(importLopHocBtn, gbc);
         final JPanel panel4 = new JPanel();
         panel4.setLayout(new GridBagLayout());
-        tabbedPane1.addTab("Lớp học", panel4);
+        tabbedPane1.addTab("Điểm", panel4);
+        diemLopHocBtn = new JButton();
+        diemLopHocBtn.setText("Xem bảng điểm lớp");
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        panel4.add(diemLopHocBtn, gbc);
+        final JPanel spacer7 = new JPanel();
+        gbc = new GridBagConstraints();
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        panel4.add(spacer7, gbc);
+        final JPanel spacer8 = new JPanel();
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        gbc.fill = GridBagConstraints.VERTICAL;
+        panel4.add(spacer8, gbc);
+        updateSvDiemBtn = new JButton();
+        updateSvDiemBtn.setText("Sửa điểm sinh viên");
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        panel4.add(updateSvDiemBtn, gbc);
+        importDiemBtn = new JButton();
+        importDiemBtn.setText("Import điểm");
+        gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        panel4.add(importDiemBtn, gbc);
         final JPanel panel5 = new JPanel();
         panel5.setLayout(new GridBagLayout());
-        tabbedPane1.addTab("Điểm", panel5);
+        tabbedPane1.addTab("Tài khoản", panel5);
         final JPanel panel6 = new JPanel();
         panel6.setLayout(new GridBagLayout());
-        tabbedPane1.addTab("Tài khoản", panel6);
-        final JPanel panel7 = new JPanel();
-        panel7.setLayout(new GridBagLayout());
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.weightx = 1.0;
         gbc.weighty = 1.0;
         gbc.fill = GridBagConstraints.BOTH;
-        panel6.add(panel7, gbc);
+        panel5.add(panel6, gbc);
         newPWsBtn = new JButton();
         newPWsBtn.setText("Đổi mật khẩu");
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        panel7.add(newPWsBtn, gbc);
+        panel6.add(newPWsBtn, gbc);
         logoutBtn = new JButton();
         logoutBtn.setText("Đăng xuất");
         gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 1;
         gbc.fill = GridBagConstraints.HORIZONTAL;
-        panel7.add(logoutBtn, gbc);
+        panel6.add(logoutBtn, gbc);
     }
 
     /**
