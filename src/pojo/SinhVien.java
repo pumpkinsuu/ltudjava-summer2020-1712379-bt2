@@ -18,6 +18,7 @@ public class SinhVien {
     private String gioiTinh;
     private String cmnd;
     private String maLop;
+    private String password;
     private Collection<LopHoc> lopHocs;
     private Lop lop;
 
@@ -71,6 +72,16 @@ public class SinhVien {
         this.maLop = maLop;
     }
 
+    @Basic
+    @Column(name = "password")
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -98,7 +109,7 @@ public class SinhVien {
     }
 
     @ManyToOne
-    @JoinColumn(name = "maLop", referencedColumnName = "maLop", nullable = false)
+    @JoinColumn(name = "maLop", referencedColumnName = "maLop", nullable = false, insertable = false, updatable = false)
     public Lop getLop() {
         return lop;
     }

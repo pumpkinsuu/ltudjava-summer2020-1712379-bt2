@@ -99,7 +99,7 @@ public class Diem {
     }
 
     @ManyToOne
-    @JoinColumn(name = "maLopHoc", referencedColumnName = "maLopHoc", nullable = false)
+    @JoinColumn(name = "maLopHoc", referencedColumnName = "maLopHoc", nullable = false, insertable = false, updatable = false)
     public LopHoc getLopHoc() {
         return lopHoc;
     }

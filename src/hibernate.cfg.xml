@@ -17,7 +17,7 @@
     <mapping class="pojo.LopHoc"/>
     <mapping class="pojo.Mon"/>
     <mapping class="pojo.SinhVien"/>
-
+    <mapping class="pojo.GiaoVu"/>
 
   </session-factory>
 </hibernate-configuration>

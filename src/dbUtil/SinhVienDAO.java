@@ -57,4 +57,12 @@ public class SinhVienDAO {
 
         return QLSinhVienDAO.remove(sv);
     }
+
+    public static boolean verify(String username, String password) {
+        SinhVien sv = SinhVienDAO.get(username);
+        if (sv == null)
+            return false;
+
+        return sv.getPassword().equals(password);
+    }
 }

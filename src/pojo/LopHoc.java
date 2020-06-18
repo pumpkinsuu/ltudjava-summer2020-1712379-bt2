@@ -88,7 +88,7 @@ public class LopHoc {
     }
 
     @ManyToOne
-    @JoinColumn(name = "maLop", referencedColumnName = "maLop", nullable = false)
+    @JoinColumn(name = "maLop", referencedColumnName = "maLop", nullable = false, insertable = false, updatable = false)
     public Lop getLop() {
         return lop;
     }
@@ -98,7 +98,7 @@ public class LopHoc {
     }
 
     @ManyToOne
-    @JoinColumn(name = "maMon", referencedColumnName = "maMon", nullable = false)
+    @JoinColumn(name = "maMon", referencedColumnName = "maMon", nullable = false, insertable = false, updatable = false)
     public Mon getMon() {
         return mon;
     }
@@ -108,7 +108,7 @@ public class LopHoc {
     }
 
     @ManyToOne
-    @JoinColumn(name = "MSSV", referencedColumnName = "MSSV", nullable = false)
+    @JoinColumn(name = "MSSV", referencedColumnName = "MSSV", nullable = false, insertable = false, updatable = false)
     public SinhVien getSinhvienByMssv() {
         return sinhvienByMssv;
     }
