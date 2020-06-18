@@ -8,19 +8,17 @@ import java.util.Objects;
  * pojo
  *
  * @Created by pumpk - StudentID : 1712379
- * @Date 17-Jun-20 - 10:52 PM
+ * @Date 18-Jun-20 - 7:31 PM
  * @Description
  */
 @Entity
 public class LopHoc {
     private String maLopHoc;
-    private String maLop;
-    private String maMon;
     private String mssv;
-    private Collection<Diem> diems;
-    private Lop lop;
-    private Mon mon;
-    private SinhVien sinhvienByMssv;
+    private String maTkb;
+    private Collection<Diem> diem;
+    private SinhVien sinhVien;
+    private Tkb tkb;
 
     @Id
     @Column(name = "maLopHoc")
@@ -33,27 +31,7 @@ public class LopHoc {
     }
 
     @Basic
-    @Column(name = "maLop")
-    public String getMaLop() {
-        return maLop;
-    }
-
-    public void setMaLop(String maLop) {
-        this.maLop = maLop;
-    }
-
-    @Basic
-    @Column(name = "maMon")
-    public String getMaMon() {
-        return maMon;
-    }
-
-    public void setMaMon(String maMon) {
-        this.maMon = maMon;
-    }
-
-    @Basic
-    @Column(name = "MSSV")
+    @Column(name = "mssv")
     public String getMssv() {
         return mssv;
     }
@@ -62,58 +40,57 @@ public class LopHoc {
         this.mssv = mssv;
     }
 
+    @Basic
+    @Column(name = "maTkb")
+    public String getMaTkb() {
+        return maTkb;
+    }
+
+    public void setMaTkb(String maTkb) {
+        this.maTkb = maTkb;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         LopHoc lopHoc = (LopHoc) o;
         return Objects.equals(maLopHoc, lopHoc.maLopHoc) &&
-                Objects.equals(maLop, lopHoc.maLop) &&
-                Objects.equals(maMon, lopHoc.maMon) &&
-                Objects.equals(mssv, lopHoc.mssv);
+                Objects.equals(mssv, lopHoc.mssv) &&
+                Objects.equals(maTkb, lopHoc.maTkb);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(maLopHoc, maLop, maMon, mssv);
+        return Objects.hash(maLopHoc, mssv, maTkb);
     }
 
     @OneToMany(mappedBy = "lopHoc")
-    public Collection<Diem> getDiems() {
-        return diems;
+    public Collection<Diem> getDiem() {
+        return diem;
     }
 
-    public void setDiems(Collection<Diem> diems) {
-        this.diems = diems;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "maLop", referencedColumnName = "maLop", nullable = false, insertable = false, updatable = false)
-    public Lop getLop() {
-        return lop;
-    }
-
-    public void setLop(Lop lop) {
-        this.lop = lop;
+    public void setDiem(Collection<Diem> diem) {
+        this.diem = diem;
     }
 
     @ManyToOne
-    @JoinColumn(name = "maMon", referencedColumnName = "maMon", nullable = false, insertable = false, updatable = false)
-    public Mon getMon() {
-        return mon;
+    @JoinColumn(name = "mssv", referencedColumnName = "mssv", nullable = false, insertable = false, updatable = false)
+    public SinhVien getSinhVien() {
+        return sinhVien;
     }
 
-    public void setMon(Mon mon) {
-        this.mon = mon;
+    public void setSinhVien(SinhVien sinhVien) {
+        this.sinhVien = sinhVien;
     }
 
     @ManyToOne
-    @JoinColumn(name = "MSSV", referencedColumnName = "MSSV", nullable = false, insertable = false, updatable = false)
-    public SinhVien getSinhvienByMssv() {
-        return sinhvienByMssv;
+    @JoinColumn(name = "maTkb", referencedColumnName = "maTkb", nullable = false, insertable = false, updatable = false)
+    public Tkb getTkb() {
+        return tkb;
     }
 
-    public void setSinhvienByMssv(SinhVien sinhvienByMssv) {
-        this.sinhvienByMssv = sinhvienByMssv;
+    public void setTkb(Tkb tkb) {
+        this.tkb = tkb;
     }
 }

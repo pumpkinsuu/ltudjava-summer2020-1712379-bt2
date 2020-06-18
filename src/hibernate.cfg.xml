@@ -13,11 +13,13 @@
     <property name="hibernate.connection.password">root</property>
 
     <mapping class="pojo.Diem"/>
+    <mapping class="pojo.GiaoVu"/>
     <mapping class="pojo.Lop"/>
     <mapping class="pojo.LopHoc"/>
     <mapping class="pojo.Mon"/>
     <mapping class="pojo.SinhVien"/>
-    <mapping class="pojo.GiaoVu"/>
+    <mapping class="pojo.Tkb"/>
+
 
   </session-factory>
 </hibernate-configuration>

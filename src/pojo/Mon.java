@@ -8,7 +8,7 @@ import java.util.Objects;
  * pojo
  *
  * @Created by pumpk - StudentID : 1712379
- * @Date 17-Jun-20 - 10:52 PM
+ * @Date 18-Jun-20 - 7:31 PM
  * @Description
  */
 @Entity
@@ -16,7 +16,7 @@ public class Mon {
     private String maMon;
     private String tenMon;
     private String phong;
-    private Collection<LopHoc> lopHocs;
+    private Collection<Tkb> tkb;
 
     @Id
     @Column(name = "maMon")
@@ -64,11 +64,11 @@ public class Mon {
     }
 
     @OneToMany(mappedBy = "mon")
-    public Collection<LopHoc> getLopHocs() {
-        return lopHocs;
+    public Collection<Tkb> getTkb() {
+        return tkb;
     }
 
-    public void setLopHocs(Collection<LopHoc> lopHocs) {
-        this.lopHocs = lopHocs;
+    public void setTkb(Collection<Tkb> tkb) {
+        this.tkb = tkb;
     }
 }

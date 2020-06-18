@@ -36,14 +36,14 @@ public class LopHocDAO {
     }
 
     public static boolean add(LopHoc lopHoc) {
-        if (LopHocDAO.get(lopHoc.getMaLop()) != null)
+        if (LopHocDAO.get(lopHoc.getMaLopHoc()) != null)
             return false;
 
         return QLSinhVienDAO.add(lopHoc);
     }
 
     public static boolean update(LopHoc lopHoc) {
-        if (LopHocDAO.get(lopHoc.getMaLop()) == null)
+        if (LopHocDAO.get(lopHoc.getMaLopHoc()) == null)
             return false;
 
         return QLSinhVienDAO.update(lopHoc);

@@ -11,14 +11,14 @@ import java.util.Objects;
  * pojo
  *
  * @Created by pumpk - StudentID : 1712379
- * @Date 17-Jun-20 - 10:52 PM
+ * @Date 18-Jun-20 - 7:31 PM
  * @Description
  */
 @Entity
 public class Lop {
     private String maLop;
-    private Collection<LopHoc> lopHocs;
-    private Collection<SinhVien> sinhViens;
+    private Collection<SinhVien> sinhVien;
+    private Collection<Tkb> tkb;
 
     @Id
     @Column(name = "maLop")
@@ -44,20 +44,20 @@ public class Lop {
     }
 
     @OneToMany(mappedBy = "lop")
-    public Collection<LopHoc> getLopHocs() {
-        return lopHocs;
+    public Collection<SinhVien> getSinhVien() {
+        return sinhVien;
     }
 
-    public void setLopHocs(Collection<LopHoc> lopHocs) {
-        this.lopHocs = lopHocs;
+    public void setSinhVien(Collection<SinhVien> sinhVien) {
+        this.sinhVien = sinhVien;
     }
 
     @OneToMany(mappedBy = "lop")
-    public Collection<SinhVien> getSinhViens() {
-        return sinhViens;
+    public Collection<Tkb> getTkb() {
+        return tkb;
     }
 
-    public void setSinhViens(Collection<SinhVien> sinhViens) {
-        this.sinhViens = sinhViens;
+    public void setTkb(Collection<Tkb> tkb) {
+        this.tkb = tkb;
     }
 }

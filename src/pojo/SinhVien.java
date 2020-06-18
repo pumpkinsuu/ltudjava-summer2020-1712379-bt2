@@ -8,7 +8,7 @@ import java.util.Objects;
  * pojo
  *
  * @Created by pumpk - StudentID : 1712379
- * @Date 17-Jun-20 - 10:52 PM
+ * @Date 18-Jun-20 - 7:31 PM
  * @Description
  */
 @Entity
@@ -19,11 +19,11 @@ public class SinhVien {
     private String cmnd;
     private String maLop;
     private String password;
-    private Collection<LopHoc> lopHocs;
+    private Collection<LopHoc> lopHoc;
     private Lop lop;
 
     @Id
-    @Column(name = "MSSV")
+    @Column(name = "mssv")
     public String getMssv() {
         return mssv;
     }
@@ -53,7 +53,7 @@ public class SinhVien {
     }
 
     @Basic
-    @Column(name = "CMND")
+    @Column(name = "cmnd")
     public String getCmnd() {
         return cmnd;
     }
@@ -91,21 +91,22 @@ public class SinhVien {
                 Objects.equals(hoTen, sinhVien.hoTen) &&
                 Objects.equals(gioiTinh, sinhVien.gioiTinh) &&
                 Objects.equals(cmnd, sinhVien.cmnd) &&
-                Objects.equals(maLop, sinhVien.maLop);
+                Objects.equals(maLop, sinhVien.maLop) &&
+                Objects.equals(password, sinhVien.password);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(mssv, hoTen, gioiTinh, cmnd, maLop);
+        return Objects.hash(mssv, hoTen, gioiTinh, cmnd, maLop, password);
     }
 
-    @OneToMany(mappedBy = "sinhvienByMssv")
-    public Collection<LopHoc> getLopHocs() {
-        return lopHocs;
+    @OneToMany(mappedBy = "sinhVien")
+    public Collection<LopHoc> getLopHoc() {
+        return lopHoc;
     }
 
-    public void setLopHocs(Collection<LopHoc> lopHocs) {
-        this.lopHocs = lopHocs;
+    public void setLopHoc(Collection<LopHoc> lopHoc) {
+        this.lopHoc = lopHoc;
     }
 
     @ManyToOne
