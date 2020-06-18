@@ -1,6 +1,5 @@
 package dbUtil;
 
-import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import pojo.Diem;
 
@@ -30,7 +29,7 @@ public class DiemDAO {
             Diem = session.get(Diem.class, maDiem);
             session.getTransaction().commit();
 
-        } catch (HibernateException ex) {
+        } catch (Exception ex) {
             System.err.println(ex.getMessage());
         }
         return Diem;

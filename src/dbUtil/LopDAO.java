@@ -1,6 +1,5 @@
 package dbUtil;
 
-import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import pojo.Lop;
 
@@ -30,7 +29,7 @@ public class LopDAO {
             lop = session.get(Lop.class, maLop);
             session.getTransaction().commit();
 
-        } catch (HibernateException ex) {
+        } catch (Exception ex) {
             System.err.println(ex.getMessage());
         }
         return lop;

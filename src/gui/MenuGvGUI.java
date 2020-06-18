@@ -10,7 +10,7 @@ import java.awt.*;
  * @Date 17-Jun-20 - 11:19 PM
  * @Description
  */
-public class MenuGV {
+public class MenuGvGUI {
     private JPanel menuGv;
     private JTabbedPane tabbedPane1;
     private JButton newPWsBtn;
@@ -24,22 +24,26 @@ public class MenuGV {
     private JFrame frame;
     private final String username;
 
-    public MenuGV(String username) {
+    public MenuGvGUI(String username) {
         this.username = username;
 
         logoutBtn.addActionListener(e -> {
             frame.dispose();
 
-            Login login = new Login();
-            login.init();
+            LoginGUI loginGUI = new LoginGUI();
+            loginGUI.init();
         });
         newPWsBtn.addActionListener(e -> {
-            ChangePW cPW = new ChangePW(this.username, true);
+            ChangePwGUI cPW = new ChangePwGUI(this.username, true);
             cPW.init();
+        });
+        importSvBtn.addActionListener(e -> {
+            ImportCsvGUI importCsvGUI = new ImportCsvGUI(0);
+            importCsvGUI.init();
         });
     }
 
-    public void run() {
+    public void init() {
         frame = new JFrame("Menu");
         frame.setContentPane(menuGv);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -1,6 +1,5 @@
 package dbUtil;
 
-import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import pojo.SinhVien;
 
@@ -30,7 +29,7 @@ public class SinhVienDAO {
             sv = session.get(SinhVien.class, mssv);
             session.getTransaction().commit();
 
-        } catch (HibernateException ex) {
+        } catch (Exception ex) {
             System.err.println(ex.getMessage());
         }
         return sv;     
@@ -56,13 +55,5 @@ public class SinhVienDAO {
             return false;
 
         return QLSinhVienDAO.remove(sv);
-    }
-
-    public static boolean verify(String username, String password) {
-        SinhVien sv = SinhVienDAO.get(username);
-        if (sv == null)
-            return false;
-
-        return sv.getPassword().equals(password);
     }
 }

@@ -17,7 +17,7 @@ import java.awt.event.ActionListener;
  * @Date 18-Jun-20 - 1:29 PM
  * @Description
  */
-public class ChangePW {
+public class ChangePwGUI {
     private JPasswordField oldPWField;
     private JPasswordField newPWField;
     private JButton changeBtn;
@@ -26,7 +26,7 @@ public class ChangePW {
     private final String username;
     private boolean type;
 
-    public ChangePW(String username, boolean type) {
+    public ChangePwGUI(String username, boolean type) {
         this.username = username;
         this.type = type;
 

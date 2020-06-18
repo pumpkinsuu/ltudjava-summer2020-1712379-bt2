@@ -1,6 +1,5 @@
 package dbUtil;
 
-import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import pojo.GiaoVu;
 
@@ -23,7 +22,7 @@ public class GiaoVuDao {
             gv = session.get(GiaoVu.class, username);
             session.getTransaction().commit();
 
-        } catch (HibernateException ex) {
+        } catch (Exception ex) {
             System.err.println(ex.getMessage());
         }
         return gv;
@@ -34,14 +33,5 @@ public class GiaoVuDao {
             return false;
 
         return QLSinhVienDAO.update(gv);
-    }
-
-    public static boolean verify(String username, String password) {
-        GiaoVu gv = GiaoVuDao.get(username);
-
-        if (gv == null)
-            return false;
-
-        return gv.getPassword().equals(password);
     }
 }

@@ -1,4 +1,4 @@
-import gui.Login;
+import gui.LoginGUI;
 
 /**
  * PACKAGE_NAME
@@ -10,7 +10,7 @@ import gui.Login;
 public class Main {
     public static void main(String[] args) {
 
-        Login login = new Login();
-        login.init();
+        LoginGUI loginGUI = new LoginGUI();
+        loginGUI.init();
     }
 }

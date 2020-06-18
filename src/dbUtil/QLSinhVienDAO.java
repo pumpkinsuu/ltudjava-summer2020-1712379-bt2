@@ -1,6 +1,5 @@
 package dbUtil;
 
-import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -26,7 +25,7 @@ public class QLSinhVienDAO {
             list = session.createQuery(hql).list();
             session.getTransaction().commit();
 
-        } catch (HibernateException ex) {
+        } catch (Exception ex) {
             System.err.println(ex.getMessage());
         }
         return list;
@@ -42,7 +41,7 @@ public class QLSinhVienDAO {
             session.save(obj);
             transaction.commit();
 
-        } catch (HibernateException ex) {
+        } catch (Exception ex) {
             if (transaction != null)
                 transaction.rollback();
 
@@ -62,7 +61,7 @@ public class QLSinhVienDAO {
             session.update(obj);
             transaction.commit();
 
-        } catch (HibernateException ex) {
+        } catch (Exception ex) {
             if (transaction != null)
                 transaction.rollback();
 
@@ -82,7 +81,7 @@ public class QLSinhVienDAO {
             session.remove(obj);
             transaction.commit();
 
-        } catch (HibernateException ex) {
+        } catch (Exception ex) {
             if (transaction != null)
                 transaction.rollback();
 

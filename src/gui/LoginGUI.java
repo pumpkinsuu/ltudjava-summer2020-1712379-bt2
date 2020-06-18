@@ -1,6 +1,7 @@
 package gui;
 
 import dbUtil.GiaoVuDao;
+import pojo.GiaoVu;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
@@ -13,7 +14,7 @@ import java.awt.*;
  * @Date 17-Jun-20 - 9:11 PM
  * @Description
  */
-public class Login {
+public class LoginGUI {
     private JPasswordField passField;
     private JPanel loginPanel;
     private JTextField username;
@@ -22,7 +23,7 @@ public class Login {
     private JPasswordField passwordField;
     private JFrame frame;
 
-    public Login() {
+    public LoginGUI() {
         loginButton.addActionListener(e -> {
             String username = userField.getText();
             if (username == null || username.isBlank()) return;
@@ -33,11 +34,12 @@ public class Login {
 
             if (password.isBlank()) return;
 
-            if (GiaoVuDao.verify(username, password)) {
+            GiaoVu gv = GiaoVuDao.get(username);
+            if (gv != null && gv.getPassword().equals(password)) {
                 frame.dispose();
 
-                MenuGV menuGV = new MenuGV(username);
-                menuGV.run();
+                MenuGvGUI menuGvGUI = new MenuGvGUI(username);
+                menuGvGUI.init();
 
                 return;
             }
