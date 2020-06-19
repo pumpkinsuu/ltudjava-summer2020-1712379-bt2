@@ -1,6 +1,9 @@
 package gui.sv;
 
+import dbUtil.LopDAO;
 import dbUtil.SinhVienDAO;
+import dbUtil.TkbDAO;
+import pojo.LopHoc;
 import pojo.SinhVien;
 
 import javax.swing.*;
@@ -8,6 +11,8 @@ import javax.swing.table.TableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.EventObject;
 import java.util.List;
 
 /**
@@ -24,36 +29,64 @@ public class ListSvGUI {
     private JFrame frame;
 
     public ListSvGUI() {
-        closeBtn.addActionListener(e -> frame.dispose());
+        closeBtn.addActionListener(e -> this.frame.dispose());
     }
 
-    public void init() {
-        this.createTab();
+    public void init(int type, String id) {
+        if (!this.createTab(type, id)) {
+            JOptionPane.showMessageDialog(this.listSvPanel, "Không có sinh viên nào!");
+            return;
+        }
 
-        frame = new JFrame("Danh sách sinh viên");
-        frame.setContentPane(listSvPanel);
-        frame.add(scrollPanel);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
+        String title = "Danh sách sinh viên";
+        if (id != null)
+            title += (' ' + id);
+
+        this.frame = new JFrame(title);
+        this.frame.setContentPane(this.listSvPanel);
+        this.frame.add(this.scrollPanel);
+        this.frame.pack();
+        this.frame.setLocationRelativeTo(null);
+        this.frame.setVisible(true);
     }
 
-    void createTab() {
-        List<SinhVien> list = SinhVienDAO.getList();
+    boolean createTab(int type, String id) {
+        List<SinhVien> list;
+
+        switch (type) {
+            case 1 -> {
+                list = (List<SinhVien>) LopDAO.get(id).getSinhVien();
+            }
+            case 2 -> {
+                List<LopHoc> lopHocList = (List<LopHoc>) TkbDAO.get(id).getLopHoc();
+                list = new ArrayList<>();
+                for (LopHoc lopHoc : lopHocList)
+                    list.add(lopHoc.getSinhVien());
+            }
+            default -> list = SinhVienDAO.getList();
+        }
+
         String[] colName = new String[]{
-                "STT", "MSSV", "Họ tên", "Giới tính", "CMND"
+                "STT", "MSSV", "Họ tên", "Giới tính", "CMND", "Lớp"
         };
-        String[][] colVal = new String[list.size()][5];
+        String[][] colVal = new String[list.size()][6];
         for (int i = 0; i < list.size(); ++i) {
             colVal[i][0] = String.valueOf(i + 1);
             colVal[i][1] = list.get(i).getMssv();
             colVal[i][2] = list.get(i).getHoTen();
             colVal[i][3] = list.get(i).getGioiTinh();
             colVal[i][4] = list.get(i).getCmnd();
+            colVal[i][5] = list.get(i).getMaLop();
         }
-        JTable tab = new JTable(colVal, colName);
-        scrollPanel = new JScrollPane(tab);
+        JTable tab = new JTable(colVal, colName) {
+            public boolean editCellAt(int row, int column, EventObject e) {
+                return false;
+            }
+        };
+        tab.setRowSelectionAllowed(false);
+        this.scrollPanel = new JScrollPane(tab);
+
+        return !list.isEmpty();
     }
 
     {
@@ -101,4 +134,5 @@ public class ListSvGUI {
     public JComponent $$$getRootComponent$$$() {
         return listSvPanel;
     }
+
 }

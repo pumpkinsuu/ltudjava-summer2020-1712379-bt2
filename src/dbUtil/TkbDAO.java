@@ -1,5 +1,6 @@
 package dbUtil;
 
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import pojo.Tkb;
 
@@ -26,7 +27,9 @@ public class TkbDAO {
                     .getCurrentSession();
 
             session.beginTransaction();
-            session.get(Tkb.class, maTkb);
+            tkb = session.get(Tkb.class, maTkb);
+            Hibernate.initialize(tkb.getMon());
+            Hibernate.initialize(tkb.getLopHoc());
             session.getTransaction().commit();
 
         } catch (Exception ex) {

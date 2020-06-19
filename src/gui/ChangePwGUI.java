@@ -80,7 +80,6 @@ public class ChangePwGUI {
     public void init() {
         frame = new JFrame("Login");
         frame.setContentPane(changePWPanel);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setResizable(false);
         frame.setVisible(true);

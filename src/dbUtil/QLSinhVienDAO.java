@@ -21,7 +21,9 @@ public class QLSinhVienDAO {
             Session session = HibernateUtil.getSessionFactory()
                     .getCurrentSession();
 
-            session.beginTransaction();
+            if (!session.getTransaction().isActive())
+                session.beginTransaction();
+
             list = session.createQuery(hql).list();
             session.getTransaction().commit();
 
@@ -37,7 +39,11 @@ public class QLSinhVienDAO {
             Session session = HibernateUtil.getSessionFactory()
                     .getCurrentSession();
 
-            transaction = session.beginTransaction();
+            if (session.getTransaction().isActive())
+                transaction = session.getTransaction();
+            else
+                transaction = session.beginTransaction();
+
             session.save(obj);
             transaction.commit();
 
@@ -45,7 +51,7 @@ public class QLSinhVienDAO {
             if (transaction != null)
                 transaction.rollback();
 
-            System.err.println(ex.getMessage());
+            System.err.println("QLSV DAO: " + ex.getMessage());
             return false;
         }
         return true;
@@ -57,7 +63,11 @@ public class QLSinhVienDAO {
             Session session = HibernateUtil.getSessionFactory()
                     .getCurrentSession();
 
-            transaction = session.beginTransaction();
+            if (session.getTransaction().isActive())
+                transaction = session.getTransaction();
+            else
+                transaction = session.beginTransaction();
+
             session.update(obj);
             transaction.commit();
 
@@ -77,7 +87,11 @@ public class QLSinhVienDAO {
             Session session = HibernateUtil.getSessionFactory()
                     .getCurrentSession();
 
-            transaction = session.beginTransaction();
+            if (session.getTransaction().isActive())
+                transaction = session.getTransaction();
+            else
+                transaction = session.beginTransaction();
+
             session.remove(obj);
             transaction.commit();
 

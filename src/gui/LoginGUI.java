@@ -15,28 +15,33 @@ import java.awt.*;
  * @Description
  */
 public class LoginGUI {
-    private JPasswordField passField;
     private JPanel loginPanel;
-    private JTextField username;
     private JTextField userField;
     private JButton loginButton;
     private JPasswordField passwordField;
     private JFrame frame;
 
     public LoginGUI() {
+
         loginButton.addActionListener(e -> {
-            String username = userField.getText();
-            if (username == null || username.isBlank()) return;
+            String username = this.userField.getText();
+            if (username == null || username.isBlank()) {
+                JOptionPane.showMessageDialog(this.userField, "Nhập username!");
+                return;
+            }
 
             String password = "";
-            if (passwordField.getPassword().length > 0)
-                password = String.valueOf(passwordField.getPassword());
+            if (this.passwordField.getPassword().length > 0)
+                password = String.valueOf(this.passwordField.getPassword());
 
-            if (password.isBlank()) return;
+            if (password.isBlank()) {
+                JOptionPane.showMessageDialog(this.passwordField, "Nhập password!");
+                return;
+            }
 
             GiaoVu gv = GiaoVuDao.get(username);
             if (gv != null && gv.getPassword().equals(password)) {
-                frame.dispose();
+                this.frame.dispose();
 
                 MenuGvGUI menuGvGUI = new MenuGvGUI(username);
                 menuGvGUI.init();
@@ -44,18 +49,18 @@ public class LoginGUI {
                 return;
             }
 
-            JOptionPane.showMessageDialog(loginPanel, "Đăng nhập sai, xin vui lòng thử lại!");
+            JOptionPane.showMessageDialog(this.loginPanel, "Đăng nhập sai, xin vui lòng thử lại!");
         });
     }
 
     public void init() {
-        frame = new JFrame("Login");
-        frame.setContentPane(loginPanel);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
-        frame.setLocationRelativeTo(null);
-        frame.setResizable(false);
-        frame.setVisible(true);
+        this.frame = new JFrame("Login");
+        this.frame.setContentPane(this.loginPanel);
+        this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.frame.pack();
+        this.frame.setLocationRelativeTo(null);
+        this.frame.setResizable(false);
+        this.frame.setVisible(true);
     }
 
     {

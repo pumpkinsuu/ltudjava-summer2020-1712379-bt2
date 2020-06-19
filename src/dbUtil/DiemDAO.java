@@ -25,7 +25,9 @@ public class DiemDAO {
             Session session = HibernateUtil.getSessionFactory()
                     .getCurrentSession();
 
-            session.beginTransaction();
+            if (!session.getTransaction().isActive())
+                session.beginTransaction();
+
             Diem = session.get(Diem.class, maDiem);
             session.getTransaction().commit();
 

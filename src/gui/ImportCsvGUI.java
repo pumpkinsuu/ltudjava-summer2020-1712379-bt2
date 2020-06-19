@@ -5,7 +5,12 @@ import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.io.File;
+import java.util.List;
 
+import dbUtil.*;
+import pojo.LopHoc;
+import pojo.SinhVien;
+import pojo.Tkb;
 import util.ImportCsv;
 
 /**
@@ -55,6 +60,8 @@ public class ImportCsvGUI {
     }
 
     public void init() {
+        if (!check()) return;
+
         String name = "";
         switch (this.type) {
             case 0 -> name = "sinh viên";
@@ -65,10 +72,32 @@ public class ImportCsvGUI {
 
         frame = new JFrame("Import " + name);
         frame.setContentPane(importPanel);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
+    }
+
+    boolean check() {
+        if (this.type == 2) {
+            List<Tkb> tkbList = TkbDAO.getList();
+            if (tkbList == null || tkbList.isEmpty()) {
+                JOptionPane.showMessageDialog(importPanel, "Chưa có thời khóa biểu trong hệ thống!");
+                return false;
+            }
+            List<SinhVien> sinhVienList = SinhVienDAO.getList();
+            if (sinhVienList == null || sinhVienList.isEmpty()) {
+                JOptionPane.showMessageDialog(importPanel, "Chưa có sinh viên trong hệ thống!");
+                return false;
+            }
+        }
+        if (this.type == 3) {
+            List<LopHoc> lopHocList = LopHocDAO.getList();
+            if (lopHocList == null || lopHocList.isEmpty()) {
+                JOptionPane.showMessageDialog(importPanel, "Chưa có lớp học trong hệ thống!");
+                return false;
+            }
+        }
+        return true;
     }
 
     {

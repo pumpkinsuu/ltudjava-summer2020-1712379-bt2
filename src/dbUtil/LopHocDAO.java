@@ -1,5 +1,6 @@
 package dbUtil;
 
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import pojo.LopHoc;
 
@@ -27,6 +28,7 @@ public class LopHocDAO {
 
             session.beginTransaction();
             lopHoc = session.get(LopHoc.class, maLopHoc);
+            Hibernate.initialize(lopHoc.getDiem());
             session.getTransaction().commit();
 
         } catch (Exception ex) {

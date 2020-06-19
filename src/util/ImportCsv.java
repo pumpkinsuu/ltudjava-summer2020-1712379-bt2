@@ -3,7 +3,11 @@ package util;
 import dbUtil.*;
 import pojo.*;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.List;
 
 /**
  * util
@@ -26,7 +30,7 @@ public class ImportCsv {
             SinhVien sv = new SinhVien();
             while ((line = br.readLine()) != null) {
                 String[] data = line.split(",");
-                if (data.length < 5) break;
+                if (data.length < 5) continue;
 
                 sv.setMssv(data[1]);
                 sv.setHoTen(data[2]);
@@ -35,7 +39,7 @@ public class ImportCsv {
                 sv.setMaLop(lop.getMaLop());
                 sv.setPassword(data[4]);
 
-                if (!SinhVienDAO.add(sv)) return false;
+                SinhVienDAO.add(sv);
             }
             br.close();
 
@@ -57,21 +61,36 @@ public class ImportCsv {
             String line;
             Mon mon = new Mon();
             Tkb tkb = new Tkb();
+            LopHoc lopHoc = new LopHoc();
+            List<SinhVien> sinhVienList = SinhVienDAO.getList();
 
             br.readLine();
             while ((line = br.readLine()) != null) {
                 String[] data = line.split(",");
-                if (data.length < 4) break;
+                if (data.length < 4) continue;
 
                 mon.setMaMon(data[1]);
                 mon.setTenMon(data[2]);
                 mon.setPhong(data[3]);
 
-                tkb.setMaTkb(lop.getMaLop() + '-' + mon.getMaMon());
+                tkb.setMaTkb(lop.getMaLop() + '-' + data[1]);
                 tkb.setMaLop(lop.getMaLop());
-                tkb.setMaMon(mon.getMaMon());
+                tkb.setMaMon(data[1]);
 
-                if (!MonDAO.add(mon)) return false;
+                MonDAO.add(mon);
+
+                if (!TkbDAO.add(tkb))
+                    continue;
+
+                for (SinhVien sv : sinhVienList) {
+                    if (sv.getMaLop().equals(lop.getMaLop())) {
+                        lopHoc.setMaLopHoc(tkb.getMaTkb() + '-' + sv.getMssv());
+                        lopHoc.setMaTkb(tkb.getMaTkb());
+                        lopHoc.setMssv(sv.getMssv());
+
+                        LopHocDAO.add(lopHoc);
+                    }
+                }
             }
             br.close();
 
@@ -92,18 +111,19 @@ public class ImportCsv {
                     new FileReader(file.getCanonicalFile()));
 
             String line;
+            String maTkb = tkb.getMaTkb();
             LopHoc lopHoc = new LopHoc();
 
             br.readLine();
             while ((line = br.readLine()) != null) {
                 String[] data = line.split(",");
-                if (data.length < 2) break;
+                if (data.length < 2) continue;
 
+                lopHoc.setMaLopHoc(maTkb + '-' + data[1]);
+                lopHoc.setMaTkb(maTkb);
                 lopHoc.setMssv(data[1]);
-                lopHoc.setMaTkb(tkb.getMaTkb());
-                lopHoc.setMaLopHoc(lopHoc.getMaTkb() + '-' + lopHoc.getMssv());
 
-                if (!LopHocDAO.add(lopHoc)) return false;
+                LopHocDAO.add(lopHoc);
             }
             br.close();
 
@@ -129,7 +149,7 @@ public class ImportCsv {
             br.readLine();
             while ((line = br.readLine()) != null) {
                 String[] data = line.split(",");
-                if (data.length < 7) break;
+                if (data.length < 7) continue;
 
                 String maLopHoc = tkb.getMaTkb() + '-' + data[1];
 
@@ -140,7 +160,7 @@ public class ImportCsv {
                 diem.setDiemTong(Double.parseDouble(data[6]));
                 diem.setMaLopHoc(maLopHoc);
 
-                if (!DiemDAO.add(diem)) return false;
+                DiemDAO.add(diem);
             }
             br.close();
 
