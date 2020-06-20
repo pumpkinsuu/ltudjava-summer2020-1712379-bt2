@@ -14,7 +14,6 @@ import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.EventObject;
 import java.util.List;
 
 /**

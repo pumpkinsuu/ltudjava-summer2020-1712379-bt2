@@ -25,7 +25,6 @@ public class ListTkbGUI {
     private JTextField textField;
     private JTable table;
     private TableRowSorter<TableModel> tableRowSorter;
-    private JScrollPane scrollPanel;
     private JFrame frame;
 
     public ListTkbGUI() {
