@@ -4,21 +4,21 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 
 /**
  * pojo
  *
  * @Created by pumpk - StudentID : 1712379
- * @Date 18-Jun-20 - 7:31 PM
+ * @Date 20-Jun-20 - 3:34 PM
  * @Description
  */
 @Entity
 public class Lop {
     private String maLop;
-    private Collection<SinhVien> sinhVien;
-    private Collection<Tkb> tkb;
+    private List<SinhVien> sinhvien;
+    private List<Tkb> tkb;
 
     @Id
     @Column(name = "maLop")
@@ -44,20 +44,20 @@ public class Lop {
     }
 
     @OneToMany(mappedBy = "lop")
-    public Collection<SinhVien> getSinhVien() {
-        return sinhVien;
+    public List<SinhVien> getSinhVien() {
+        return sinhvien;
     }
 
-    public void setSinhVien(Collection<SinhVien> sinhVien) {
-        this.sinhVien = sinhVien;
+    public void setSinhVien(List<SinhVien> sinhvien) {
+        this.sinhvien = sinhvien;
     }
 
     @OneToMany(mappedBy = "lop")
-    public Collection<Tkb> getTkb() {
+    public List<Tkb> getTkb() {
         return tkb;
     }
 
-    public void setTkb(Collection<Tkb> tkb) {
+    public void setTkb(List<Tkb> tkb) {
         this.tkb = tkb;
     }
 }

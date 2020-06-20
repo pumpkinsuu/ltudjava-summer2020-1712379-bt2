@@ -38,14 +38,14 @@ public class DiemDAO {
     }
 
     public static boolean add(Diem Diem) {
-        if (DiemDAO.get(Diem.getMaDiem()) != null)
+        if (DiemDAO.get(Diem.getMaLopHoc()) != null)
             return false;
 
         return QLSinhVienDAO.add(Diem);
     }
 
     public static boolean update(Diem Diem) {
-        if (DiemDAO.get(Diem.getMaDiem()) == null)
+        if (DiemDAO.get(Diem.getMaLopHoc()) == null)
             return false;
 
         return QLSinhVienDAO.update(Diem);

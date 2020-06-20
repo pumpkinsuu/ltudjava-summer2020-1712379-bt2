@@ -32,7 +32,17 @@ public class SinhVienDAO {
         } catch (Exception ex) {
             System.err.println(ex.getMessage());
         }
-        return sv;     
+        return sv;
+    }
+
+    public static SinhVien getByName(String name) {
+        String hql = "select sv from SinhVien sv where sv.hoTen = '" + name + '\'';
+        List<SinhVien> svs = QLSinhVienDAO.getList(hql);
+
+        if (svs != null && !svs.isEmpty())
+            return svs.get(0);
+
+        return null;
     }
 
     public static boolean add(SinhVien sv) {

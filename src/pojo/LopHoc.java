@@ -1,14 +1,13 @@
 package pojo;
 
 import javax.persistence.*;
-import java.util.Collection;
 import java.util.Objects;
 
 /**
  * pojo
  *
  * @Created by pumpk - StudentID : 1712379
- * @Date 18-Jun-20 - 7:31 PM
+ * @Date 20-Jun-20 - 3:35 PM
  * @Description
  */
 @Entity
@@ -16,7 +15,7 @@ public class LopHoc {
     private String maLopHoc;
     private String mssv;
     private String maTkb;
-    private Collection<Diem> diem;
+    private Diem diem;
     private SinhVien sinhVien;
     private Tkb tkb;
 
@@ -65,12 +64,12 @@ public class LopHoc {
         return Objects.hash(maLopHoc, mssv, maTkb);
     }
 
-    @OneToMany(mappedBy = "lopHoc")
-    public Collection<Diem> getDiem() {
+    @OneToOne(mappedBy = "lopHoc")
+    public Diem getDiem() {
         return diem;
     }
 
-    public void setDiem(Collection<Diem> diem) {
+    public void setDiem(Diem diem) {
         this.diem = diem;
     }
 

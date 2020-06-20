@@ -24,12 +24,14 @@
       </component>
       <component id="61058" class="javax.swing.JTextField" binding="userField">
         <constraints>
-          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="0" fill="0" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="25"/>
           </grid>
           <gridbag weightx="1.0" weighty="1.0"/>
         </constraints>
-        <properties/>
+        <properties>
+          <preferredSize width="200" height="25"/>
+        </properties>
       </component>
       <component id="703a4" class="javax.swing.JLabel">
         <constraints>
@@ -42,22 +44,25 @@
       </component>
       <component id="e5dd1" class="javax.swing.JPasswordField" binding="passwordField">
         <constraints>
-          <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false">
+          <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="0" fill="0" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="25"/>
           </grid>
           <gridbag weightx="1.0" weighty="1.0"/>
         </constraints>
-        <properties/>
+        <properties>
+          <preferredSize width="200" height="25"/>
+        </properties>
       </component>
       <component id="e5ec4" class="javax.swing.JButton" binding="loginButton">
         <constraints>
-          <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="2" fill="1" indent="0" use-parent-layout="false">
+          <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="2" fill="0" indent="0" use-parent-layout="false">
             <preferred-size width="-1" height="25"/>
           </grid>
           <gridbag weightx="1.0" weighty="1.0"/>
         </constraints>
         <properties>
           <alignmentY value="0.5"/>
+          <preferredSize width="100" height="30"/>
           <text value="Đăng nhập"/>
         </properties>
       </component>

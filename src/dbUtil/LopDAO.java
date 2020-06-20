@@ -3,7 +3,6 @@ package dbUtil;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import pojo.Lop;
-import pojo.SinhVien;
 
 import java.util.List;
 
@@ -30,6 +29,7 @@ public class LopDAO {
             session.beginTransaction();
             lop = session.get(Lop.class, maLop);
             Hibernate.initialize(lop.getSinhVien());
+            Hibernate.initialize(lop.getTkb());
             session.getTransaction().commit();
 
         } catch (Exception ex) {

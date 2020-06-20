@@ -84,7 +84,7 @@ public class ImportCsv {
 
                 for (SinhVien sv : sinhVienList) {
                     if (sv.getMaLop().equals(lop.getMaLop())) {
-                        lopHoc.setMaLopHoc(tkb.getMaTkb() + '-' + sv.getMssv());
+                        lopHoc.setMaLopHoc(tkb.getMaMon() + '-' + sv.getMssv());
                         lopHoc.setMaTkb(tkb.getMaTkb());
                         lopHoc.setMssv(sv.getMssv());
 
@@ -111,6 +111,7 @@ public class ImportCsv {
                     new FileReader(file.getCanonicalFile()));
 
             String line;
+            String maMon = tkb.getMaMon();
             String maTkb = tkb.getMaTkb();
             LopHoc lopHoc = new LopHoc();
 
@@ -119,7 +120,7 @@ public class ImportCsv {
                 String[] data = line.split(",");
                 if (data.length < 2) continue;
 
-                lopHoc.setMaLopHoc(maTkb + '-' + data[1]);
+                lopHoc.setMaLopHoc(maMon + '-' + data[1]);
                 lopHoc.setMaTkb(maTkb);
                 lopHoc.setMssv(data[1]);
 
@@ -151,9 +152,8 @@ public class ImportCsv {
                 String[] data = line.split(",");
                 if (data.length < 7) continue;
 
-                String maLopHoc = tkb.getMaTkb() + '-' + data[1];
+                String maLopHoc = tkb.getMaMon() + '-' + data[1];
 
-                diem.setMaDiem(maLopHoc);
                 diem.setDiemGk(Double.parseDouble(data[3]));
                 diem.setDiemCk(Double.parseDouble(data[4]));
                 diem.setDiemKhac(Double.parseDouble(data[5]));

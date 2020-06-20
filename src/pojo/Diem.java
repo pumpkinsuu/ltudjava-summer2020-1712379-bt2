@@ -7,28 +7,17 @@ import java.util.Objects;
  * pojo
  *
  * @Created by pumpk - StudentID : 1712379
- * @Date 18-Jun-20 - 7:31 PM
+ * @Date 20-Jun-20 - 3:34 PM
  * @Description
  */
 @Entity
 public class Diem {
-    private String maDiem;
     private double diemGk;
     private double diemCk;
     private double diemKhac;
     private double diemTong;
     private String maLopHoc;
     private LopHoc lopHoc;
-
-    @Id
-    @Column(name = "maDiem")
-    public String getMaDiem() {
-        return maDiem;
-    }
-
-    public void setMaDiem(String maDiem) {
-        this.maDiem = maDiem;
-    }
 
     @Basic
     @Column(name = "diemGK")
@@ -70,7 +59,7 @@ public class Diem {
         this.diemTong = diemTong;
     }
 
-    @Basic
+    @Id
     @Column(name = "maLopHoc")
     public String getMaLopHoc() {
         return maLopHoc;
@@ -85,8 +74,7 @@ public class Diem {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Diem diem = (Diem) o;
-        return maDiem == diem.maDiem &&
-                Double.compare(diem.diemGk, diemGk) == 0 &&
+        return Double.compare(diem.diemGk, diemGk) == 0 &&
                 Double.compare(diem.diemCk, diemCk) == 0 &&
                 Double.compare(diem.diemKhac, diemKhac) == 0 &&
                 Double.compare(diem.diemTong, diemTong) == 0 &&
@@ -95,10 +83,10 @@ public class Diem {
 
     @Override
     public int hashCode() {
-        return Objects.hash(maDiem, diemGk, diemCk, diemKhac, diemTong, maLopHoc);
+        return Objects.hash(diemGk, diemCk, diemKhac, diemTong, maLopHoc);
     }
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "maLopHoc", referencedColumnName = "maLopHoc", nullable = false, insertable = false, updatable = false)
     public LopHoc getLopHoc() {
         return lopHoc;
