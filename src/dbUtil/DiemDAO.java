@@ -3,6 +3,7 @@ package dbUtil;
 import org.hibernate.Session;
 import pojo.Diem;
 
+import java.lang.reflect.Array;
 import java.util.List;
 
 /**
@@ -15,7 +16,7 @@ import java.util.List;
 public class DiemDAO {
 
     public static List<Diem> getList() {
-        String hql = "select Diem from Diem Diem";
+        String hql = "from Diem diem";
         return QLSinhVienDAO.getList(hql);
     }
 

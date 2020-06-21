@@ -2,10 +2,10 @@ package gui.lop;
 
 import dbUtil.LopDAO;
 import dbUtil.TkbDAO;
-import gui.sv.ListSvGUI;
-import gui.tkb.ListTkbGUI;
+import gui.ListGUI;
 import pojo.Lop;
 import pojo.Tkb;
+import util.PopMenu;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -23,19 +23,15 @@ public class GetMaLopGUI {
     private JTextField textField;
     private JComboBox<String> selectBox;
     private JButton getBtn;
-    private JButton closeBtn;
     private JPanel panel;
-    private JFrame frame;
     private final List<String> list;
     private final String type;
 
     public GetMaLopGUI(String type) {
         this.list = new ArrayList<>();
         this.type = type;
+        this.textField.setComponentPopupMenu(PopMenu.getCP());
 
-        closeBtn.addActionListener(e -> {
-            this.frame.dispose();
-        });
         selectBox.addActionListener(e -> {
             if (Objects.requireNonNull(this.selectBox.getSelectedItem()).toString() != null)
                 this.textField.setText(this.selectBox.getSelectedItem().toString());
@@ -51,31 +47,32 @@ public class GetMaLopGUI {
             }
 
             switch (this.type) {
-                case "sv_lop" -> getSvLop();
-                case "sv_lopHoc" -> getSvlopHoc();
-                case "tkb_lop" -> getTkbLop();
+                case "sv_lop" -> this.getSvLop();
+                case "sv_lopHoc" -> this.getSvlopHoc();
+                case "tkb_lop" -> this.getTkbLop();
+                case "diem_lop" -> this.getDiemLop();
             }
         });
     }
 
     public void init() {
-        initBox();
+        this.initBox();
         if (this.list.isEmpty()) {
             JOptionPane.showMessageDialog(this.panel, "Không có danh sách!");
             return;
         }
 
-        this.frame = new JFrame("Chọn lớp");
-        this.frame.setContentPane(panel);
-        this.frame.pack();
-        this.frame.setLocationRelativeTo(null);
-        this.frame.setVisible(true);
+        JFrame frame = new JFrame("Chọn lớp");
+        frame.setContentPane(this.panel);
+        frame.setSize(250,200);
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
     }
 
     void initBox() {
         switch (this.type) {
-            case "sv_lop", "tkb_lop" -> initLop();
-            case "sv_lopHoc", "diem_lopHoc" -> initLopHoc();
+            case "sv_lop", "tkb_lop" -> this.initLop();
+            case "sv_lopHoc", "diem_lop" -> this.initLopHoc();
         }
     }
 
@@ -96,17 +93,22 @@ public class GetMaLopGUI {
     }
 
     void getSvLop() {
-        ListSvGUI listSvGUI = new ListSvGUI();
-        listSvGUI.init("lop", this.textField.getText());
+        ListGUI listGUI = new ListGUI();
+        listGUI.init("sv_lop", this.textField.getText());
     }
 
     void getSvlopHoc() {
-        ListSvGUI listSvGUI = new ListSvGUI();
-        listSvGUI.init("lopHoc", this.textField.getText());
+        ListGUI listGUI = new ListGUI();
+        listGUI.init("sv_lopHoc", this.textField.getText());
     }
 
     void getTkbLop() {
-        ListTkbGUI listTkbGUI = new ListTkbGUI();
-        listTkbGUI.init(this.textField.getText());
+        ListGUI listGUI = new ListGUI();
+        listGUI.init("tkb_lop", this.textField.getText());
+    }
+
+    void getDiemLop() {
+        ListGUI listGUI = new ListGUI();
+        listGUI.init("diem_lop", this.textField.getText());
     }
 }

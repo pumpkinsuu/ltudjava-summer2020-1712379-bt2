@@ -16,7 +16,7 @@ import java.util.List;
 public class TkbDAO {
 
     public static List<Tkb> getList() {
-        String hql = "select tkb from Tkb tkb";
+        String hql = "from Tkb tkb";
         return QLSinhVienDAO.getList(hql);
     }
 

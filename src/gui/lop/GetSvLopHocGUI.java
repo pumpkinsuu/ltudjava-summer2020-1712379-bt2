@@ -1,17 +1,15 @@
 package gui.lop;
 
-import dbUtil.LopHocDAO;
-import dbUtil.MonDAO;
-import dbUtil.SinhVienDAO;
-import dbUtil.TkbDAO;
+import dbUtil.*;
+import gui.ListGUI;
+import gui.sv.EditDiemGUI;
 import pojo.LopHoc;
 import pojo.Mon;
 import pojo.SinhVien;
 import pojo.Tkb;
+import util.PopMenu;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,18 +24,19 @@ public class GetSvLopHocGUI {
     private JTextField svField;
     private JTextField lopField;
     private JButton addBtn;
-    private JButton closeBtn;
     private JPanel panel;
     private JLabel lopLable;
-    private JFrame frame;
+    private JButton svBtn;
+    private JButton lopBtn;
     private final List<String> list;
     private final String type;
 
     public GetSvLopHocGUI(String type) {
         this.list = new ArrayList<>();
         this.type = type;
+        this.svField.setComponentPopupMenu(PopMenu.getCP());
+        this.lopField.setComponentPopupMenu(PopMenu.getCP());
 
-        closeBtn.addActionListener(e -> this.frame.dispose());
         addBtn.addActionListener(e -> {
             if (this.svField == null || this.lopField == null) {
                 JOptionPane.showMessageDialog(this.panel, "Không được bỏ trống!");
@@ -46,7 +45,7 @@ public class GetSvLopHocGUI {
             if (!this.list.contains(this.lopField.getText())) {
                 switch (this.type) {
                     case "addLopHoc" -> JOptionPane.showMessageDialog(this.lopField, "Lớp học không tồn tại!");
-                    case "removeLopHoc" -> JOptionPane.showMessageDialog(this.lopField, "Môn học không tồn tại!");
+                    case "removeLopHoc", "updateDiem" -> JOptionPane.showMessageDialog(this.lopField, "Môn học không tồn tại!");
                 }
                 return;
             }
@@ -61,6 +60,18 @@ public class GetSvLopHocGUI {
             switch (this.type) {
                 case "addLopHoc" -> addLopHoc(sv);
                 case "removeLopHoc" -> removeLopHoc(sv);
+                case "updateDiem" -> updateDiem(sv);
+            }
+        });
+        svBtn.addActionListener(e -> {
+            ListGUI listGUI = new ListGUI();
+            listGUI.init("sv_all", null);
+        });
+        lopBtn.addActionListener(e -> {
+            ListGUI listGUI = new ListGUI();
+            switch (this.type) {
+                case "addLopHoc" -> listGUI.init("tkb_all", null);
+                case "removeLopHoc", "updateDiem" -> listGUI.init("tkb_mon", null);
             }
         });
     }
@@ -72,11 +83,11 @@ public class GetSvLopHocGUI {
             return;
         }
 
-        this.frame = new JFrame("Chọn sinh viên và lớp học");
-        this.frame.setContentPane(panel);
-        this.frame.pack();
-        this.frame.setLocationRelativeTo(null);
-        this.frame.setVisible(true);
+        JFrame frame = new JFrame("Chọn sinh viên và lớp học");
+        frame.setContentPane(panel);
+        frame.pack();
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
     }
 
     void initBox() {
@@ -90,6 +101,14 @@ public class GetSvLopHocGUI {
             case "removeLopHoc" -> {
                 this.lopLable.setText("Môn học");
                 this.addBtn.setText("Xóa");
+                List<Mon> mos = MonDAO.getList();
+                for (Mon mon : mos) {
+                    this.list.add(mon.getMaMon());
+                }
+            }
+            case "updateDiem" -> {
+                this.lopLable.setText("Môn học");
+                this.addBtn.setText("Chọn");
                 List<Mon> mos = MonDAO.getList();
                 for (Mon mon : mos) {
                     this.list.add(mon.getMaMon());
@@ -131,5 +150,23 @@ public class GetSvLopHocGUI {
             JOptionPane.showMessageDialog(panel, "Rút sinh viên thành công!");
         else
             JOptionPane.showMessageDialog(panel, "Rút sinh viên thất bại!");
+    }
+
+    void updateDiem(SinhVien sv) {
+        String maLopHoc = this.lopField.getText() + '-' + sv.getMssv();
+        LopHoc lopHoc = LopHocDAO.get(maLopHoc);
+
+        if (lopHoc == null) {
+            JOptionPane.showMessageDialog(this.svField, "Sinh viên chưa đăng ký lớp học!");
+            return;
+        }
+
+        if (lopHoc.getDiem() == null) {
+            JOptionPane.showMessageDialog(this.svField, "Sinh viên chưa có điểm lớp học!");
+            return;
+        }
+
+        EditDiemGUI editDiemGUI = new EditDiemGUI(lopHoc);
+        editDiemGUI.init();
     }
 }

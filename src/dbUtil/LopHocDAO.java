@@ -16,8 +16,30 @@ import java.util.List;
 public class LopHocDAO {
 
     public static List<LopHoc> getList() {
-        String hql = "select lopHoc from LopHoc lopHoc";
+        String hql = "from LopHoc lopHoc";
         return QLSinhVienDAO.getList(hql);
+    }
+
+    @SuppressWarnings("unchecked")
+    public static List<LopHoc> getTkb(String maTkb) {
+        String hql = "from LopHoc lopHoc where lopHoc.maTkb = '" + maTkb + "'";
+
+        List<LopHoc> list = null;
+        try {
+            Session session = HibernateUtil.getSessionFactory()
+                    .getCurrentSession();
+
+            if (!session.getTransaction().isActive())
+                session.beginTransaction();
+
+            list = session.createQuery(hql).list();
+            Hibernate.initialize(list);
+            session.getTransaction().commit();
+
+        } catch (Exception ex) {
+            System.err.println(ex.getMessage());
+        }
+        return list;
     }
 
     public static LopHoc get(String maLopHoc) {
@@ -29,6 +51,7 @@ public class LopHocDAO {
             session.beginTransaction();
             lopHoc = session.get(LopHoc.class, maLopHoc);
             Hibernate.initialize(lopHoc.getDiem());
+            Hibernate.initialize(lopHoc.getSinhVien());
             session.getTransaction().commit();
 
         } catch (Exception ex) {

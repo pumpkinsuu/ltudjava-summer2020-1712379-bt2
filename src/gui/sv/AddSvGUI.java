@@ -22,14 +22,12 @@ public class AddSvGUI {
     private JTextField cmndField;
     private JComboBox<String> lopBox;
     private JButton addBtn;
-    private JButton closeBtn;
     private JTextArea mssvField;
     private JTextField nameField;
     private JPanel AddSvPanel;
     private JFrame frame;
 
     public AddSvGUI() {
-        closeBtn.addActionListener(e -> this.frame.dispose());
         addBtn.addActionListener(e -> {
             if (this.mssvField.getText() == null || this.mssvField.getText().isBlank()) {
                 JOptionPane.showMessageDialog(this.mssvField, "Nhập MSSV!");

@@ -1,4 +1,5 @@
 import gui.LoginGUI;
+import gui.MenuGvGUI;
 
 /**
  * PACKAGE_NAME
@@ -10,7 +11,9 @@ import gui.LoginGUI;
 public class Main {
     public static void main(String[] args) {
 
-        LoginGUI loginGUI = new LoginGUI();
-        loginGUI.init();
+        //LoginGUI loginGUI = new LoginGUI();
+        //loginGUI.init();
+        MenuGvGUI menuGvGUI = new MenuGvGUI("admin");
+        menuGvGUI.init();
     }
 }

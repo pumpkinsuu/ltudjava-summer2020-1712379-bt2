@@ -20,7 +20,7 @@ public class LoginGUI {
     private JFrame frame;
 
     public LoginGUI() {
-
+        GiaoVuDao.get("");
         loginButton.addActionListener(e -> {
             String username = this.userField.getText();
             if (username == null || username.isBlank()) {
@@ -38,6 +38,7 @@ public class LoginGUI {
             }
 
             GiaoVu gv = GiaoVuDao.get(username);
+
             if (gv != null && gv.getPassword().equals(password)) {
                 this.frame.dispose();
 

@@ -3,7 +3,6 @@ package gui;
 import gui.lop.GetMaLopGUI;
 import gui.lop.GetSvLopHocGUI;
 import gui.sv.AddSvGUI;
-import gui.sv.ListSvGUI;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -63,8 +62,8 @@ public class MenuGvGUI {
             importCsvGUI.init();
         });
         listSvBtn.addActionListener(e -> {
-            ListSvGUI listSvGUI = new ListSvGUI();
-            listSvGUI.init("all", null);
+            ListGUI listGUI = new ListGUI();
+            listGUI.init("sv_all", null);
         });
         listSvLopBtn.addActionListener(e -> {
             GetMaLopGUI getMaLopGUI = new GetMaLopGUI("sv_lop");
@@ -88,6 +87,14 @@ public class MenuGvGUI {
         });
         removeLopHocBtn.addActionListener(e -> {
             GetSvLopHocGUI getSvLopHocGUI = new GetSvLopHocGUI("removeLopHoc");
+            getSvLopHocGUI.init();
+        });
+        diemLopHocBtn.addActionListener(e -> {
+            GetMaLopGUI getMaLopGUI = new GetMaLopGUI("diem_lop");
+            getMaLopGUI.init();
+        });
+        updateSvDiemBtn.addActionListener(e -> {
+            GetSvLopHocGUI getSvLopHocGUI = new GetSvLopHocGUI("updateDiem");
             getSvLopHocGUI.init();
         });
     }

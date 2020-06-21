@@ -16,7 +16,7 @@ import java.util.List;
 public class LopDAO {
 
     public static List<Lop> getList() {
-        String hql = "select lop from Lop lop";
+        String hql = "from Lop lop";
         return QLSinhVienDAO.getList(hql);
     }
 

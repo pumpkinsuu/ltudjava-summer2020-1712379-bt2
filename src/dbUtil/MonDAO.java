@@ -16,7 +16,7 @@ import java.util.List;
 public class MonDAO {
 
     public static List<Mon> getList() {
-        String hql = "select mon from Mon mon";
+        String hql = "from Mon mon";
         return QLSinhVienDAO.getList(hql);
     }
 

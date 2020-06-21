@@ -15,7 +15,7 @@ import java.util.List;
 public class SinhVienDAO {
 
     public static List<SinhVien> getList() {
-        String hql = "select sv from SinhVien sv";
+        String hql = "from SinhVien sv";
         return QLSinhVienDAO.getList(hql);
     }
 
@@ -36,7 +36,7 @@ public class SinhVienDAO {
     }
 
     public static SinhVien getByName(String name) {
-        String hql = "select sv from SinhVien sv where sv.hoTen = '" + name + '\'';
+        String hql = "from SinhVien sv where sv.hoTen = '" + name + "'";
         List<SinhVien> svs = QLSinhVienDAO.getList(hql);
 
         if (svs != null && !svs.isEmpty())
