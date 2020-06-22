@@ -63,9 +63,9 @@ public class TableList {
     public static boolean setTkbTab(JTable table, JTextField textField, String type, String id) {
         TableModel tableModel;
         switch (type) {
-            case "tkb_mon" -> tableModel = initMon();
-            case "tkb_all" -> tableModel = initAll();
-            case "tkb_lop" -> tableModel = initDef(id);
+            case "tkb_mon" -> tableModel = tkbMon();
+            case "tkb_all" -> tableModel = tkbAll();
+            case "tkb_lop" -> tableModel = tkbLop(id);
             default -> {
                 return false;
             }
@@ -76,7 +76,7 @@ public class TableList {
         return tableModel.getRowCount() != 0;
     }
 
-    static TableModel initMon() {
+    static TableModel tkbMon() {
         List<Mon> mons = MonDAO.getList();
 
         String[] colName = new String[]{
@@ -97,7 +97,7 @@ public class TableList {
             }
         };
     }
-    static TableModel initAll() {
+    static TableModel tkbAll() {
         List<Tkb> tkbs = TkbDAO.getList();
 
         String[]colName = new String[]{
@@ -120,7 +120,7 @@ public class TableList {
             }
         };
     }
-    static TableModel initDef(String maLop) {
+    static TableModel tkbLop(String maLop) {
         List<Tkb> tkbs = LopDAO.get(maLop).getTkb();
 
         String[] colName = new String[]{
@@ -143,7 +143,7 @@ public class TableList {
         };
     }
 
-    public static boolean setDiemTab(JTable table, JTextField textField, String type, String id, List<LopHoc> list) {
+    public static boolean setDiemTab(JTable table, JTextField textField, List<LopHoc> list) {
         String[] colName = new String[]{
                 "STT", "MSSV", "Họ tên", "Điểm GK", "Điểm CK", "Điểm khác", "Điểm Tổng", "Đậu/Rớt"
         };

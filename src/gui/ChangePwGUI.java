@@ -4,6 +4,7 @@ import dbUtil.GiaoVuDao;
 import dbUtil.SinhVienDAO;
 import pojo.GiaoVu;
 import pojo.SinhVien;
+import util.PopMenu;
 
 import javax.swing.*;
 
@@ -75,6 +76,9 @@ public class ChangePwGUI {
     }
 
     public void init() {
+        this.oldPWField.setComponentPopupMenu(PopMenu.getCP());
+        this.newPWField.setComponentPopupMenu(PopMenu.getCP());
+
         frame = new JFrame("Login");
         frame.setContentPane(changePWPanel);
         frame.pack();

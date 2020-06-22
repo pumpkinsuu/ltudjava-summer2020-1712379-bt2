@@ -62,7 +62,9 @@ public class ListGUI {
     }
 
     boolean setDiemLopGUI(String type, String id) {
-        List<LopHoc> list = LopHocDAO.getTkb(id);
+        String hql = "from LopHoc lopHoc where lopHoc.maTkb = '" + id + "'";
+
+        List<LopHoc> list = LopHocDAO.getAll(hql);
         if (list == null)
             return false;
 
@@ -85,6 +87,6 @@ public class ListGUI {
             JOptionPane.showMessageDialog(tkBtn, tk);
         });
 
-        return TableList.setDiemTab(this.table, this.textField, type, id, list);
+        return TableList.setDiemTab(this.table, this.textField, list);
     }
 }

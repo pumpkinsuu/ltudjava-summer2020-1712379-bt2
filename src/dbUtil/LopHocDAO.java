@@ -21,9 +21,7 @@ public class LopHocDAO {
     }
 
     @SuppressWarnings("unchecked")
-    public static List<LopHoc> getTkb(String maTkb) {
-        String hql = "from LopHoc lopHoc where lopHoc.maTkb = '" + maTkb + "'";
-
+    public static List<LopHoc> getAll(String hql) {
         List<LopHoc> list = null;
         try {
             Session session = HibernateUtil.getSessionFactory()

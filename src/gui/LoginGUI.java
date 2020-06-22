@@ -1,7 +1,10 @@
 package gui;
 
 import dbUtil.GiaoVuDao;
+import dbUtil.SinhVienDAO;
 import pojo.GiaoVu;
+import pojo.SinhVien;
+import util.PopMenu;
 
 import javax.swing.*;
 
@@ -20,7 +23,6 @@ public class LoginGUI {
     private JFrame frame;
 
     public LoginGUI() {
-        GiaoVuDao.get("");
         loginButton.addActionListener(e -> {
             String username = this.userField.getText();
             if (username == null || username.isBlank()) {
@@ -38,12 +40,20 @@ public class LoginGUI {
             }
 
             GiaoVu gv = GiaoVuDao.get(username);
-
             if (gv != null && gv.getPassword().equals(password)) {
                 this.frame.dispose();
 
                 MenuGvGUI menuGvGUI = new MenuGvGUI(username);
                 menuGvGUI.init();
+
+                return;
+            }
+            SinhVien sv = SinhVienDAO.get(username);
+            if (sv != null && sv.getPassword().equals(password)) {
+                this.frame.dispose();
+
+                MenuSvGUI MenuSvGUI = new MenuSvGUI(sv);
+                MenuSvGUI.init();
 
                 return;
             }
@@ -53,6 +63,9 @@ public class LoginGUI {
     }
 
     public void init() {
+        this.userField.setComponentPopupMenu(PopMenu.getCP());
+        this.passwordField.setComponentPopupMenu(PopMenu.getCP());
+
         this.frame = new JFrame("Login");
         this.frame.setContentPane(this.loginPanel);
         this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
