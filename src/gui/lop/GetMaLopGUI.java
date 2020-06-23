@@ -5,6 +5,7 @@ import dbUtil.TkbDAO;
 import gui.ListGUI;
 import pojo.Lop;
 import pojo.Tkb;
+import util.LayoutSwitch;
 import util.PopMenu;
 
 import javax.swing.*;
@@ -24,10 +25,13 @@ public class GetMaLopGUI {
     private JComboBox<String> selectBox;
     private JButton getBtn;
     private JPanel panel;
+    private JButton backBtn;
+    private final JPanel viewPanel;
     private final List<String> list;
     private final String type;
 
-    public GetMaLopGUI(String type) {
+    public GetMaLopGUI(JPanel viewPanel, String type) {
+        this.viewPanel = viewPanel;
         this.list = new ArrayList<>();
         this.type = type;
         this.textField.setComponentPopupMenu(PopMenu.getCP());
@@ -53,6 +57,9 @@ public class GetMaLopGUI {
                 case "diem_lop" -> this.getDiemLop();
             }
         });
+        backBtn.addActionListener(e -> {
+            LayoutSwitch.back(this.viewPanel, this.panel);
+        });
     }
 
     public void init() {
@@ -62,11 +69,7 @@ public class GetMaLopGUI {
             return;
         }
 
-        JFrame frame = new JFrame("Chọn lớp");
-        frame.setContentPane(this.panel);
-        frame.setSize(250,200);
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
+        LayoutSwitch.next(this.viewPanel, this.panel);
     }
 
     void initBox() {
@@ -93,22 +96,22 @@ public class GetMaLopGUI {
     }
 
     void getSvLop() {
-        ListGUI listGUI = new ListGUI();
+        ListGUI listGUI = new ListGUI(this.viewPanel);
         listGUI.init("sv_lop", this.textField.getText());
     }
 
     void getSvlopHoc() {
-        ListGUI listGUI = new ListGUI();
+        ListGUI listGUI = new ListGUI(this.viewPanel);
         listGUI.init("sv_lopHoc", this.textField.getText());
     }
 
     void getTkbLop() {
-        ListGUI listGUI = new ListGUI();
+        ListGUI listGUI = new ListGUI(this.viewPanel);
         listGUI.init("tkb_lop", this.textField.getText());
     }
 
     void getDiemLop() {
-        ListGUI listGUI = new ListGUI();
+        ListGUI listGUI = new ListGUI(this.viewPanel);
         listGUI.init("diem_lop", this.textField.getText());
     }
 }

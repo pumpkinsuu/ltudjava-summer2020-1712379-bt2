@@ -1,12 +1,11 @@
 package gui;
 
-import gui.lop.GetMaLopGUI;
-import gui.lop.GetSvLopHocGUI;
-import gui.sv.AddSvGUI;
+import gui.diem.DiemOptionGUI;
+import gui.lop.LopOptionPanel;
+import gui.sv.SvOptionGUI;
+import gui.tkb.TkbOptionGUI;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 /**
  * PACKAGE_NAME
@@ -16,94 +15,45 @@ import java.awt.event.ActionListener;
  * @Description
  */
 public class MenuGvGUI {
-    private JPanel menuGv;
+    private JPanel panel;
     private JButton newPWsBtn;
     private JButton logoutBtn;
-    private JButton listSvBtn;
-    private JButton importSvBtn;
-    private JButton addSvBtn;
-    private JButton updateSvBtn;
-    private JButton removeSvBtn;
-    private JButton listTkbBtn;
-    private JButton importTkbBtn;
-    private JButton listSvLopBtn;
-    private JButton listSvLopHocBtn;
-    private JButton diemLopHocBtn;
-    private JButton updateSvDiemBtn;
-    private JButton importDiemBtn;
-    private JButton addLopHocBtn;
-    private JButton removeLopHocBtn;
-    private JFrame frame;
+    private JPanel svPanel;
+    private JPanel tkbPanel;
+    private JPanel lopPanel;
+    private JPanel diemPanel;
+    private JPanel accPanel;
+    private final JFrame frame;
     private final String username;
 
-    public MenuGvGUI(String username) {
+    public MenuGvGUI(JFrame frame, String username) {
+        this.frame = frame;
         this.username = username;
 
         logoutBtn.addActionListener(e -> {
-            this.frame.dispose();
-
-            LoginGUI loginGUI = new LoginGUI();
+            LoginGUI loginGUI = new LoginGUI(this.frame);
             loginGUI.init();
         });
         newPWsBtn.addActionListener(e -> {
-            ChangePwGUI cPW = new ChangePwGUI(this.username, true);
+            ChangePwGUI cPW = new ChangePwGUI(this.accPanel, this.username, true);
             cPW.init();
-        });
-        importSvBtn.addActionListener(e -> {
-            ImportCsvGUI importCsvGUI = new ImportCsvGUI(0);
-            importCsvGUI.init();
-        });
-        importTkbBtn.addActionListener(e -> {
-            ImportCsvGUI importCsvGUI = new ImportCsvGUI(1);
-            importCsvGUI.init();
-        });
-        importDiemBtn.addActionListener(e -> {
-            ImportCsvGUI importCsvGUI = new ImportCsvGUI(3);
-            importCsvGUI.init();
-        });
-        listSvBtn.addActionListener(e -> {
-            ListGUI listGUI = new ListGUI();
-            listGUI.init("sv_all", null);
-        });
-        listSvLopBtn.addActionListener(e -> {
-            GetMaLopGUI getMaLopGUI = new GetMaLopGUI("sv_lop");
-            getMaLopGUI.init();
-        });
-        listSvLopHocBtn.addActionListener(e -> {
-            GetMaLopGUI getMaLopGUI = new GetMaLopGUI("sv_lopHoc");
-            getMaLopGUI.init();
-        });
-        listTkbBtn.addActionListener(e -> {
-            GetMaLopGUI getMaLopGUI = new GetMaLopGUI("tkb_lop");
-            getMaLopGUI.init();
-        });
-        addSvBtn.addActionListener(e -> {
-            AddSvGUI addSvGUI = new AddSvGUI();
-            addSvGUI.init();
-        });
-        addLopHocBtn.addActionListener(e -> {
-            GetSvLopHocGUI getSvLopHocGUI = new GetSvLopHocGUI("addLopHoc");
-            getSvLopHocGUI.init();
-        });
-        removeLopHocBtn.addActionListener(e -> {
-            GetSvLopHocGUI getSvLopHocGUI = new GetSvLopHocGUI("removeLopHoc");
-            getSvLopHocGUI.init();
-        });
-        diemLopHocBtn.addActionListener(e -> {
-            GetMaLopGUI getMaLopGUI = new GetMaLopGUI("diem_lop");
-            getMaLopGUI.init();
-        });
-        updateSvDiemBtn.addActionListener(e -> {
-            GetSvLopHocGUI getSvLopHocGUI = new GetSvLopHocGUI("updateDiem");
-            getSvLopHocGUI.init();
         });
     }
 
     public void init() {
-        this.frame = new JFrame("Quản lý sinh viên");
-        this.frame.setContentPane(menuGv);
+        SvOptionGUI svOptionGUI = new SvOptionGUI(this.svPanel);
+        svOptionGUI.init();
+        TkbOptionGUI tkbOptionGUI = new TkbOptionGUI(this.tkbPanel);
+        tkbOptionGUI.init();
+        LopOptionPanel lopOptionPanel = new LopOptionPanel(this.lopPanel);
+        lopOptionPanel.init();
+        DiemOptionGUI diemOptionGUI = new DiemOptionGUI(this.diemPanel);
+        diemOptionGUI.init();
+
+        this.frame.setTitle("Quản lý sinh viên");
+        this.frame.setContentPane(panel);
         this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.frame.setSize(400, 400);
+        this.frame.setSize(800, 600);
         this.frame.setLocationRelativeTo(null);
         this.frame.setVisible(true);
     }

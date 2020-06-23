@@ -4,6 +4,7 @@ import dbUtil.LopDAO;
 import dbUtil.SinhVienDAO;
 import pojo.Lop;
 import pojo.SinhVien;
+import util.LayoutSwitch;
 
 import javax.swing.*;
 import java.util.List;
@@ -24,10 +25,13 @@ public class AddSvGUI {
     private JButton addBtn;
     private JTextArea mssvField;
     private JTextField nameField;
-    private JPanel AddSvPanel;
-    private JFrame frame;
+    private JPanel panel;
+    private JButton backBtn;
+    private final JPanel viewPanel;
 
-    public AddSvGUI() {
+    public AddSvGUI(JPanel viewPanel) {
+        this.viewPanel = viewPanel;
+
         addBtn.addActionListener(e -> {
             if (this.mssvField.getText() == null || this.mssvField.getText().isBlank()) {
                 JOptionPane.showMessageDialog(this.mssvField, "Nhập MSSV!");
@@ -59,23 +63,21 @@ public class AddSvGUI {
             sv.setPassword(this.cmndField.getText());
 
             if (SinhVienDAO.add(sv)) {
-                JOptionPane.showMessageDialog(this.AddSvPanel, "Thêm thành công!");
-                this.frame.dispose();
+                JOptionPane.showMessageDialog(this.panel, "Thêm thành công!");
+                LayoutSwitch.back(this.viewPanel, this.panel);
                 return;
             }
 
-            JOptionPane.showMessageDialog(this.AddSvPanel, "Thêm thất bại!");
+            JOptionPane.showMessageDialog(this.panel, "Thêm thất bại!");
+        });
+        backBtn.addActionListener(e -> {
+            LayoutSwitch.back(this.viewPanel, this.panel);
         });
     }
 
     public void init() {
         this.createLopBox();
-
-        this.frame = new JFrame("Thêm sinh viên");
-        this.frame.setContentPane(AddSvPanel);
-        this.frame.pack();
-        this.frame.setLocationRelativeTo(null);
-        this.frame.setVisible(true);
+        LayoutSwitch.next(this.viewPanel, this.panel);
     }
 
     void createLopBox() {

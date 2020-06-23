@@ -2,10 +2,10 @@ package gui;
 
 import dbUtil.LopHocDAO;
 import pojo.LopHoc;
+import util.LayoutSwitch;
 import util.TableList;
 
 import javax.swing.*;
-import java.awt.*;
 import java.util.List;
 
 /**
@@ -20,9 +20,15 @@ public class ListGUI {
     private JPanel panel;
     private JTable table;
     private JButton tkBtn;
-    private JFrame frame;
+    private JButton backBtn;
+    private final JPanel viewPanel;
 
-    public ListGUI() {
+    public ListGUI(JPanel viewPanel) {
+        this.viewPanel = viewPanel;
+
+        backBtn.addActionListener(e -> {
+            LayoutSwitch.back(this.viewPanel, this.panel);
+        });
     }
 
     public void init(String type, String id) {
@@ -45,20 +51,11 @@ public class ListGUI {
         }
 
         if (!flag) {
-            JOptionPane.showMessageDialog(this.frame, "Danh sách rỗng!");
+            JOptionPane.showMessageDialog(this.viewPanel, "Danh sách rỗng!");
             return;
         }
 
-
-        if (id != null)
-            title += (' ' + id);
-
-        this.frame = new JFrame(title);
-        this.frame.setLayout(new FlowLayout(FlowLayout.CENTER));
-        this.frame.setContentPane(panel);
-        this.frame.pack();
-        this.frame.setLocationRelativeTo(null);
-        this.frame.setVisible(true);
+        LayoutSwitch.next(this.viewPanel, this.panel);
     }
 
     boolean setDiemLopGUI(String type, String id) {

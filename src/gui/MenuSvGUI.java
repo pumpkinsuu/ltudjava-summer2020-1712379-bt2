@@ -1,19 +1,13 @@
 package gui;
 
 import dbUtil.LopHocDAO;
-import dbUtil.SinhVienDAO;
 import pojo.LopHoc;
 import pojo.SinhVien;
-import util.TableList;
 import util.TableSearch;
 
-import javax.persistence.Table;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -41,23 +35,23 @@ public class MenuSvGUI {
     private JLabel diemLabel;
     private JScrollPane tkbPanel;
     private JScrollPane diemPanel;
-    private JFrame frame;
+    private JPanel accPanel;
+    private final JFrame frame;
     private final SinhVien sv;
     private final List<LopHoc> lopHoc;
 
-    public MenuSvGUI(SinhVien sv) {
+    public MenuSvGUI(JFrame frame, SinhVien sv) {
+        this.frame = frame;
         this.sv = sv;
         String hql = "from LopHoc lopHoc where lopHoc.mssv = '" + this.sv.getMssv() + "'";
         this.lopHoc = LopHocDAO.getAll(hql);
 
         logoutBtn.addActionListener(e -> {
-            this.frame.dispose();
-
-            LoginGUI loginGUI = new LoginGUI();
+            LoginGUI loginGUI = new LoginGUI(this.frame);
             loginGUI.init();
         });
         newPWsBtn.addActionListener(e -> {
-            ChangePwGUI cPW = new ChangePwGUI(this.sv.getMssv(), false);
+            ChangePwGUI cPW = new ChangePwGUI(this.accPanel, this.sv.getMssv(), false);
             cPW.init();
         });
     }
@@ -67,10 +61,10 @@ public class MenuSvGUI {
         this.createTkb();
         this.createDiem();
 
-        this.frame = new JFrame("Quản lý sinh viên");
+        this.frame.setTitle("Quản lý sinh viên");
         this.frame.setContentPane(panel);
         this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.frame.setSize(400, 400);
+        this.frame.setSize(800, 600);
         this.frame.setLocationRelativeTo(null);
         this.frame.setVisible(true);
     }

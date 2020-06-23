@@ -1,8 +1,9 @@
-package gui.sv;
+package gui.diem;
 
 import dbUtil.DiemDAO;
 import pojo.Diem;
 import pojo.LopHoc;
+import util.LayoutSwitch;
 
 import javax.swing.*;
 
@@ -13,7 +14,7 @@ import javax.swing.*;
  * @Date 21-Jun-20 - 10:46 PM
  * @Description
  */
-public class EditDiemGUI {
+public class UpdateDiemGUI {
     private JTextField lopField;
     private JTextField svField;
     private JTextField gkField;
@@ -22,10 +23,12 @@ public class EditDiemGUI {
     private JTextField tongField;
     private JButton updateBtn;
     private JPanel panel;
-    private JFrame frame;
+    private JButton backBtn;
+    private final JPanel viewPanel;
     private final LopHoc lopHoc;
 
-    public EditDiemGUI(LopHoc lopHoc) {
+    public UpdateDiemGUI(JPanel viewPanel, LopHoc lopHoc) {
+        this.viewPanel = viewPanel;
         this.lopHoc = lopHoc;
 
         updateBtn.addActionListener(e -> {
@@ -75,20 +78,19 @@ public class EditDiemGUI {
             }
 
             JOptionPane.showMessageDialog(this.updateBtn, "Cập nhật thành công!");
-            this.frame.dispose();
+            LayoutSwitch.back(this.viewPanel, this.panel);
+        });
+        backBtn.addActionListener(e -> {
+            LayoutSwitch.back(this.viewPanel, this.panel);
         });
     }
 
     public void init() {
         if (!this.createLopBox()) {
-            JOptionPane.showMessageDialog(this.frame, "Không tồn tại!");
+            JOptionPane.showMessageDialog(this.viewPanel, "Không tồn tại!");
         }
 
-        this.frame = new JFrame("Sửa điểm sinh viên");
-        this.frame.setContentPane(panel);
-        this.frame.pack();
-        this.frame.setLocationRelativeTo(null);
-        this.frame.setVisible(true);
+        LayoutSwitch.next(this.viewPanel, this.panel);
     }
 
     boolean createLopBox() {

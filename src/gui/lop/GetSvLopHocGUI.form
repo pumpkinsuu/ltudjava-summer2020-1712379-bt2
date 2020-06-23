@@ -13,12 +13,6 @@
           <gridbag weightx="0.0" weighty="0.0"/>
         </constraints>
       </hspacer>
-      <vspacer id="39149">
-        <constraints>
-          <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
-          <gridbag weightx="0.0" weighty="0.0"/>
-        </constraints>
-      </vspacer>
       <component id="471a1" class="javax.swing.JTextField" binding="lopField">
         <constraints>
           <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
@@ -34,7 +28,7 @@
           <gridbag weightx="0.0" weighty="0.0"/>
         </constraints>
         <properties>
-          <text value="Thêm"/>
+          <text value="Chọn"/>
         </properties>
       </component>
       <component id="2e173" class="javax.swing.JButton" binding="svBtn">
@@ -80,6 +74,15 @@
         </constraints>
         <properties>
           <text value="Mã lớp học"/>
+        </properties>
+      </component>
+      <component id="4f603" class="javax.swing.JButton" binding="backBtn">
+        <constraints>
+          <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <gridbag weightx="0.0" weighty="0.0"/>
+        </constraints>
+        <properties>
+          <text value="Quay lại"/>
         </properties>
       </component>
     </children>

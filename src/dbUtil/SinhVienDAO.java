@@ -1,6 +1,5 @@
 package dbUtil;
 
-import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import pojo.SinhVien;
 

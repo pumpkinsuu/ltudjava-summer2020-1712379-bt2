@@ -11,6 +11,7 @@ import pojo.LopHoc;
 import pojo.SinhVien;
 import pojo.Tkb;
 import util.ImportCsv;
+import util.LayoutSwitch;
 
 /**
  * gui
@@ -21,12 +22,13 @@ import util.ImportCsv;
  */
 public class ImportCsvGUI {
     private JButton openBtn;
-    private JPanel importPanel;
+    private JPanel panel;
     private JButton closeBtn;
-    private JFrame frame;
+    private final JPanel viewPanel;
     private final int type;
 
-    public ImportCsvGUI(int type) {
+    public ImportCsvGUI(JPanel viewPanel, int type) {
+        this.viewPanel = viewPanel;
         this.type = type;
 
         openBtn.addActionListener(e -> {
@@ -35,7 +37,7 @@ public class ImportCsvGUI {
             jFileChooser.setDialogTitle("Chọn file");
             jFileChooser.setFileFilter(filter);
 
-            if (jFileChooser.showOpenDialog(importPanel) != JFileChooser.APPROVE_OPTION) {
+            if (jFileChooser.showOpenDialog(panel) != JFileChooser.APPROVE_OPTION) {
                 System.out.println("Error!");
                 return;
             }
@@ -51,48 +53,35 @@ public class ImportCsvGUI {
             }
 
             if (flag)
-                JOptionPane.showMessageDialog(importPanel, "Import thành công!");
+                JOptionPane.showMessageDialog(panel, "Import thành công!");
             else
-                JOptionPane.showMessageDialog(importPanel, "Import thất bại!");
+                JOptionPane.showMessageDialog(panel, "Import thất bại!");
         });
-        closeBtn.addActionListener(e -> this.frame.dispose());
+        closeBtn.addActionListener(e -> LayoutSwitch.back(this.viewPanel, this.panel));
     }
 
     public void init() {
-        if (!check()) return;
-
-        String name = "";
-        switch (this.type) {
-            case 0 -> name = "sinh viên";
-            case 1 -> name = "thời khóa biểu";
-            case 2 -> name = "lớp học";
-            case 3 -> name = "điểm";
-        }
-
-        frame = new JFrame("Import " + name);
-        frame.setContentPane(importPanel);
-        frame.pack();
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
+        if (this.check())
+            LayoutSwitch.next(this.viewPanel, this.panel);
     }
 
     boolean check() {
         if (this.type == 2) {
             List<Tkb> tkbList = TkbDAO.getList();
             if (tkbList == null || tkbList.isEmpty()) {
-                JOptionPane.showMessageDialog(importPanel, "Chưa có thời khóa biểu trong hệ thống!");
+                JOptionPane.showMessageDialog(panel, "Chưa có thời khóa biểu trong hệ thống!");
                 return false;
             }
             List<SinhVien> sinhVienList = SinhVienDAO.getList();
             if (sinhVienList == null || sinhVienList.isEmpty()) {
-                JOptionPane.showMessageDialog(importPanel, "Chưa có sinh viên trong hệ thống!");
+                JOptionPane.showMessageDialog(panel, "Chưa có sinh viên trong hệ thống!");
                 return false;
             }
         }
         if (this.type == 3) {
             List<LopHoc> lopHocList = LopHocDAO.getList();
             if (lopHocList == null || lopHocList.isEmpty()) {
-                JOptionPane.showMessageDialog(importPanel, "Chưa có lớp học trong hệ thống!");
+                JOptionPane.showMessageDialog(panel, "Chưa có lớp học trong hệ thống!");
                 return false;
             }
         }

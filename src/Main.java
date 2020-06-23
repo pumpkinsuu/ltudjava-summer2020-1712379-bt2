@@ -1,5 +1,7 @@
 import gui.LoginGUI;
 
+import javax.swing.*;
+
 /**
  * PACKAGE_NAME
  *
@@ -10,7 +12,17 @@ import gui.LoginGUI;
 public class Main {
     public static void main(String[] args) {
 
-        LoginGUI loginGUI = new LoginGUI();
+        try {
+            for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ignored) { }
+
+        JFrame frame = new JFrame("Đăng nhập");
+        LoginGUI loginGUI = new LoginGUI(frame);
         loginGUI.init();
     }
 }

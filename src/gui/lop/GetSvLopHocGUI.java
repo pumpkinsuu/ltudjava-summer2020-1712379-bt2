@@ -2,11 +2,12 @@ package gui.lop;
 
 import dbUtil.*;
 import gui.ListGUI;
-import gui.sv.EditDiemGUI;
+import gui.diem.UpdateDiemGUI;
 import pojo.LopHoc;
 import pojo.Mon;
 import pojo.SinhVien;
 import pojo.Tkb;
+import util.LayoutSwitch;
 import util.PopMenu;
 
 import javax.swing.*;
@@ -28,10 +29,13 @@ public class GetSvLopHocGUI {
     private JLabel lopLable;
     private JButton svBtn;
     private JButton lopBtn;
+    private JButton backBtn;
+    private final JPanel viewPanel;
     private final List<String> list;
     private final String type;
 
-    public GetSvLopHocGUI(String type) {
+    public GetSvLopHocGUI(JPanel viewPanel, String type) {
+        this.viewPanel = viewPanel;
         this.list = new ArrayList<>();
         this.type = type;
         this.svField.setComponentPopupMenu(PopMenu.getCP());
@@ -64,15 +68,18 @@ public class GetSvLopHocGUI {
             }
         });
         svBtn.addActionListener(e -> {
-            ListGUI listGUI = new ListGUI();
+            ListGUI listGUI = new ListGUI(this.viewPanel);
             listGUI.init("sv_all", null);
         });
         lopBtn.addActionListener(e -> {
-            ListGUI listGUI = new ListGUI();
+            ListGUI listGUI = new ListGUI(this.viewPanel);
             switch (this.type) {
                 case "addLopHoc" -> listGUI.init("tkb_all", null);
                 case "removeLopHoc", "updateDiem" -> listGUI.init("tkb_mon", null);
             }
+        });
+        backBtn.addActionListener(e -> {
+            LayoutSwitch.back(this.viewPanel, this.panel);
         });
     }
 
@@ -83,11 +90,7 @@ public class GetSvLopHocGUI {
             return;
         }
 
-        JFrame frame = new JFrame("Chọn sinh viên và lớp học");
-        frame.setContentPane(panel);
-        frame.pack();
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
+        LayoutSwitch.next(this.viewPanel, this.panel);
     }
 
     void initBox() {
@@ -166,7 +169,7 @@ public class GetSvLopHocGUI {
             return;
         }
 
-        EditDiemGUI editDiemGUI = new EditDiemGUI(lopHoc);
-        editDiemGUI.init();
+        UpdateDiemGUI updateDiemGUI = new UpdateDiemGUI(this.viewPanel, lopHoc);
+        updateDiemGUI.init();
     }
 }

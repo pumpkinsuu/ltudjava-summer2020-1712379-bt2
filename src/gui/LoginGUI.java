@@ -16,13 +16,18 @@ import javax.swing.*;
  * @Description
  */
 public class LoginGUI {
-    private JPanel loginPanel;
     private JTextField userField;
     private JButton loginButton;
     private JPasswordField passwordField;
-    private JFrame frame;
+    private JPanel panel;
+    private JButton closeBtn;
+    private final JFrame frame;
 
-    public LoginGUI() {
+    public LoginGUI(JFrame frame) {
+        this.frame = frame;
+        this.userField.setComponentPopupMenu(PopMenu.getCP());
+        this.passwordField.setComponentPopupMenu(PopMenu.getCP());
+
         loginButton.addActionListener(e -> {
             String username = this.userField.getText();
             if (username == null || username.isBlank()) {
@@ -41,38 +46,30 @@ public class LoginGUI {
 
             GiaoVu gv = GiaoVuDao.get(username);
             if (gv != null && gv.getPassword().equals(password)) {
-                this.frame.dispose();
-
-                MenuGvGUI menuGvGUI = new MenuGvGUI(username);
+                MenuGvGUI menuGvGUI = new MenuGvGUI(this.frame, username);
                 menuGvGUI.init();
-
                 return;
             }
             SinhVien sv = SinhVienDAO.get(username);
             if (sv != null && sv.getPassword().equals(password)) {
-                this.frame.dispose();
-
-                MenuSvGUI MenuSvGUI = new MenuSvGUI(sv);
-                MenuSvGUI.init();
-
+                MenuSvGUI menuSvGUI = new MenuSvGUI(this.frame, sv);
+                menuSvGUI.init();
                 return;
             }
 
-            JOptionPane.showMessageDialog(this.loginPanel, "Đăng nhập sai, xin vui lòng thử lại!");
+            JOptionPane.showMessageDialog(this.panel, "Đăng nhập sai, xin vui lòng thử lại!");
+        });
+        closeBtn.addActionListener(e -> {
+            this.frame.dispose();
         });
     }
 
     public void init() {
-        this.userField.setComponentPopupMenu(PopMenu.getCP());
-        this.passwordField.setComponentPopupMenu(PopMenu.getCP());
-
-        this.frame = new JFrame("Login");
-        this.frame.setContentPane(this.loginPanel);
+        this.frame.setTitle("Đăng nhập");
+        this.frame.setContentPane(this.panel);
         this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.frame.setSize(250,200);
+        this.frame.setSize(250, 250);
         this.frame.setLocationRelativeTo(null);
-        this.frame.setResizable(false);
         this.frame.setVisible(true);
     }
-
 }

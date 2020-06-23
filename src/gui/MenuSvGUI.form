@@ -257,22 +257,21 @@
               </scrollpane>
             </children>
           </grid>
-          <grid id="f6672" layout-manager="GridBagLayout">
+          <grid id="f6672" binding="accPanel" layout-manager="CardLayout" hgap="0" vgap="0">
             <constraints>
               <tabbedpane title="Tài khoản"/>
             </constraints>
             <properties/>
             <border type="none"/>
             <children>
-              <grid id="d1bb9" layout-manager="GridBagLayout">
+              <grid id="862cc" layout-manager="GridBagLayout">
                 <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
-                  <gridbag weightx="1.0" weighty="1.0"/>
+                  <card name="Card1"/>
                 </constraints>
                 <properties/>
                 <border type="none"/>
                 <children>
-                  <component id="b2376" class="javax.swing.JButton" binding="newPWsBtn">
+                  <component id="83bbb" class="javax.swing.JButton" binding="newPWsBtn">
                     <constraints>
                       <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                       <gridbag weightx="0.0" weighty="0.0"/>
@@ -281,7 +280,7 @@
                       <text value="Đổi mật khẩu"/>
                     </properties>
                   </component>
-                  <component id="c251" class="javax.swing.JButton" binding="logoutBtn">
+                  <component id="4c3e3" class="javax.swing.JButton" binding="logoutBtn">
                     <constraints>
                       <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                       <gridbag weightx="0.0" weighty="0.0"/>
@@ -296,18 +295,6 @@
           </grid>
         </children>
       </tabbedpane>
-      <hspacer id="5deb6">
-        <constraints>
-          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-          <gridbag weightx="0.0" weighty="0.0"/>
-        </constraints>
-      </hspacer>
-      <vspacer id="a9df6">
-        <constraints>
-          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
-          <gridbag weightx="0.0" weighty="0.0"/>
-        </constraints>
-      </vspacer>
     </children>
   </grid>
 </form>

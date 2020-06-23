@@ -4,9 +4,11 @@ import dbUtil.GiaoVuDao;
 import dbUtil.SinhVienDAO;
 import pojo.GiaoVu;
 import pojo.SinhVien;
+import util.LayoutSwitch;
 import util.PopMenu;
 
 import javax.swing.*;
+import java.util.Arrays;
 
 /**
  * gui
@@ -19,10 +21,13 @@ public class ChangePwGUI {
     private JPasswordField oldPWField;
     private JPasswordField newPWField;
     private JButton changeBtn;
-    private JPanel changePWPanel;
-    private JFrame frame;
+    private JPanel panel;
+    private JPasswordField curPWField;
+    private JButton backBtn;
+    private final JPanel viewPanel;
 
-    public ChangePwGUI(String username, boolean type) {
+    public ChangePwGUI(JPanel viewPanel, String username, boolean type) {
+        this.viewPanel = viewPanel;
 
         changeBtn.addActionListener(e -> {
             String oldPW = "";
@@ -41,6 +46,11 @@ public class ChangePwGUI {
                 return;
             }
 
+            if (!Arrays.equals(this.newPWField.getPassword(), this.curPWField.getPassword())) {
+                JOptionPane.showMessageDialog(this.oldPWField, "Mật khẩu mới không khớp!");
+                return;
+            }
+
             if (type) {
                 GiaoVu gv = GiaoVuDao.get(username);
 
@@ -48,6 +58,7 @@ public class ChangePwGUI {
                     JOptionPane.showMessageDialog(this.oldPWField, "Mật khẩu cũ không đúng!");
                     return;
                 }
+
                 gv.setPassword(newPW);
 
                 if (!GiaoVuDao.update(gv)) {
@@ -70,8 +81,11 @@ public class ChangePwGUI {
                 }
             }
 
-            JOptionPane.showMessageDialog(this.changePWPanel, "Đổi mật khẩu thành công!");
-            this.frame.dispose();
+            JOptionPane.showMessageDialog(this.panel, "Đổi mật khẩu thành công!");
+            LayoutSwitch.back(this.viewPanel, this.panel);
+        });
+        backBtn.addActionListener(e -> {
+            LayoutSwitch.back(this.viewPanel, this.panel);
         });
     }
 
@@ -79,11 +93,7 @@ public class ChangePwGUI {
         this.oldPWField.setComponentPopupMenu(PopMenu.getCP());
         this.newPWField.setComponentPopupMenu(PopMenu.getCP());
 
-        frame = new JFrame("Login");
-        frame.setContentPane(changePWPanel);
-        frame.pack();
-        frame.setResizable(false);
-        frame.setVisible(true);
+        LayoutSwitch.next(this.viewPanel, this.panel);
     }
 
 }
