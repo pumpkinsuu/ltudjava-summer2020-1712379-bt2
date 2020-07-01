@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="gui.lop.LopOptionPanel">
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="gui.OptionGUI">
   <grid id="27dc6" binding="panel" layout-manager="GridBagLayout">
     <constraints>
       <xy x="20" y="20" width="500" height="400"/>
@@ -7,52 +7,61 @@
     <properties/>
     <border type="none"/>
     <children>
-      <component id="2f9d" class="javax.swing.JButton" binding="listSvLopBtn">
+      <component id="37730" class="javax.swing.JButton" binding="importBtn">
+        <constraints>
+          <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <gridbag weightx="0.0" weighty="0.0"/>
+        </constraints>
+        <properties>
+          <text value="Import"/>
+        </properties>
+      </component>
+      <hspacer id="974a7">
+        <constraints>
+          <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <gridbag weightx="0.0" weighty="0.0"/>
+        </constraints>
+      </hspacer>
+      <vspacer id="3a917">
+        <constraints>
+          <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+          <gridbag weightx="0.0" weighty="0.0"/>
+        </constraints>
+      </vspacer>
+      <component id="313a6" class="javax.swing.JButton" binding="listBtn">
         <constraints>
           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
           <gridbag weightx="0.0" weighty="0.0"/>
         </constraints>
         <properties>
-          <text value="Xem danh sách lớp"/>
+          <text value="Xem danh sách"/>
         </properties>
       </component>
-      <hspacer id="d5316">
-        <constraints>
-          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-          <gridbag weightx="0.0" weighty="0.0"/>
-        </constraints>
-      </hspacer>
-      <vspacer id="ebc2b">
-        <constraints>
-          <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
-          <gridbag weightx="0.0" weighty="0.0"/>
-        </constraints>
-      </vspacer>
-      <component id="48e95" class="javax.swing.JButton" binding="listSvLopHocBtn">
+      <component id="fff92" class="javax.swing.JButton" binding="addBtn">
         <constraints>
           <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
           <gridbag weightx="0.0" weighty="0.0"/>
         </constraints>
         <properties>
-          <text value="Xem danh sách lớp học"/>
+          <text value="Thêm"/>
         </properties>
       </component>
-      <component id="e081e" class="javax.swing.JButton" binding="addLopHocBtn">
+      <component id="ec5a4" class="javax.swing.JButton" binding="updateBtn">
         <constraints>
           <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
           <gridbag weightx="0.0" weighty="0.0"/>
         </constraints>
         <properties>
-          <text value="Thêm sinh viên vào lớp học"/>
+          <text value="Cập nhật"/>
         </properties>
       </component>
-      <component id="385b2" class="javax.swing.JButton" binding="removeLopHocBtn">
+      <component id="2d1fc" class="javax.swing.JButton" binding="removeBtn">
         <constraints>
           <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
           <gridbag weightx="0.0" weighty="0.0"/>
         </constraints>
         <properties>
-          <text value="Xóa sinh viên khỏi lớp học"/>
+          <text value="Xóa"/>
         </properties>
       </component>
     </children>

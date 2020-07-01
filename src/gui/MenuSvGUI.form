@@ -17,14 +17,14 @@
         <properties/>
         <border type="none"/>
         <children>
-          <grid id="db2bb" layout-manager="GridBagLayout">
+          <grid id="db2bb" binding="svPanel" layout-manager="GridBagLayout">
             <constraints>
               <tabbedpane title="Thông tin sinh viên"/>
             </constraints>
             <properties/>
             <border type="none"/>
             <children>
-              <component id="4c1e6" class="javax.swing.JLabel">
+              <component id="9e685" class="javax.swing.JLabel">
                 <constraints>
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                   <gridbag weightx="0.0" weighty="0.0"/>
@@ -33,19 +33,19 @@
                   <text value="MSSV"/>
                 </properties>
               </component>
-              <hspacer id="22daa">
+              <hspacer id="f248b">
                 <constraints>
                   <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                   <gridbag weightx="0.0" weighty="0.0"/>
                 </constraints>
               </hspacer>
-              <vspacer id="f501e">
+              <vspacer id="8111c">
                 <constraints>
                   <grid row="10" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
                   <gridbag weightx="0.0" weighty="0.0"/>
                 </constraints>
               </vspacer>
-              <component id="fd7e4" class="javax.swing.JTextField" binding="mssvField">
+              <component id="25c76" class="javax.swing.JTextField" binding="mssvField">
                 <constraints>
                   <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                     <preferred-size width="150" height="-1"/>
@@ -56,7 +56,7 @@
                   <editable value="false"/>
                 </properties>
               </component>
-              <component id="af3c3" class="javax.swing.JLabel">
+              <component id="4b788" class="javax.swing.JLabel">
                 <constraints>
                   <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                   <gridbag weightx="0.0" weighty="0.0"/>
@@ -65,7 +65,7 @@
                   <text value="Họ và tên"/>
                 </properties>
               </component>
-              <component id="1e3b6" class="javax.swing.JTextField" binding="nameField">
+              <component id="c71ce" class="javax.swing.JTextField" binding="nameField">
                 <constraints>
                   <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                     <preferred-size width="150" height="-1"/>
@@ -76,7 +76,7 @@
                   <editable value="false"/>
                 </properties>
               </component>
-              <component id="d9a34" class="javax.swing.JLabel">
+              <component id="d3470" class="javax.swing.JLabel">
                 <constraints>
                   <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                   <gridbag weightx="0.0" weighty="0.0"/>
@@ -85,7 +85,7 @@
                   <text value="Giới tính"/>
                 </properties>
               </component>
-              <component id="470ce" class="javax.swing.JTextField" binding="gioiField">
+              <component id="7e603" class="javax.swing.JTextField" binding="gioiField">
                 <constraints>
                   <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                     <preferred-size width="150" height="-1"/>
@@ -97,7 +97,7 @@
                   <text value=""/>
                 </properties>
               </component>
-              <component id="40e37" class="javax.swing.JLabel">
+              <component id="b5bb8" class="javax.swing.JLabel">
                 <constraints>
                   <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                   <gridbag weightx="0.0" weighty="0.0"/>
@@ -106,7 +106,7 @@
                   <text value="CMND"/>
                 </properties>
               </component>
-              <component id="cda0e" class="javax.swing.JTextField" binding="cmndField">
+              <component id="4199c" class="javax.swing.JTextField" binding="cmndField">
                 <constraints>
                   <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                     <preferred-size width="150" height="-1"/>
@@ -117,7 +117,7 @@
                   <editable value="false"/>
                 </properties>
               </component>
-              <component id="95fb7" class="javax.swing.JLabel">
+              <component id="b8e81" class="javax.swing.JLabel">
                 <constraints>
                   <grid row="8" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                   <gridbag weightx="0.0" weighty="0.0"/>
@@ -126,7 +126,7 @@
                   <text value="Lớp"/>
                 </properties>
               </component>
-              <component id="5b192" class="javax.swing.JTextField" binding="lopField">
+              <component id="4a5a8" class="javax.swing.JTextField" binding="lopField">
                 <constraints>
                   <grid row="9" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                     <preferred-size width="150" height="-1"/>
@@ -139,118 +139,102 @@
               </component>
             </children>
           </grid>
-          <grid id="dc3e9" layout-manager="BorderLayout" hgap="0" vgap="0">
+          <grid id="dc3e9" layout-manager="GridBagLayout">
             <constraints>
               <tabbedpane title="Thời khóa biểu"/>
             </constraints>
             <properties/>
             <border type="none"/>
             <children>
-              <grid id="6ab60" layout-manager="GridBagLayout">
-                <constraints border-constraint="North"/>
-                <properties/>
-                <border type="none"/>
-                <children>
-                  <component id="ec61c" class="javax.swing.JLabel" binding="tkbLable">
-                    <constraints>
-                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                      <gridbag weightx="0.0" weighty="0.0"/>
-                    </constraints>
-                    <properties>
-                      <text value="Chưa đăng ký  lớp học!"/>
-                    </properties>
-                  </component>
-                  <vspacer id="445c3">
-                    <constraints>
-                      <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
-                      <gridbag weightx="0.0" weighty="0.0"/>
-                    </constraints>
-                  </vspacer>
-                  <component id="71072" class="javax.swing.JTextField" binding="searchTkbField">
-                    <constraints>
-                      <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                        <preferred-size width="150" height="-1"/>
-                      </grid>
-                      <gridbag weightx="0.0" weighty="0.0"/>
-                    </constraints>
-                    <properties>
-                      <minimumSize width="100" height="25"/>
-                      <preferredSize width="150" height="25"/>
-                      <visible value="false"/>
-                    </properties>
-                  </component>
-                </children>
-              </grid>
-              <scrollpane id="1e57" binding="tkbPanel">
-                <constraints border-constraint="Center"/>
+              <vspacer id="16ed3">
+                <constraints>
+                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+                  <gridbag weightx="0.0" weighty="0.0"/>
+                </constraints>
+              </vspacer>
+              <scrollpane id="79d15" binding="tkbPanel">
+                <constraints>
+                  <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                  <gridbag weightx="0.0" weighty="0.0"/>
+                </constraints>
                 <properties>
                   <visible value="false"/>
                 </properties>
                 <border type="none"/>
                 <children>
-                  <component id="673f3" class="javax.swing.JTable" binding="tkbTable">
+                  <component id="3b45b" class="javax.swing.JTable" binding="tkbTab">
                     <constraints/>
-                    <properties>
-                      <visible value="true"/>
-                    </properties>
+                    <properties/>
                   </component>
                 </children>
               </scrollpane>
+              <grid id="20818" layout-manager="BorderLayout" hgap="0" vgap="0">
+                <constraints>
+                  <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                  <gridbag weightx="0.0" weighty="0.0"/>
+                </constraints>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <component id="9b149" class="javax.swing.JLabel" binding="tkbLabel">
+                    <constraints border-constraint="West"/>
+                    <properties>
+                      <text value="Chưa đăng ký!"/>
+                    </properties>
+                  </component>
+                  <component id="9f4aa" class="javax.swing.JTextField" binding="tkbField">
+                    <constraints border-constraint="Center"/>
+                    <properties>
+                      <visible value="false"/>
+                    </properties>
+                  </component>
+                </children>
+              </grid>
             </children>
           </grid>
-          <grid id="c352e" layout-manager="BorderLayout" hgap="0" vgap="0">
+          <grid id="c352e" layout-manager="GridBagLayout">
             <constraints>
               <tabbedpane title="Điểm"/>
             </constraints>
             <properties/>
             <border type="none"/>
             <children>
-              <grid id="e43e7" layout-manager="GridBagLayout">
-                <constraints border-constraint="North"/>
+              <grid id="8c60e" layout-manager="BorderLayout" hgap="0" vgap="0">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                  <gridbag weightx="0.0" weighty="0.0"/>
+                </constraints>
                 <properties/>
                 <border type="none"/>
                 <children>
-                  <component id="a207d" class="javax.swing.JLabel" binding="diemLabel">
-                    <constraints>
-                      <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                      <gridbag weightx="0.0" weighty="0.0"/>
-                    </constraints>
+                  <component id="53ba2" class="javax.swing.JLabel" binding="diemLabel">
+                    <constraints border-constraint="West"/>
                     <properties>
-                      <text value="Chưa có điểm"/>
+                      <text value="Chưa có điểm!"/>
                     </properties>
                   </component>
-                  <vspacer id="63074">
-                    <constraints>
-                      <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
-                      <gridbag weightx="0.0" weighty="0.0"/>
-                    </constraints>
-                  </vspacer>
-                  <component id="111bc" class="javax.swing.JTextField" binding="searchDiemField">
-                    <constraints>
-                      <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                        <preferred-size width="150" height="-1"/>
-                      </grid>
-                      <gridbag weightx="0.0" weighty="0.0"/>
-                    </constraints>
+                  <component id="da360" class="javax.swing.JTextField" binding="diemField">
+                    <constraints border-constraint="Center"/>
                     <properties>
-                      <minimumSize width="100" height="25"/>
-                      <preferredSize width="150" height="25"/>
                       <visible value="false"/>
                     </properties>
                   </component>
                 </children>
               </grid>
-              <scrollpane id="90213" binding="diemPanel">
-                <constraints border-constraint="Center"/>
+              <scrollpane id="c4697" binding="diemPanel">
+                <constraints>
+                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                  <gridbag weightx="0.0" weighty="0.0"/>
+                </constraints>
                 <properties>
                   <visible value="false"/>
                 </properties>
                 <border type="none"/>
                 <children>
-                  <component id="80171" class="javax.swing.JTable" binding="diemTable">
+                  <component id="3d0d3" class="javax.swing.JTable" binding="diemTab">
                     <constraints/>
                     <properties>
-                      <visible value="true"/>
+                      <visible value="false"/>
                     </properties>
                   </component>
                 </children>

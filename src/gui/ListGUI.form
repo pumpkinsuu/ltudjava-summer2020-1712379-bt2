@@ -7,38 +7,6 @@
     <properties/>
     <border type="none"/>
     <children>
-      <hspacer id="bfe26">
-        <constraints>
-          <grid row="2" column="3" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-          <gridbag weightx="0.0" weighty="0.0"/>
-        </constraints>
-      </hspacer>
-      <vspacer id="2ad30">
-        <constraints>
-          <grid row="3" column="0" row-span="1" col-span="3" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
-          <gridbag weightx="0.0" weighty="0.0"/>
-        </constraints>
-      </vspacer>
-      <component id="cd825" class="javax.swing.JLabel">
-        <constraints>
-          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-          <gridbag weightx="0.0" weighty="0.0"/>
-        </constraints>
-        <properties>
-          <text value="Tra cứu "/>
-        </properties>
-      </component>
-      <component id="ac504" class="javax.swing.JTextField" binding="textField">
-        <constraints>
-          <grid row="0" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-            <preferred-size width="150" height="-1"/>
-          </grid>
-          <gridbag weightx="0.0" weighty="0.0"/>
-        </constraints>
-        <properties>
-          <text value=""/>
-        </properties>
-      </component>
       <scrollpane id="f6fe9">
         <constraints>
           <grid row="1" column="1" row-span="1" col-span="2" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
@@ -55,25 +23,63 @@
           </component>
         </children>
       </scrollpane>
-      <component id="79e47" class="javax.swing.JButton" binding="tkBtn">
+      <grid id="3257a" layout-manager="BorderLayout" hgap="0" vgap="0">
         <constraints>
-          <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <gridbag weightx="0.0" weighty="0.0"/>
+        </constraints>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="cd825" class="javax.swing.JLabel">
+            <constraints border-constraint="West"/>
+            <properties>
+              <text value="Tra cứu "/>
+            </properties>
+          </component>
+          <component id="ac504" class="javax.swing.JTextField" binding="textField">
+            <constraints border-constraint="Center"/>
+            <properties>
+              <text value=""/>
+            </properties>
+          </component>
+          <component id="57f90" class="javax.swing.JComboBox" binding="lopBox">
+            <constraints border-constraint="East"/>
+            <properties/>
+          </component>
+        </children>
+      </grid>
+      <component id="ab5d0" class="javax.swing.JButton" binding="button">
+        <constraints>
+          <grid row="3" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
           <gridbag weightx="0.0" weighty="0.0"/>
         </constraints>
         <properties>
-          <text value="Thống kê"/>
+          <text value="Cập nhật"/>
           <visible value="false"/>
         </properties>
       </component>
-      <component id="26ff" class="javax.swing.JButton" binding="backBtn">
+      <component id="470ee" class="javax.swing.JButton" binding="backBtn">
         <constraints>
-          <grid row="4" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="5" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
           <gridbag weightx="0.0" weighty="0.0"/>
         </constraints>
         <properties>
           <text value="Quay lại"/>
         </properties>
       </component>
+      <vspacer id="6ff76">
+        <constraints>
+          <grid row="4" column="2" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+          <gridbag weightx="0.0" weighty="0.0"/>
+        </constraints>
+      </vspacer>
+      <vspacer id="a77a8">
+        <constraints>
+          <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+          <gridbag weightx="0.0" weighty="0.0"/>
+        </constraints>
+      </vspacer>
     </children>
   </grid>
 </form>

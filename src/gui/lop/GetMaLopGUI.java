@@ -28,18 +28,33 @@ public class GetMaLopGUI {
     private JButton backBtn;
     private final JPanel viewPanel;
     private final List<String> list;
-    private final String type;
 
-    public GetMaLopGUI(JPanel viewPanel, String type) {
+    public GetMaLopGUI(JPanel viewPanel) {
         this.viewPanel = viewPanel;
         this.list = new ArrayList<>();
-        this.type = type;
         this.textField.setComponentPopupMenu(PopMenu.getCP());
 
         selectBox.addActionListener(e -> {
             if (Objects.requireNonNull(this.selectBox.getSelectedItem()).toString() != null)
                 this.textField.setText(this.selectBox.getSelectedItem().toString());
         });
+        backBtn.addActionListener(e -> {
+            LayoutSwitch.back(this.viewPanel, this.panel);
+        });
+    }
+
+    public void init(String type, int mode) {
+        List<Tkb> tkbs = TkbDAO.getList();
+        for (Tkb tkb : tkbs) {
+            this.selectBox.addItem(tkb.getMaTkb());
+            this.list.add(tkb.getMaTkb());
+        }
+
+        if (this.list.isEmpty()) {
+            JOptionPane.showMessageDialog(this.panel, "Không có danh sách!");
+            return;
+        }
+
         getBtn.addActionListener(e -> {
             if (this.textField.getText() == null) {
                 JOptionPane.showMessageDialog(this.textField, "Nhập mã lớp!");
@@ -50,68 +65,15 @@ public class GetMaLopGUI {
                 return;
             }
 
-            switch (this.type) {
-                case "sv_lop" -> this.getSvLop();
-                case "sv_lopHoc" -> this.getSvlopHoc();
-                case "tkb_lop" -> this.getTkbLop();
-                case "diem_lop" -> this.getDiemLop();
+            switch (type) {
+                case "add_lop", "add_diem" -> {}
+                default -> {
+                    ListGUI listGUI = new ListGUI(this.viewPanel);
+                    listGUI.init(type, this.textField.getText(), mode);
+                }
             }
         });
-        backBtn.addActionListener(e -> {
-            LayoutSwitch.back(this.viewPanel, this.panel);
-        });
-    }
-
-    public void init() {
-        this.initBox();
-        if (this.list.isEmpty()) {
-            JOptionPane.showMessageDialog(this.panel, "Không có danh sách!");
-            return;
-        }
 
         LayoutSwitch.next(this.viewPanel, this.panel);
-    }
-
-    void initBox() {
-        switch (this.type) {
-            case "sv_lop", "tkb_lop" -> this.initLop();
-            case "sv_lopHoc", "diem_lop" -> this.initLopHoc();
-        }
-    }
-
-    void initLop() {
-        List<Lop> lops = LopDAO.getList();
-        for (Lop lop : lops) {
-            this.selectBox.addItem(lop.getMaLop());
-            this.list.add(lop.getMaLop());
-        }
-    }
-
-    void initLopHoc() {
-        List<Tkb> tkbs = TkbDAO.getList();
-        for (Tkb tkb : tkbs) {
-            this.selectBox.addItem(tkb.getMaTkb());
-            this.list.add(tkb.getMaTkb());
-        }
-    }
-
-    void getSvLop() {
-        ListGUI listGUI = new ListGUI(this.viewPanel);
-        listGUI.init("sv_lop", this.textField.getText());
-    }
-
-    void getSvlopHoc() {
-        ListGUI listGUI = new ListGUI(this.viewPanel);
-        listGUI.init("sv_lopHoc", this.textField.getText());
-    }
-
-    void getTkbLop() {
-        ListGUI listGUI = new ListGUI(this.viewPanel);
-        listGUI.init("tkb_lop", this.textField.getText());
-    }
-
-    void getDiemLop() {
-        ListGUI listGUI = new ListGUI(this.viewPanel);
-        listGUI.init("diem_lop", this.textField.getText());
     }
 }

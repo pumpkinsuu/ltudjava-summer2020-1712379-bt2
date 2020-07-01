@@ -4,6 +4,7 @@ import dbUtil.GiaoVuDao;
 import dbUtil.SinhVienDAO;
 import pojo.GiaoVu;
 import pojo.SinhVien;
+import util.OptionMsg;
 import util.PopMenu;
 
 import javax.swing.*;
@@ -31,7 +32,7 @@ public class LoginGUI {
         loginButton.addActionListener(e -> {
             String username = this.userField.getText();
             if (username == null || username.isBlank()) {
-                JOptionPane.showMessageDialog(this.userField, "Nhập username!");
+                OptionMsg.warnMsg(this.userField, "Nhập username!");
                 return;
             }
 
@@ -40,7 +41,7 @@ public class LoginGUI {
                 password = String.valueOf(this.passwordField.getPassword());
 
             if (password.isBlank()) {
-                JOptionPane.showMessageDialog(this.passwordField, "Nhập password!");
+                OptionMsg.warnMsg(this.passwordField, "Nhập password!");
                 return;
             }
 
@@ -57,7 +58,7 @@ public class LoginGUI {
                 return;
             }
 
-            JOptionPane.showMessageDialog(this.panel, "Đăng nhập sai, xin vui lòng thử lại!");
+            OptionMsg.warnMsg(this.panel, "Đăng nhập sai, xin vui lòng thử lại!");
         });
         closeBtn.addActionListener(e -> {
             this.frame.dispose();

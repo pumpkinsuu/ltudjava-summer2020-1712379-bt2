@@ -1,12 +1,28 @@
 package gui;
 
+import dbUtil.LopDAO;
 import dbUtil.LopHocDAO;
+import dbUtil.SinhVienDAO;
+import dbUtil.TkbDAO;
+import gui.diem.TableListDiem;
+import gui.sv.TableListSv;
+import gui.tkb.TableListTkb;
+import pojo.Lop;
 import pojo.LopHoc;
+import pojo.SinhVien;
+import pojo.Tkb;
 import util.LayoutSwitch;
-import util.TableList;
+import util.MouseAction;
+import util.PopMenu;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * gui
@@ -19,46 +35,64 @@ public class ListGUI {
     private JTextField textField;
     private JPanel panel;
     private JTable table;
-    private JButton tkBtn;
     private JButton backBtn;
+    private JButton button;
+    private JComboBox<String> lopBox;
     private final JPanel viewPanel;
+    private TableRowSorter<TableModel> tableRowSorter;
 
     public ListGUI(JPanel viewPanel) {
         this.viewPanel = viewPanel;
 
-        backBtn.addActionListener(e -> {
-            LayoutSwitch.back(this.viewPanel, this.panel);
-        });
+        backBtn.addActionListener(e -> LayoutSwitch.back(this.viewPanel, this.panel));
+        table.setToolTipText("Sao chép");
+        table.addMouseListener(MouseAction.getMouseCP(table));
+        textField.setComponentPopupMenu(PopMenu.getCP());
     }
 
-    public void init(String type, String id) {
-        boolean flag = false;
-        String title = "";
+    public void init(String type, String id, int mode) {
+        List<Lop> lops = LopDAO.getList();
+        if (lops.isEmpty()) {
+            JOptionPane.showMessageDialog(this.panel, "Danh sách rỗng!");
+            return;
+        }
 
+        this.lopBox.addItem("Tất cả");
+        for (Lop lop : lops)
+            this.lopBox.addItem(lop.getMaLop());
+
+        boolean flag = false;
         switch (type) {
-            case "sv_all", "sv_lop", "sv_lopHoc" -> {
-                flag = TableList.setSvTab(this.table, this.textField, type, id);
-                title = "Danh sách sinh viên";
+            case "lop" -> {
+                List<LopHoc> lopHocList = TkbDAO.get(id).getLopHoc();
+                List<SinhVien> list = new ArrayList<>();
+                for (LopHoc lopHoc : lopHocList)
+                    list.add(lopHoc.getSinhVien());
+
+                flag = setTabSv(list, mode);
             }
-            case "tkb_mon", "tkb_all", "tkb_lop" -> {
-                flag = TableList.setTkbTab(this.table, this.textField, type, id);
-                title = "Thời khóa biểu";
+            case "sv" -> {
+                List<SinhVien> list = SinhVienDAO.getList();
+                flag = setTabSv(list, mode);
             }
-            case "diem_lop" -> {
-                flag = this.setDiemLopGUI(type, id);
-                title = "Danh sách điểm";
+            case "tkb" -> {
+                List<Tkb> list = TkbDAO.getList();
+                flag = setTabTkb(list, mode);
+            }
+            case "diem" -> {
+                this.lopBox.setVisible(false);
+                flag = setDiemLopGUI(id, mode);
             }
         }
 
         if (!flag) {
-            JOptionPane.showMessageDialog(this.viewPanel, "Danh sách rỗng!");
+            JOptionPane.showMessageDialog(this.panel, "Danh sách rỗng!");
             return;
         }
-
         LayoutSwitch.next(this.viewPanel, this.panel);
     }
 
-    boolean setDiemLopGUI(String type, String id) {
+    boolean setDiemLopGUI(String id, int mode) {
         String hql = "from LopHoc lopHoc where lopHoc.maTkb = '" + id + "'";
 
         List<LopHoc> list = LopHocDAO.getAll(hql);
@@ -69,21 +103,60 @@ public class ListGUI {
         if (list.isEmpty())
             return false;
 
-        int count = 0;
-        int sum = list.size();
-        for (LopHoc lh : list) {
-            if (lh.getDiem().getDiemTong() >= 5 && lh.getDiem().getDiemTong() >= 3)
-                ++count;
+
+        TableListDiem.setTab(this.table, this.button, list, mode);
+        this.setTabFilter();
+        return true;
+    }
+
+    boolean setTabSv(List<SinhVien> list, int mode) {
+        if (!list.isEmpty()) {
+            TableListSv.setTab(this.table, this.button, list, mode);
+            this.setTabFilter();
+            return true;
         }
-        String tk = "Tổng: " + sum + '\n'
-                + "Đậu: " + count + "(" + String.format("%d",(count * 100 / sum)) + "%)\n"
-                + "Rớt: " + (sum - count) + "(" + String.format("%d",((sum - count) * 100 / sum)) + "%)";
+        return false;
+    }
 
-        this.tkBtn.setVisible(true);
-        this.tkBtn.addActionListener(e -> {
-            JOptionPane.showMessageDialog(tkBtn, tk);
+    boolean setTabTkb(List<Tkb> list, int mode) {
+        if (!list.isEmpty()) {
+            TableListTkb.setTab(this.table, this.button, list, mode);
+            this.setTabFilter();
+            return true;
+        }
+        return false;
+    }
+
+    void setTabFilter() {
+        this.tableRowSorter = new TableRowSorter<>(this.table.getModel());
+        this.table.setRowSorter(this.tableRowSorter);
+        textField.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                search();
+            }
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                search();
+            }
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                search();
+            }
         });
+        lopBox.addActionListener(e -> search());
+    }
 
-        return TableList.setDiemTab(this.table, this.textField, list);
+    void search() {
+        String lop = Objects.requireNonNull(lopBox.getSelectedItem()).toString();
+        if (lop.equals("Tất cả")) lop = ".";
+        String text = textField.getText();
+        text = (text == null || text.isBlank()) ? "." : "(?i)" + text;
+
+        List<RowFilter<Object, Object>> filters = new ArrayList<>();
+        filters.add(RowFilter.regexFilter(lop));
+        filters.add(RowFilter.regexFilter(text));
+
+        tableRowSorter.setRowFilter(RowFilter.andFilter(filters));
     }
 }

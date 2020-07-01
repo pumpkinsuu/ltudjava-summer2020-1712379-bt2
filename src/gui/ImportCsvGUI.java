@@ -25,9 +25,9 @@ public class ImportCsvGUI {
     private JPanel panel;
     private JButton closeBtn;
     private final JPanel viewPanel;
-    private final int type;
+    private final String type;
 
-    public ImportCsvGUI(JPanel viewPanel, int type) {
+    public ImportCsvGUI(JPanel viewPanel, String type) {
         this.viewPanel = viewPanel;
         this.type = type;
 
@@ -46,10 +46,10 @@ public class ImportCsvGUI {
 
             boolean flag = false;
             switch (this.type) {
-                case 0 -> flag = ImportCsv.importSv(file);
-                case 1 -> flag = ImportCsv.importMon(file);
-                case 2 -> flag = ImportCsv.importLopHoc(file);
-                case 3 -> flag = ImportCsv.importDiem(file);
+                case "sv" -> flag = ImportCsv.importSv(file);
+                case "tkb" -> flag = ImportCsv.importMon(file);
+                case "lop" -> flag = ImportCsv.importLopHoc(file);
+                case "diem" -> flag = ImportCsv.importDiem(file);
             }
 
             if (flag)
@@ -66,7 +66,7 @@ public class ImportCsvGUI {
     }
 
     boolean check() {
-        if (this.type == 2) {
+        if (this.type.equals("lop")) {
             List<Tkb> tkbList = TkbDAO.getList();
             if (tkbList == null || tkbList.isEmpty()) {
                 JOptionPane.showMessageDialog(panel, "Chưa có thời khóa biểu trong hệ thống!");
@@ -78,7 +78,7 @@ public class ImportCsvGUI {
                 return false;
             }
         }
-        if (this.type == 3) {
+        if (this.type.equals("diem")) {
             List<LopHoc> lopHocList = LopHocDAO.getList();
             if (lopHocList == null || lopHocList.isEmpty()) {
                 JOptionPane.showMessageDialog(panel, "Chưa có lớp học trong hệ thống!");

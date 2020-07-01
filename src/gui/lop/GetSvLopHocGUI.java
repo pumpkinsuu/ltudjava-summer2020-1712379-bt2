@@ -69,13 +69,13 @@ public class GetSvLopHocGUI {
         });
         svBtn.addActionListener(e -> {
             ListGUI listGUI = new ListGUI(this.viewPanel);
-            listGUI.init("sv_all", null);
+            listGUI.init("sv_all", null, 0);
         });
         lopBtn.addActionListener(e -> {
             ListGUI listGUI = new ListGUI(this.viewPanel);
             switch (this.type) {
-                case "addLopHoc" -> listGUI.init("tkb_all", null);
-                case "removeLopHoc", "updateDiem" -> listGUI.init("tkb_mon", null);
+                case "addLopHoc" -> listGUI.init("tkb_all", null, 0);
+                case "removeLopHoc", "updateDiem" -> listGUI.init("tkb_mon", null, 0);
             }
         });
         backBtn.addActionListener(e -> {

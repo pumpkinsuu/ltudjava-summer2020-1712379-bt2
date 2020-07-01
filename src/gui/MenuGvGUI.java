@@ -1,10 +1,5 @@
 package gui;
 
-import gui.diem.DiemOptionGUI;
-import gui.lop.LopOptionPanel;
-import gui.sv.SvOptionGUI;
-import gui.tkb.TkbOptionGUI;
-
 import javax.swing.*;
 
 /**
@@ -41,14 +36,14 @@ public class MenuGvGUI {
     }
 
     public void init() {
-        SvOptionGUI svOptionGUI = new SvOptionGUI(this.svPanel);
-        svOptionGUI.init();
-        TkbOptionGUI tkbOptionGUI = new TkbOptionGUI(this.tkbPanel);
-        tkbOptionGUI.init();
-        LopOptionPanel lopOptionPanel = new LopOptionPanel(this.lopPanel);
-        lopOptionPanel.init();
-        DiemOptionGUI diemOptionGUI = new DiemOptionGUI(this.diemPanel);
-        diemOptionGUI.init();
+        OptionGUI svOption = new OptionGUI(this.svPanel, "sv");
+        svOption.init();
+        OptionGUI tkbOption = new OptionGUI(this.tkbPanel, "tkb");
+        tkbOption.init();
+        OptionGUI lopOption = new OptionGUI(this.lopPanel, "lop");
+        lopOption.init();
+        OptionGUI diemOption = new OptionGUI(this.diemPanel, "diem");
+        diemOption.init();
 
         this.frame.setTitle("Quản lý sinh viên");
         this.frame.setContentPane(panel);
