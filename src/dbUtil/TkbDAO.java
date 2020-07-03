@@ -22,18 +22,13 @@ public class TkbDAO {
 
     public static Tkb get(String maTkb) {
         Tkb tkb = null;
-        try {
-            Session session = HibernateUtil.getSessionFactory()
-                    .getCurrentSession();
-
-            session.beginTransaction();
+        try(Session session = HibernateUtil.getSession()) {
             tkb = session.get(Tkb.class, maTkb);
             Hibernate.initialize(tkb.getMon());
             Hibernate.initialize(tkb.getLopHoc());
-            session.getTransaction().commit();
 
         } catch (Exception ex) {
-            System.err.println(ex.getMessage());
+            System.err.println(Tkb.class + " DAO: " + ex.getMessage());
         }
         return tkb;
     }

@@ -20,42 +20,35 @@ public class DiemDAO {
     }
 
     public static Diem get(String maDiem) {
-        Diem Diem = null;
-        try {
-            Session session = HibernateUtil.getSessionFactory()
-                    .getCurrentSession();
-
-            if (!session.getTransaction().isActive())
-                session.beginTransaction();
-
-            Diem = session.get(Diem.class, maDiem);
-            session.getTransaction().commit();
+        Diem diem = null;
+        try (Session session = HibernateUtil.getSession()) {
+            diem = session.get(Diem.class, maDiem);
 
         } catch (Exception ex) {
-            System.err.println(ex.getMessage());
+            System.err.println(Diem.class + " DAO: " + ex.getMessage());
         }
-        return Diem;
+        return diem;
     }
 
-    public static boolean add(Diem Diem) {
-        if (DiemDAO.get(Diem.getMaLopHoc()) != null)
+    public static boolean add(Diem diem) {
+        if (DiemDAO.get(diem.getMaLopHoc()) != null)
             return false;
 
-        return QLSinhVienDAO.add(Diem);
+        return QLSinhVienDAO.add(diem);
     }
 
-    public static boolean update(Diem Diem) {
-        if (DiemDAO.get(Diem.getMaLopHoc()) == null)
+    public static boolean update(Diem diem) {
+        if (DiemDAO.get(diem.getMaLopHoc()) == null)
             return false;
 
-        return QLSinhVienDAO.update(Diem);
+        return QLSinhVienDAO.update(diem);
     }
 
     public static boolean remove(String maDiem) {
-        Diem Diem = DiemDAO.get(maDiem);
-        if (Diem == null)
+        Diem diem = DiemDAO.get(maDiem);
+        if (diem == null)
             return false;
 
-        return QLSinhVienDAO.remove(Diem);
+        return QLSinhVienDAO.remove(diem);
     }
 }

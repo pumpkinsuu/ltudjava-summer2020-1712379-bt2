@@ -5,6 +5,7 @@ import dbUtil.SinhVienDAO;
 import pojo.Lop;
 import pojo.SinhVien;
 import util.LayoutSwitch;
+import util.OptionMsg;
 
 import javax.swing.*;
 import java.util.List;
@@ -32,25 +33,29 @@ public class AddSvGUI {
     public AddSvGUI(JPanel viewPanel) {
         this.viewPanel = viewPanel;
 
-        addBtn.addActionListener(e -> {
+        this.addBtn.addActionListener(e -> {
             if (this.mssvField.getText() == null || this.mssvField.getText().isBlank()) {
-                JOptionPane.showMessageDialog(this.mssvField, "Nhập MSSV!");
+                OptionMsg.infoMsg(this.panel, "Nhập MSSV!");
+                return;
+            }
+            if (SinhVienDAO.get(this.mssvField.getText()) != null) {
+                OptionMsg.infoMsg(this.panel, "Mã số sinh viên đã tồn tại!");
                 return;
             }
             if (this.nameField.getText() == null || this.nameField.getText().isBlank()) {
-                JOptionPane.showMessageDialog(this.nameField, "Nhập họ và !");
+                OptionMsg.infoMsg(this.panel, "Nhập họ và tên!");
                 return;
             }
             if (this.cmndField.getText() == null || this.cmndField.getText().isBlank()) {
-                JOptionPane.showMessageDialog(this.cmndField, "Nhập CMND!");
+                OptionMsg.infoMsg(this.panel, "Nhập CMND!");
                 return;
             }
             if (!this.mRadioBtn.isSelected() && !this.fRadioBtn.isSelected()) {
-                JOptionPane.showMessageDialog(this.mRadioBtn, "Chọn nam hoặc nữ!");
+                OptionMsg.infoMsg(this.panel, "Chọn nam hoặc nữ!");
                 return;
             }
             if (this.lopBox.getSelectedItem() == null) {
-                JOptionPane.showMessageDialog(this.lopBox, "Chọn lớp!");
+                OptionMsg.infoMsg(this.panel, "Chọn lớp!");
                 return;
             }
 
@@ -62,15 +67,9 @@ public class AddSvGUI {
             sv.setMaLop(Objects.requireNonNull(this.lopBox.getSelectedItem()).toString());
             sv.setPassword(this.cmndField.getText());
 
-            if (SinhVienDAO.add(sv)) {
-                JOptionPane.showMessageDialog(this.panel, "Thêm thành công!");
-                LayoutSwitch.back(this.viewPanel, this.panel);
-                return;
-            }
-
-            JOptionPane.showMessageDialog(this.panel, "Thêm thất bại!");
+            OptionMsg.checkMsg(this.panel, "Thêm", SinhVienDAO.add(sv));
         });
-        backBtn.addActionListener(e -> {
+        this.backBtn.addActionListener(e -> {
             LayoutSwitch.back(this.viewPanel, this.panel);
         });
     }
@@ -80,7 +79,7 @@ public class AddSvGUI {
         LayoutSwitch.next(this.viewPanel, this.panel);
     }
 
-    void createLopBox() {
+    private void createLopBox() {
         List<Lop> lopList = LopDAO.getList();
         for (Lop lop : lopList)
             this.lopBox.addItem(lop.getMaLop());

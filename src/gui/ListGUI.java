@@ -13,6 +13,7 @@ import pojo.SinhVien;
 import pojo.Tkb;
 import util.LayoutSwitch;
 import util.MouseAction;
+import util.OptionMsg;
 import util.PopMenu;
 
 import javax.swing.*;
@@ -44,16 +45,17 @@ public class ListGUI {
     public ListGUI(JPanel viewPanel) {
         this.viewPanel = viewPanel;
 
-        backBtn.addActionListener(e -> LayoutSwitch.back(this.viewPanel, this.panel));
-        table.setToolTipText("Sao chép");
-        table.addMouseListener(MouseAction.getMouseCP(table));
-        textField.setComponentPopupMenu(PopMenu.getCP());
+        this.table.setToolTipText("Sao chép");
+        this.table.addMouseListener(MouseAction.getMouseCP(table));
+        this.textField.setComponentPopupMenu(PopMenu.getCP());
+
+        this.backBtn.addActionListener(e -> LayoutSwitch.back(this.viewPanel, this.panel));
     }
 
     public void init(String type, String id, int mode) {
         List<Lop> lops = LopDAO.getList();
         if (lops.isEmpty()) {
-            JOptionPane.showMessageDialog(this.panel, "Danh sách rỗng!");
+            OptionMsg.infoMsg(this.panel, "Danh sách rỗng!");
             return;
         }
 
@@ -63,14 +65,6 @@ public class ListGUI {
 
         boolean flag = false;
         switch (type) {
-            case "lop" -> {
-                List<LopHoc> lopHocList = TkbDAO.get(id).getLopHoc();
-                List<SinhVien> list = new ArrayList<>();
-                for (LopHoc lopHoc : lopHocList)
-                    list.add(lopHoc.getSinhVien());
-
-                flag = setTabSv(list, mode);
-            }
             case "sv" -> {
                 List<SinhVien> list = SinhVienDAO.getList();
                 flag = setTabSv(list, mode);
@@ -79,37 +73,55 @@ public class ListGUI {
                 List<Tkb> list = TkbDAO.getList();
                 flag = setTabTkb(list, mode);
             }
+            case "lop" -> {
+                List<LopHoc> lopHocList = TkbDAO.get(id).getLopHoc();
+                List<SinhVien> list = new ArrayList<>();
+                for (LopHoc lopHoc : lopHocList)
+                    list.add(lopHoc.getSinhVien());
+
+                flag = setTabSv(list, mode);
+            }
             case "diem" -> {
                 this.lopBox.setVisible(false);
-                flag = setDiemLopGUI(id, mode);
+                flag = setTabDiem(id, mode);
+            }
+            case "get_sv" -> {
+                List<SinhVien> list = SinhVienDAO.getList();
+                flag = setTabSv(list, mode);
+                if (flag)
+                    this.setGetSvBtn(id);
+            }
+            case "get_lop" -> {
+                List<Tkb> list = TkbDAO.getList();
+                flag = setTabTkb(list, mode);
+                if (flag)
+                    this.setGetTkbBtn(id, mode);
             }
         }
 
         if (!flag) {
-            JOptionPane.showMessageDialog(this.panel, "Danh sách rỗng!");
+            OptionMsg.infoMsg(this.panel, "Danh sách rỗng!");
             return;
         }
         LayoutSwitch.next(this.viewPanel, this.panel);
     }
 
-    boolean setDiemLopGUI(String id, int mode) {
+    private boolean setTabDiem(String id, int mode) {
         String hql = "from LopHoc lopHoc where lopHoc.maTkb = '" + id + "'";
-
         List<LopHoc> list = LopHocDAO.getAll(hql);
         if (list == null)
             return false;
 
-        list.removeIf(lh -> lh.getDiem() == null);
+        list.removeIf(e -> e.getDiem() == null);
         if (list.isEmpty())
             return false;
-
 
         TableListDiem.setTab(this.table, this.button, list, mode);
         this.setTabFilter();
         return true;
     }
 
-    boolean setTabSv(List<SinhVien> list, int mode) {
+    private boolean setTabSv(List<SinhVien> list, int mode) {
         if (!list.isEmpty()) {
             TableListSv.setTab(this.table, this.button, list, mode);
             this.setTabFilter();
@@ -118,7 +130,7 @@ public class ListGUI {
         return false;
     }
 
-    boolean setTabTkb(List<Tkb> list, int mode) {
+    private boolean setTabTkb(List<Tkb> list, int mode) {
         if (!list.isEmpty()) {
             TableListTkb.setTab(this.table, this.button, list, mode);
             this.setTabFilter();
@@ -127,10 +139,10 @@ public class ListGUI {
         return false;
     }
 
-    void setTabFilter() {
+    private void setTabFilter() {
         this.tableRowSorter = new TableRowSorter<>(this.table.getModel());
         this.table.setRowSorter(this.tableRowSorter);
-        textField.getDocument().addDocumentListener(new DocumentListener() {
+        this.textField.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
                 search();
@@ -144,12 +156,13 @@ public class ListGUI {
                 search();
             }
         });
-        lopBox.addActionListener(e -> search());
+        this.lopBox.addActionListener(e -> search());
     }
 
-    void search() {
-        String lop = Objects.requireNonNull(lopBox.getSelectedItem()).toString();
+    private void search() {
+        String lop = Objects.requireNonNull(this.lopBox.getSelectedItem()).toString();
         if (lop.equals("Tất cả")) lop = ".";
+
         String text = textField.getText();
         text = (text == null || text.isBlank()) ? "." : "(?i)" + text;
 
@@ -157,6 +170,49 @@ public class ListGUI {
         filters.add(RowFilter.regexFilter(lop));
         filters.add(RowFilter.regexFilter(text));
 
-        tableRowSorter.setRowFilter(RowFilter.andFilter(filters));
+        this.tableRowSorter.setRowFilter(RowFilter.andFilter(filters));
+    }
+
+    private void setGetSvBtn(String id) {
+        this.button.setText("Chọn");
+        this.button.setVisible(true);
+        this.button.addActionListener(e -> {
+            int row = this.table.getSelectedRow();
+            if (row == -1) {
+                OptionMsg.infoMsg(this.panel, "Chọn sinh viên!");
+                return;
+            }
+            String mssv = this.table.getValueAt(row, 1).toString();
+            String maLopHoc = id.substring(id.indexOf('-') + 1)
+                    + '-' + mssv;
+            if (LopHocDAO.get(maLopHoc) != null) {
+                OptionMsg.infoMsg(this.panel, "Sinh viên đã đăng ký môn học!");
+                return;
+            }
+
+            LopHoc lopHoc = new LopHoc();
+            lopHoc.setMaLopHoc(maLopHoc);
+            lopHoc.setMaTkb(id);
+            lopHoc.setMssv(mssv);
+
+            OptionMsg.checkMsg(this.panel, "Đăng ký", LopHocDAO.add(lopHoc));
+        });
+    }
+
+    private void setGetTkbBtn(String type, int mode) {
+        this.button.setText("Chọn");
+        this.button.setVisible(true);
+        this.button.addActionListener(e -> {
+            int row = this.table.getSelectedRow();
+            if (row == -1) {
+                OptionMsg.infoMsg(this.panel, "Chọn lớp học!");
+                return;
+            }
+            String maTkb = this.table.getValueAt(row, 1).toString()
+                    + '-' + this.table.getValueAt(row, 2).toString();
+
+            ListGUI listGUI = new ListGUI(this.viewPanel);
+            listGUI.init(type, maTkb, mode);
+        });
     }
 }

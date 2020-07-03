@@ -25,11 +25,11 @@ public class MenuGvGUI {
         this.frame = frame;
         this.username = username;
 
-        logoutBtn.addActionListener(e -> {
+        this.logoutBtn.addActionListener(e -> {
             LoginGUI loginGUI = new LoginGUI(this.frame);
             loginGUI.init();
         });
-        newPWsBtn.addActionListener(e -> {
+        this.newPWsBtn.addActionListener(e -> {
             ChangePwGUI cPW = new ChangePwGUI(this.accPanel, this.username, true);
             cPW.init();
         });

@@ -14,11 +14,13 @@ import java.awt.*;
 public class LayoutSwitch {
     public static void back(JPanel viewPanel, JPanel curPanel) {
         viewPanel.remove(curPanel);
+
         CardLayout cardLayout = (CardLayout) viewPanel.getLayout();
         cardLayout.previous(viewPanel);
     }
     public static void next(JPanel viewPanel, JPanel nextPanel) {
         viewPanel.add(nextPanel);
+
         CardLayout cardLayout = (CardLayout) viewPanel.getLayout();
         cardLayout.next(viewPanel);
     }

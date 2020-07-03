@@ -21,13 +21,13 @@ public class ImportCsv {
         Lop lop = ImportCsv.getLop(file);
         if (lop == null) return false;
 
-        try {
-            BufferedReader br = new BufferedReader(
-                    new FileReader(file.getCanonicalFile()));
+        try (BufferedReader br = new BufferedReader(
+                new FileReader(file.getCanonicalFile()))) {
 
-            br.readLine();
             String line;
             SinhVien sv = new SinhVien();
+
+            br.readLine();
             while ((line = br.readLine()) != null) {
                 String[] data = line.split(",");
                 if (data.length < 5) continue;
@@ -41,22 +41,19 @@ public class ImportCsv {
 
                 SinhVienDAO.add(sv);
             }
-            br.close();
-
         } catch (IOException e) {
-            System.err.println(e.getMessage());
+            System.err.println("ImportSv: " + e.getMessage());
             return false;
         }
         return true;
     }
 
-    public static boolean importMon(File file) {
+    public static boolean importTkb(File file) {
         Lop lop = ImportCsv.getLop(file);
         if (lop == null) return false;
 
-        try {
-            BufferedReader br = new BufferedReader(
-                    new FileReader(file.getCanonicalFile()));
+        try (BufferedReader br = new BufferedReader(
+                new FileReader(file.getCanonicalFile()))) {
 
             String line;
             Mon mon = new Mon();
@@ -92,10 +89,8 @@ public class ImportCsv {
                     }
                 }
             }
-            br.close();
-
         } catch (IOException e) {
-            System.err.println(e.getMessage());
+            System.err.println("ImportTkb: " + e.getMessage());
             return false;
         }
         return true;
@@ -106,9 +101,8 @@ public class ImportCsv {
         Tkb tkb = TkbDAO.get(fileName);
         if (tkb == null) return false;
 
-        try {
-            BufferedReader br = new BufferedReader(
-                    new FileReader(file.getCanonicalFile()));
+        try (BufferedReader br = new BufferedReader(
+                new FileReader(file.getCanonicalFile()))) {
 
             String line;
             String maMon = tkb.getMaMon();
@@ -126,10 +120,8 @@ public class ImportCsv {
 
                 LopHocDAO.add(lopHoc);
             }
-            br.close();
-
         } catch (IOException e) {
-            System.err.println(e.getMessage());
+            System.err.println("ImportLopHoc: " + e.getMessage());
             return false;
         }
         return true;
@@ -140,9 +132,8 @@ public class ImportCsv {
         Tkb tkb = TkbDAO.get(fileName);
         if (tkb == null) return false;
 
-        try {
-            BufferedReader br = new BufferedReader(
-                    new FileReader(file.getCanonicalFile()));
+        try (BufferedReader br = new BufferedReader(
+                new FileReader(file.getCanonicalFile()))) {
 
             String line;
             Diem diem = new Diem();
@@ -154,18 +145,16 @@ public class ImportCsv {
 
                 String maLopHoc = tkb.getMaMon() + '-' + data[1];
 
+                diem.setMaLopHoc(maLopHoc);
                 diem.setDiemGk(Double.parseDouble(data[3]));
                 diem.setDiemCk(Double.parseDouble(data[4]));
                 diem.setDiemKhac(Double.parseDouble(data[5]));
                 diem.setDiemTong(Double.parseDouble(data[6]));
-                diem.setMaLopHoc(maLopHoc);
 
                 DiemDAO.add(diem);
             }
-            br.close();
-
         } catch (IOException e) {
-            System.err.println(e.getMessage());
+            System.err.println("ImportDiem: " + e.getMessage());
             return false;
         }
         return true;
@@ -173,18 +162,18 @@ public class ImportCsv {
 
     public static String getBaseName(String fileName) {
         if (fileName != null) {
-            int index = fileName.lastIndexOf('.');
-            if (index != -1)
-                return fileName.substring(0, index);
+            int pos = fileName.lastIndexOf('.');
+            if (pos != -1)
+                return fileName.substring(0, pos);
         }
         return fileName;
     }
 
-    public static Lop getLop(File file) {
+    private static Lop getLop(File file) {
         String fileName = getBaseName(file.getName());
         Lop lop = new Lop();
-
         lop.setMaLop(fileName);
+
         LopDAO.add(lop);
 
         return LopDAO.get(fileName);

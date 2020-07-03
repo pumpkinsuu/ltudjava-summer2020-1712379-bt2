@@ -1,8 +1,5 @@
 package gui;
 
-import gui.ImportCsvGUI;
-import gui.ListGUI;
-import gui.lop.GetMaLopGUI;
 import gui.sv.AddSvGUI;
 import util.LayoutSwitch;
 
@@ -27,12 +24,14 @@ public class OptionGUI {
     public OptionGUI(JPanel viewPanel, String type) {
         this.viewPanel = viewPanel;
 
-        if (type.equals("lop"))
+        if (type.equals("tkb") || type.equals("diem"))
+            addBtn.setVisible(false);
+        if (type.equals("lop") || type.equals("tkb"))
             updateBtn.setVisible(false);
 
         importBtn.addActionListener(e -> {
-            ImportCsvGUI importCsvGUI = new ImportCsvGUI(this.viewPanel, type);
-            importCsvGUI.init();
+            ImportCsvGUI importCsvGUI = new ImportCsvGUI(this.viewPanel);
+            importCsvGUI.init(type);
         });
         listBtn.addActionListener(e -> {
             switch (type) {
@@ -41,8 +40,8 @@ public class OptionGUI {
                     listGUI.init(type, null, 0);
                 }
                 case "lop", "diem" -> {
-                    GetMaLopGUI getMaLopGUI = new GetMaLopGUI(this.viewPanel);
-                    getMaLopGUI.init(type, 0);
+                    ListGUI listGUI = new ListGUI(this.viewPanel);
+                    listGUI.init("get_lop", type, 0);
                 }
             }
         });
@@ -52,18 +51,21 @@ public class OptionGUI {
                     AddSvGUI addSvGUI = new AddSvGUI(this.viewPanel);
                     addSvGUI.init();
                 }
-                case "tkb", "lop", "diem" -> {}
+                case "lop" -> {
+                    ListGUI listGUI = new ListGUI(this.viewPanel);
+                    listGUI.init("get_lop", "get_sv", 0);
+                }
             }
         });
         updateBtn.addActionListener(e -> {
             switch (type) {
-                case "sv", "tkb" -> {
+                case "sv" -> {
                     ListGUI listGUI = new ListGUI(this.viewPanel);
                     listGUI.init(type, null, 1);
                 }
                 case "diem" -> {
-                    GetMaLopGUI getMaLopGUI = new GetMaLopGUI(this.viewPanel);
-                    getMaLopGUI.init(type, 1);
+                    ListGUI listGUI = new ListGUI(this.viewPanel);
+                    listGUI.init("get_lop", type, 1);
                 }
             }
         });
@@ -74,8 +76,8 @@ public class OptionGUI {
                     listGUI.init(type, null, 2);
                 }
                 case "lop", "diem" -> {
-                    GetMaLopGUI getMaLopGUI = new GetMaLopGUI(this.viewPanel);
-                    getMaLopGUI.init(type, 2);
+                    ListGUI listGUI = new ListGUI(this.viewPanel);
+                    listGUI.init("get_lop", type, 2);
                 }
             }
         });

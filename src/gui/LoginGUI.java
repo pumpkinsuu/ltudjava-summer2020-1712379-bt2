@@ -26,13 +26,14 @@ public class LoginGUI {
 
     public LoginGUI(JFrame frame) {
         this.frame = frame;
+
         this.userField.setComponentPopupMenu(PopMenu.getCP());
         this.passwordField.setComponentPopupMenu(PopMenu.getCP());
 
-        loginButton.addActionListener(e -> {
+        this.loginButton.addActionListener(e -> {
             String username = this.userField.getText();
             if (username == null || username.isBlank()) {
-                OptionMsg.warnMsg(this.userField, "Nhập username!");
+                OptionMsg.infoMsg(this.panel, "Nhập tên đăng nhập!");
                 return;
             }
 
@@ -41,7 +42,7 @@ public class LoginGUI {
                 password = String.valueOf(this.passwordField.getPassword());
 
             if (password.isBlank()) {
-                OptionMsg.warnMsg(this.passwordField, "Nhập password!");
+                OptionMsg.infoMsg(this.panel, "Nhập mật khẩu!");
                 return;
             }
 
@@ -58,9 +59,9 @@ public class LoginGUI {
                 return;
             }
 
-            OptionMsg.warnMsg(this.panel, "Đăng nhập sai, xin vui lòng thử lại!");
+            OptionMsg.infoMsg(this.panel, "Đăng nhập sai, xin vui lòng thử lại!");
         });
-        closeBtn.addActionListener(e -> {
+        this.closeBtn.addActionListener(e -> {
             this.frame.dispose();
         });
     }

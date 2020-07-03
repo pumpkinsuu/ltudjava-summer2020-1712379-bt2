@@ -14,16 +14,11 @@ public class GiaoVuDao {
 
     public static GiaoVu get(String username) {
         GiaoVu gv = null;
-        try {
-            Session session = HibernateUtil.getSessionFactory()
-                    .getCurrentSession();
-
-            session.beginTransaction();
+        try(Session session = HibernateUtil.getSession()) {
             gv = session.get(GiaoVu.class, username);
-            session.getTransaction().commit();
 
         } catch (Exception ex) {
-            System.err.println(ex.getMessage());
+            System.err.println(GiaoVu.class + " DAO: " + ex.getMessage());
         }
         return gv;
     }

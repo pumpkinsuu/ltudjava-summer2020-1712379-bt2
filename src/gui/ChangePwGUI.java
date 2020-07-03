@@ -5,6 +5,7 @@ import dbUtil.SinhVienDAO;
 import pojo.GiaoVu;
 import pojo.SinhVien;
 import util.LayoutSwitch;
+import util.OptionMsg;
 import util.PopMenu;
 
 import javax.swing.*;
@@ -29,7 +30,11 @@ public class ChangePwGUI {
     public ChangePwGUI(JPanel viewPanel, String username, boolean type) {
         this.viewPanel = viewPanel;
 
-        changeBtn.addActionListener(e -> {
+        this.oldPWField.setComponentPopupMenu(PopMenu.getCP());
+        this.newPWField.setComponentPopupMenu(PopMenu.getCP());
+        this.curPWField.setComponentPopupMenu(PopMenu.getCP());
+
+        this.changeBtn.addActionListener(e -> {
             String oldPW = "";
             String newPW = "";
 
@@ -38,16 +43,16 @@ public class ChangePwGUI {
             if (this.newPWField.getPassword().length > 0)
                 newPW = String.valueOf(this.newPWField.getPassword());
 
-            if (oldPW.isBlank() || newPW.isBlank())
-                return;
-
-            if (newPW.length() > 45) {
-                JOptionPane.showMessageDialog(this.newPWField, "Mật khẩu mới quá dài!");
+            if (oldPW.isBlank() || newPW.isBlank()) {
+                OptionMsg.infoMsg(this.panel, "Không được bỏ trống!");
                 return;
             }
-
+            if (newPW.length() > 45) {
+                OptionMsg.infoMsg(this.panel, "Mật khẩu mới quá dài!");
+                return;
+            }
             if (!Arrays.equals(this.newPWField.getPassword(), this.curPWField.getPassword())) {
-                JOptionPane.showMessageDialog(this.oldPWField, "Mật khẩu mới không khớp!");
+                OptionMsg.infoMsg(this.panel, "Mật khẩu mới không khớp!");
                 return;
             }
 
@@ -55,14 +60,14 @@ public class ChangePwGUI {
                 GiaoVu gv = GiaoVuDao.get(username);
 
                 if (!gv.getPassword().equals(oldPW)) {
-                    JOptionPane.showMessageDialog(this.oldPWField, "Mật khẩu cũ không đúng!");
+                    OptionMsg.infoMsg(this.panel, "Mật khẩu cũ không đúng!");
                     return;
                 }
 
                 gv.setPassword(newPW);
 
                 if (!GiaoVuDao.update(gv)) {
-                    JOptionPane.showMessageDialog(this.oldPWField, "Đổi mật khẩu thất bại!");
+                    OptionMsg.errMsg(this.panel, "Đổi mật khẩu thất bại!");
                     return;
                 }
             }
@@ -70,30 +75,24 @@ public class ChangePwGUI {
                 SinhVien sv = SinhVienDAO.get(username);
 
                 if (!sv.getPassword().equals(oldPW)) {
-                    JOptionPane.showMessageDialog(this.oldPWField, "Mật khẩu cũ không đúng!");
+                    OptionMsg.infoMsg(this.panel, "Mật khẩu cũ không đúng!");
                     return;
                 }
                 sv.setPassword(newPW);
 
                 if (!SinhVienDAO.update(sv)) {
-                    JOptionPane.showMessageDialog(this.oldPWField, "Đổi mật khẩu thất bại!");
+                    OptionMsg.errMsg(this.panel, "Đổi mật khẩu thất bại!");
                     return;
                 }
             }
 
-            JOptionPane.showMessageDialog(this.panel, "Đổi mật khẩu thành công!");
+            OptionMsg.infoMsg(this.panel, "Đổi mật khẩu thành công!");
             LayoutSwitch.back(this.viewPanel, this.panel);
         });
-        backBtn.addActionListener(e -> {
+        this.backBtn.addActionListener(e -> {
             LayoutSwitch.back(this.viewPanel, this.panel);
         });
     }
 
-    public void init() {
-        this.oldPWField.setComponentPopupMenu(PopMenu.getCP());
-        this.newPWField.setComponentPopupMenu(PopMenu.getCP());
-
-        LayoutSwitch.next(this.viewPanel, this.panel);
-    }
-
+    public void init() { LayoutSwitch.next(this.viewPanel, this.panel); }
 }

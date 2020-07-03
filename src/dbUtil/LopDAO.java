@@ -22,18 +22,13 @@ public class LopDAO {
 
     public static Lop get(String maLop) {
         Lop lop = null;
-        try {
-            Session session = HibernateUtil.getSessionFactory()
-                    .getCurrentSession();
-
-            session.beginTransaction();
+        try(Session session = HibernateUtil.getSession()) {
             lop = session.get(Lop.class, maLop);
             Hibernate.initialize(lop.getSinhVien());
             Hibernate.initialize(lop.getTkb());
-            session.getTransaction().commit();
 
         } catch (Exception ex) {
-            System.err.println(ex.getMessage());
+            System.err.println(Lop.class + " DAO: " + ex.getMessage());
         }
         return lop;
     }

@@ -23,37 +23,25 @@ public class LopHocDAO {
     @SuppressWarnings("unchecked")
     public static List<LopHoc> getAll(String hql) {
         List<LopHoc> list = null;
-        try {
-            Session session = HibernateUtil.getSessionFactory()
-                    .getCurrentSession();
-
-            if (!session.getTransaction().isActive())
-                session.beginTransaction();
-
+        try(Session session = HibernateUtil.getSession()) {
             list = session.createQuery(hql).list();
             Hibernate.initialize(list);
-            session.getTransaction().commit();
 
         } catch (Exception ex) {
-            System.err.println(ex.getMessage());
+            System.err.println(LopHoc.class + " DAO: " + ex.getMessage());
         }
         return list;
     }
 
     public static LopHoc get(String maLopHoc) {
         LopHoc lopHoc = null;
-        try {
-            Session session = HibernateUtil.getSessionFactory()
-                    .getCurrentSession();
-
-            session.beginTransaction();
+        try(Session session = HibernateUtil.getSession()) {
             lopHoc = session.get(LopHoc.class, maLopHoc);
             Hibernate.initialize(lopHoc.getDiem());
             Hibernate.initialize(lopHoc.getSinhVien());
-            session.getTransaction().commit();
 
         } catch (Exception ex) {
-            System.err.println(ex.getMessage());
+            System.err.println(LopHoc.class + " DAO: " + ex.getMessage());
         }
         return lopHoc;
     }

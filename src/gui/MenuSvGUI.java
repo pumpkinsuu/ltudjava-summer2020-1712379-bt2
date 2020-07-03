@@ -31,12 +31,10 @@ public class MenuSvGUI {
     private JTextField cmndField;
     private JTextField lopField;
     private JPanel panel;
-    private JLabel tkbLable;
     private JLabel diemLabel;
-    private JScrollPane tkbPanel;
-    private JScrollPane diemPanel;
+    private JPanel tkbPanel;
+    private JPanel diemPanel;
     private JPanel accPanel;
-    private JPanel svPanel;
     private JTextField tkbField;
     private JTable tkbTab;
     private JTable diemTab;
@@ -49,11 +47,11 @@ public class MenuSvGUI {
         this.frame = frame;
         this.sv = sv;
 
-        logoutBtn.addActionListener(e -> {
+        this.logoutBtn.addActionListener(e -> {
             LoginGUI loginGUI = new LoginGUI(this.frame);
             loginGUI.init();
         });
-        newPWsBtn.addActionListener(e -> {
+        this.newPWsBtn.addActionListener(e -> {
             ChangePwGUI cPW = new ChangePwGUI(this.accPanel, this.sv.getMssv(), false);
             cPW.init();
         });
@@ -61,6 +59,7 @@ public class MenuSvGUI {
 
     public void init() {
         this.createSv();
+
         String hql = "from LopHoc lopHoc where lopHoc.mssv = '" + this.sv.getMssv() + "'";
         List<LopHoc> list = LopHocDAO.getAll(hql);
         if (list != null && !list.isEmpty()) {
@@ -76,22 +75,22 @@ public class MenuSvGUI {
         this.frame.setVisible(true);
     }
 
-    void createSv() {
-        this.mssvField.setText(sv.getMssv());
-        this.nameField.setText(sv.getHoTen());
-        this.gioiField.setText(sv.getGioiTinh());
-        this.cmndField.setText(sv.getCmnd());
-        this.lopField.setText(sv.getMaLop());
+    private void createSv() {
+        this.mssvField.setText(this.sv.getMssv());
+        this.nameField.setText(this.sv.getHoTen());
+        this.gioiField.setText(this.sv.getGioiTinh());
+        this.cmndField.setText(this.sv.getCmnd());
+        this.lopField.setText(this.sv.getMaLop());
     }
 
-    void createTkb(List<LopHoc> list) {
+    private void createTkb(List<LopHoc> list) {
         String[] colName = new String[]{
                 "STT", "Lớp", "Mã môn", "Tên môn", "Phòng học"
         };
-        String[][]colVal = new String[list.size()][5];
+        Object[][]colVal = new Object[list.size()][5];
 
         for (int i = 0; i < list.size(); ++i) {
-            colVal[i][0] = String.valueOf(i + 1);
+            colVal[i][0] = i + 1;
             colVal[i][1] = list.get(i).getTkb().getMaLop();
             colVal[i][2] = list.get(i).getTkb().getMaMon();
             colVal[i][3] = list.get(i).getTkb().getMon().getTenMon();
@@ -100,32 +99,30 @@ public class MenuSvGUI {
         this.setTab(this.tkbPanel, this.tkbTab, this.tkbField, this.tkbLabel, colVal, colName);
     }
 
-    void createDiem(List<LopHoc> list) {
-        List<LopHoc> diem = list.stream()
-                .filter(e -> e.getDiem() != null)
-                .collect(Collectors.toList());
-        if (diem.isEmpty())
+    private void createDiem(List<LopHoc> list) {
+        list.removeIf(e -> e.getDiem() == null);
+        if (list.isEmpty())
             return;
 
         String[] colName = new String[]{
                 "STT", "Mã Lớp", "Tên môn", "Điểm GK", "Điểm CK", "Điểm khác", "Điểm Tổng", "Đậu/Rớt"
         };
-        String[][]colVal = new String[list.size()][8];
+        Object[][]colVal = new Object[list.size()][8];
 
         for (int i = 0; i < list.size(); ++i) {
-            colVal[i][0] = String.valueOf(i + 1);
-            colVal[i][1] = diem.get(i).getMaTkb();
-            colVal[i][2] = diem.get(i).getTkb().getMon().getTenMon();
-            colVal[i][3] = String.valueOf(diem.get(i).getDiem().getDiemGk());
-            colVal[i][4] = String.valueOf(diem.get(i).getDiem().getDiemCk());
-            colVal[i][5] = String.valueOf(diem.get(i).getDiem().getDiemKhac());
-            colVal[i][6] = String.valueOf(diem.get(i).getDiem().getDiemTong());
-            colVal[i][7] = (diem.get(i).getDiem().getDiemTong() >= 5 ? "Đậu" : "Rớt");
+            colVal[i][0] = i + 1;
+            colVal[i][1] = list.get(i).getMaTkb();
+            colVal[i][2] = list.get(i).getTkb().getMon().getTenMon();
+            colVal[i][3] = list.get(i).getDiem().getDiemGk();
+            colVal[i][4] = list.get(i).getDiem().getDiemCk();
+            colVal[i][5] = list.get(i).getDiem().getDiemKhac();
+            colVal[i][6] = list.get(i).getDiem().getDiemTong();
+            colVal[i][7] = (list.get(i).getDiem().getDiemTong() >= 5 ? "Đậu" : "Rớt");
         }
         this.setTab(this.diemPanel, this.diemTab, this.diemField, this.diemLabel, colVal, colName);
     }
 
-    void setTab(JScrollPane panel, JTable table, JTextField textField, JLabel lable, String[][]colVal, String[] colName) {
+    private void setTab(JPanel panel, JTable table, JTextField textField, JLabel lable, Object[][]colVal, String[] colName) {
         TableModel tableModel = new DefaultTableModel(colVal, colName) {
             @Override
             public boolean isCellEditable(int row, int column){
@@ -140,13 +137,11 @@ public class MenuSvGUI {
         table.setRowSorter(tableRowSorter);
         this.setSearch(textField, tableRowSorter);
 
-        lable.setText("Tra cứu ");
-        textField.setComponentPopupMenu(PopMenu.getCP());
-        textField.setVisible(true);
+        lable.setVisible(false);
         panel.setVisible(true);
     }
 
-    void setSearch(JTextField textField, TableRowSorter<TableModel> tableRowSorter) {
+    private void setSearch(JTextField textField, TableRowSorter<TableModel> tableRowSorter) {
         textField.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
@@ -167,6 +162,8 @@ public class MenuSvGUI {
                 tableRowSorter.setRowFilter(RowFilter.regexFilter(text));
             }
         });
+        textField.setComponentPopupMenu(PopMenu.getCP());
+        textField.setVisible(true);
     }
 }
 

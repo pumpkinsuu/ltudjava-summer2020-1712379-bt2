@@ -12,6 +12,7 @@ import pojo.SinhVien;
 import pojo.Tkb;
 import util.ImportCsv;
 import util.LayoutSwitch;
+import util.OptionMsg;
 
 /**
  * gui
@@ -25,66 +26,59 @@ public class ImportCsvGUI {
     private JPanel panel;
     private JButton closeBtn;
     private final JPanel viewPanel;
-    private final String type;
 
-    public ImportCsvGUI(JPanel viewPanel, String type) {
+    public ImportCsvGUI(JPanel viewPanel) {
         this.viewPanel = viewPanel;
-        this.type = type;
 
-        openBtn.addActionListener(e -> {
+        this.closeBtn.addActionListener(e -> LayoutSwitch.back(this.viewPanel, this.panel));
+    }
+
+    public void init(String type) {
+        if (this.check(type))
+            LayoutSwitch.next(this.viewPanel, this.panel);
+    }
+
+    private boolean check(String type) {
+        if (type.equals("lop")) {
+            List<Tkb> tkbList = TkbDAO.getList();
+            if (tkbList == null || tkbList.isEmpty()) {
+                OptionMsg.infoMsg(this.panel, "Chưa có thời khóa biểu trong hệ thống!");
+                return false;
+            }
+            List<SinhVien> sinhVienList = SinhVienDAO.getList();
+            if (sinhVienList == null || sinhVienList.isEmpty()) {
+                OptionMsg.infoMsg(this.panel, "Chưa có sinh viên trong hệ thống!");
+                return false;
+            }
+        }
+        if (type.equals("diem")) {
+            List<LopHoc> lopHocList = LopHocDAO.getList();
+            if (lopHocList == null || lopHocList.isEmpty()) {
+                OptionMsg.infoMsg(this.panel, "Chưa có lớp học trong hệ thống!");
+                return false;
+            }
+        }
+
+        this.openBtn.addActionListener(e -> {
             FileFilter filter = new FileNameExtensionFilter("CSV file", "csv");
             JFileChooser jFileChooser = new JFileChooser();
             jFileChooser.setDialogTitle("Chọn file");
             jFileChooser.setFileFilter(filter);
 
-            if (jFileChooser.showOpenDialog(panel) != JFileChooser.APPROVE_OPTION) {
-                System.out.println("Error!");
+            if (jFileChooser.showOpenDialog(this.panel) != JFileChooser.APPROVE_OPTION)
                 return;
-            }
 
             File file = jFileChooser.getSelectedFile();
 
             boolean flag = false;
-            switch (this.type) {
+            switch (type) {
                 case "sv" -> flag = ImportCsv.importSv(file);
-                case "tkb" -> flag = ImportCsv.importMon(file);
+                case "tkb" -> flag = ImportCsv.importTkb(file);
                 case "lop" -> flag = ImportCsv.importLopHoc(file);
                 case "diem" -> flag = ImportCsv.importDiem(file);
             }
-
-            if (flag)
-                JOptionPane.showMessageDialog(panel, "Import thành công!");
-            else
-                JOptionPane.showMessageDialog(panel, "Import thất bại!");
+            OptionMsg.checkMsg(this.panel, "Import", flag);
         });
-        closeBtn.addActionListener(e -> LayoutSwitch.back(this.viewPanel, this.panel));
-    }
-
-    public void init() {
-        if (this.check())
-            LayoutSwitch.next(this.viewPanel, this.panel);
-    }
-
-    boolean check() {
-        if (this.type.equals("lop")) {
-            List<Tkb> tkbList = TkbDAO.getList();
-            if (tkbList == null || tkbList.isEmpty()) {
-                JOptionPane.showMessageDialog(panel, "Chưa có thời khóa biểu trong hệ thống!");
-                return false;
-            }
-            List<SinhVien> sinhVienList = SinhVienDAO.getList();
-            if (sinhVienList == null || sinhVienList.isEmpty()) {
-                JOptionPane.showMessageDialog(panel, "Chưa có sinh viên trong hệ thống!");
-                return false;
-            }
-        }
-        if (this.type.equals("diem")) {
-            List<LopHoc> lopHocList = LopHocDAO.getList();
-            if (lopHocList == null || lopHocList.isEmpty()) {
-                JOptionPane.showMessageDialog(panel, "Chưa có lớp học trong hệ thống!");
-                return false;
-            }
-        }
         return true;
     }
 

@@ -22,16 +22,11 @@ public class MonDAO {
 
     public static Mon get(String maMon) {
         Mon mon = null;
-        try {
-            Session session = HibernateUtil.getSessionFactory()
-                    .getCurrentSession();
-
-            session.beginTransaction();
+        try(Session session = HibernateUtil.getSession()) {
             mon = session.get(Mon.class, maMon);
-            session.getTransaction().commit();
 
         } catch (Exception ex) {
-            System.err.println(ex.getMessage());
+            System.err.println(Mon.class + " DAO: " + ex.getMessage());
         }
         return mon;
     }

@@ -21,28 +21,13 @@ public class SinhVienDAO {
 
     public static SinhVien get(String mssv) {
         SinhVien sv = null;
-        try {
-            Session session = HibernateUtil.getSessionFactory()
-                    .getCurrentSession();
-
-            session.beginTransaction();
+        try(Session session = HibernateUtil.getSession()) {
             sv = session.get(SinhVien.class, mssv);
-            session.getTransaction().commit();
 
         } catch (Exception ex) {
-            System.err.println(ex.getMessage());
+            System.err.println(SinhVien.class + " DAO: " + ex.getMessage());
         }
         return sv;
-    }
-
-    public static SinhVien getByName(String name) {
-        String hql = "from SinhVien sv where sv.hoTen = '" + name + "'";
-        List<SinhVien> svs = QLSinhVienDAO.getList(hql);
-
-        if (svs != null && !svs.isEmpty())
-            return svs.get(0);
-
-        return null;
     }
 
     public static boolean add(SinhVien sv) {
