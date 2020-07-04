@@ -3,10 +3,8 @@ package util;
 import dbUtil.*;
 import pojo.*;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 /**
@@ -22,7 +20,8 @@ public class ImportCsv {
         if (lop == null) return false;
 
         try (BufferedReader br = new BufferedReader(
-                new FileReader(file.getCanonicalFile()))) {
+                new InputStreamReader(
+                        new FileInputStream(file.getCanonicalFile()), StandardCharsets.UTF_8))) {
 
             String line;
             SinhVien sv = new SinhVien();
@@ -37,7 +36,7 @@ public class ImportCsv {
                 sv.setGioiTinh(data[3]);
                 sv.setCmnd(data[4]);
                 sv.setMaLop(lop.getMaLop());
-                sv.setPassword(data[4]);
+                sv.setPassword(data[1]);
 
                 SinhVienDAO.add(sv);
             }
@@ -53,7 +52,8 @@ public class ImportCsv {
         if (lop == null) return false;
 
         try (BufferedReader br = new BufferedReader(
-                new FileReader(file.getCanonicalFile()))) {
+                new InputStreamReader(
+                        new FileInputStream(file.getCanonicalFile()), StandardCharsets.UTF_8))) {
 
             String line;
             Mon mon = new Mon();
@@ -102,7 +102,8 @@ public class ImportCsv {
         if (tkb == null) return false;
 
         try (BufferedReader br = new BufferedReader(
-                new FileReader(file.getCanonicalFile()))) {
+                new InputStreamReader(
+                        new FileInputStream(file.getCanonicalFile()), StandardCharsets.UTF_8))) {
 
             String line;
             String maMon = tkb.getMaMon();
@@ -135,7 +136,8 @@ public class ImportCsv {
         if (tkb == null) return false;
 
         try (BufferedReader br = new BufferedReader(
-                new FileReader(file.getCanonicalFile()))) {
+                new InputStreamReader(
+                        new FileInputStream(file.getCanonicalFile()), StandardCharsets.UTF_8))) {
 
             String line;
             Diem diem = new Diem();

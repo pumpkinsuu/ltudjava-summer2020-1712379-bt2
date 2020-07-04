@@ -38,8 +38,11 @@ public class LopHocDAO {
         LopHoc lopHoc = null;
         try(Session session = HibernateUtil.getSession()) {
             lopHoc = session.get(LopHoc.class, maLopHoc);
-            if (lopHoc != null)
-                Hibernate.initialize(lopHoc);
+            if (lopHoc != null) {
+                Hibernate.initialize(lopHoc.getSinhVien());
+                Hibernate.initialize(lopHoc.getTkb());
+                Hibernate.initialize(lopHoc.getDiem());
+            }
 
         } catch (Exception ex) {
             System.err.println(LopHoc.class + " DAO: " + ex.getMessage());

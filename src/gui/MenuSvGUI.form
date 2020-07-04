@@ -181,7 +181,7 @@
                       <component id="47e78" class="javax.swing.JLabel">
                         <constraints border-constraint="West"/>
                         <properties>
-                          <text value="Tra cứu"/>
+                          <text value="Tra cứu "/>
                         </properties>
                       </component>
                     </children>
@@ -235,7 +235,13 @@
                       <component id="da360" class="javax.swing.JTextField" binding="diemField">
                         <constraints border-constraint="Center"/>
                         <properties>
-                          <visible value="false"/>
+                          <visible value="true"/>
+                        </properties>
+                      </component>
+                      <component id="92032" class="javax.swing.JLabel">
+                        <constraints border-constraint="West"/>
+                        <properties>
+                          <text value="Tra cứu "/>
                         </properties>
                       </component>
                     </children>
@@ -243,14 +249,14 @@
                   <scrollpane id="c4697">
                     <constraints border-constraint="Center"/>
                     <properties>
-                      <visible value="false"/>
+                      <visible value="true"/>
                     </properties>
                     <border type="none"/>
                     <children>
                       <component id="3d0d3" class="javax.swing.JTable" binding="diemTab">
                         <constraints/>
                         <properties>
-                          <visible value="false"/>
+                          <visible value="true"/>
                         </properties>
                       </component>
                     </children>
