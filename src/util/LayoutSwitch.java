@@ -24,4 +24,15 @@ public class LayoutSwitch {
         CardLayout cardLayout = (CardLayout) viewPanel.getLayout();
         cardLayout.next(viewPanel);
     }
+
+    public static void setFrame(JFrame frame, JPanel panel, String title, int w, int h) {
+        Dimension dimension = new Dimension(w,h);
+        frame.setTitle(title);
+        frame.setMinimumSize(dimension);
+        frame.setSize(dimension);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setContentPane(panel);
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+    }
 }

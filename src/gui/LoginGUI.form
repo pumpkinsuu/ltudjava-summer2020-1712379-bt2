@@ -39,8 +39,8 @@
               <gridbag weightx="1.0" weighty="1.0"/>
             </constraints>
             <properties>
-              <minimumSize width="250" height="25"/>
-              <preferredSize width="200" height="25"/>
+              <minimumSize width="200" height="30"/>
+              <preferredSize width="200" height="30"/>
             </properties>
           </component>
           <component id="703a4" class="javax.swing.JLabel">
@@ -60,8 +60,8 @@
               <gridbag weightx="1.0" weighty="1.0"/>
             </constraints>
             <properties>
-              <minimumSize width="250" height="25"/>
-              <preferredSize width="200" height="25"/>
+              <minimumSize width="200" height="30"/>
+              <preferredSize width="200" height="30"/>
             </properties>
           </component>
           <vspacer id="64620">

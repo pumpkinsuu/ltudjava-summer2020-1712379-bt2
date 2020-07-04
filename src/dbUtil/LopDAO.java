@@ -24,8 +24,6 @@ public class LopDAO {
         Lop lop = null;
         try(Session session = HibernateUtil.getSession()) {
             lop = session.get(Lop.class, maLop);
-            Hibernate.initialize(lop.getSinhVien());
-            Hibernate.initialize(lop.getTkb());
 
         } catch (Exception ex) {
             System.err.println(Lop.class + " DAO: " + ex.getMessage());

@@ -4,6 +4,7 @@ import dbUtil.GiaoVuDao;
 import dbUtil.SinhVienDAO;
 import pojo.GiaoVu;
 import pojo.SinhVien;
+import util.LayoutSwitch;
 import util.OptionMsg;
 import util.PopMenu;
 
@@ -36,7 +37,6 @@ public class LoginGUI {
                 OptionMsg.infoMsg(this.panel, "Nhập tên đăng nhập!");
                 return;
             }
-
             String password = "";
             if (this.passwordField.getPassword().length > 0)
                 password = String.valueOf(this.passwordField.getPassword());
@@ -45,33 +45,28 @@ public class LoginGUI {
                 OptionMsg.infoMsg(this.panel, "Nhập mật khẩu!");
                 return;
             }
-
-            GiaoVu gv = GiaoVuDao.get(username);
-            if (gv != null && gv.getPassword().equals(password)) {
-                MenuGvGUI menuGvGUI = new MenuGvGUI(this.frame, username);
-                menuGvGUI.init();
-                return;
-            }
-            SinhVien sv = SinhVienDAO.get(username);
-            if (sv != null && sv.getPassword().equals(password)) {
-                MenuSvGUI menuSvGUI = new MenuSvGUI(this.frame, sv);
-                menuSvGUI.init();
-                return;
-            }
-
-            OptionMsg.infoMsg(this.panel, "Đăng nhập sai, xin vui lòng thử lại!");
+            this.check(username, password);
         });
-        this.closeBtn.addActionListener(e -> {
-            this.frame.dispose();
-        });
+        this.closeBtn.addActionListener(e -> this.frame.dispose());
     }
 
     public void init() {
-        this.frame.setTitle("Đăng nhập");
-        this.frame.setContentPane(this.panel);
-        this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.frame.setSize(250, 250);
-        this.frame.setLocationRelativeTo(null);
-        this.frame.setVisible(true);
+        LayoutSwitch.setFrame(this.frame, this.panel, "Đăng nhập", 275, 275);
+    }
+
+    private void check(String username, String password) {
+        GiaoVu gv = GiaoVuDao.get(username);
+        if (gv != null && gv.getPassword().equals(password)) {
+            MenuGvGUI menuGvGUI = new MenuGvGUI(this.frame, username);
+            menuGvGUI.init();
+            return;
+        }
+        SinhVien sv = SinhVienDAO.get(username);
+        if (sv != null && sv.getPassword().equals(password)) {
+            MenuSvGUI menuSvGUI = new MenuSvGUI(this.frame, sv);
+            menuSvGUI.init();
+            return;
+        }
+        OptionMsg.infoMsg(this.panel, "Đăng nhập sai, xin vui lòng thử lại!");
     }
 }

@@ -85,17 +85,17 @@ public class ListGUI {
                 this.lopBox.setVisible(false);
                 flag = setTabDiem(id, mode);
             }
-            case "get_sv" -> {
-                List<SinhVien> list = SinhVienDAO.getList();
-                flag = setTabSv(list, mode);
-                if (flag)
-                    this.setGetSvBtn(id);
-            }
             case "get_lop" -> {
                 List<Tkb> list = TkbDAO.getList();
-                flag = setTabTkb(list, mode);
+                flag = setTabTkb(list, 0);
                 if (flag)
                     this.setGetTkbBtn(id, mode);
+            }
+            case "add_lop" -> {
+                List<SinhVien> list = SinhVienDAO.getList();
+                flag = setTabSv(list, 0);
+                if (flag)
+                    this.setGetSvBtn(type, id);
             }
         }
 
@@ -173,7 +173,7 @@ public class ListGUI {
         this.tableRowSorter.setRowFilter(RowFilter.andFilter(filters));
     }
 
-    private void setGetSvBtn(String id) {
+    private void setGetSvBtn(String type, String id) {
         this.button.setText("Chọn");
         this.button.setVisible(true);
         this.button.addActionListener(e -> {
@@ -185,17 +185,9 @@ public class ListGUI {
             String mssv = this.table.getValueAt(row, 1).toString();
             String maLopHoc = id.substring(id.indexOf('-') + 1)
                     + '-' + mssv;
-            if (LopHocDAO.get(maLopHoc) != null) {
-                OptionMsg.infoMsg(this.panel, "Sinh viên đã đăng ký môn học!");
-                return;
-            }
 
-            LopHoc lopHoc = new LopHoc();
-            lopHoc.setMaLopHoc(maLopHoc);
-            lopHoc.setMaTkb(id);
-            lopHoc.setMssv(mssv);
-
-            OptionMsg.checkMsg(this.panel, "Đăng ký", LopHocDAO.add(lopHoc));
+            if (type.equals("add_lop"))
+                this.addLop(maLopHoc, mssv, id);
         });
     }
 
@@ -214,5 +206,19 @@ public class ListGUI {
             ListGUI listGUI = new ListGUI(this.viewPanel);
             listGUI.init(type, maTkb, mode);
         });
+    }
+
+    private void addLop(String maLopHoc, String mssv, String maTkb) {
+        if (LopHocDAO.get(maLopHoc) != null) {
+            OptionMsg.infoMsg(this.panel, "Sinh viên đã đăng ký môn học!");
+            return;
+        }
+
+        LopHoc lopHoc = new LopHoc();
+        lopHoc.setMaLopHoc(maLopHoc);
+        lopHoc.setMaTkb(maTkb);
+        lopHoc.setMssv(mssv);
+
+        OptionMsg.checkMsg(this.panel, "Đăng ký", LopHocDAO.add(lopHoc));
     }
 }

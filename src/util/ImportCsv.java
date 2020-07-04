@@ -114,11 +114,13 @@ public class ImportCsv {
                 String[] data = line.split(",");
                 if (data.length < 2) continue;
 
-                lopHoc.setMaLopHoc(maMon + '-' + data[1]);
-                lopHoc.setMaTkb(maTkb);
-                lopHoc.setMssv(data[1]);
+                if (SinhVienDAO.get(data[1]) != null) {
+                    lopHoc.setMaLopHoc(maMon + '-' + data[1]);
+                    lopHoc.setMaTkb(maTkb);
+                    lopHoc.setMssv(data[1]);
 
-                LopHocDAO.add(lopHoc);
+                    LopHocDAO.add(lopHoc);
+                }
             }
         } catch (IOException e) {
             System.err.println("ImportLopHoc: " + e.getMessage());

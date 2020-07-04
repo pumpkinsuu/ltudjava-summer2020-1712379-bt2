@@ -24,8 +24,8 @@ public class TkbDAO {
         Tkb tkb = null;
         try(Session session = HibernateUtil.getSession()) {
             tkb = session.get(Tkb.class, maTkb);
-            Hibernate.initialize(tkb.getMon());
-            Hibernate.initialize(tkb.getLopHoc());
+            if (tkb != null)
+                Hibernate.initialize(tkb);
 
         } catch (Exception ex) {
             System.err.println(Tkb.class + " DAO: " + ex.getMessage());

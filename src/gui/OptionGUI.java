@@ -24,16 +24,20 @@ public class OptionGUI {
     public OptionGUI(JPanel viewPanel, String type) {
         this.viewPanel = viewPanel;
 
-        if (type.equals("tkb") || type.equals("diem"))
-            addBtn.setVisible(false);
-        if (type.equals("lop") || type.equals("tkb"))
-            updateBtn.setVisible(false);
+        switch (type) {
+            case "tkb" -> {
+                this.addBtn.setVisible(false);
+                this.updateBtn.setVisible(false);
+            }
+            case "lop" -> this.updateBtn.setVisible(false);
+            case "diem" -> this.addBtn.setVisible(false);
+        }
 
-        importBtn.addActionListener(e -> {
+        this.importBtn.addActionListener(e -> {
             ImportCsvGUI importCsvGUI = new ImportCsvGUI(this.viewPanel);
             importCsvGUI.init(type);
         });
-        listBtn.addActionListener(e -> {
+        this.listBtn.addActionListener(e -> {
             switch (type) {
                 case "sv", "tkb" -> {
                     ListGUI listGUI = new ListGUI(this.viewPanel);
@@ -45,7 +49,7 @@ public class OptionGUI {
                 }
             }
         });
-        addBtn.addActionListener(e -> {
+        this.addBtn.addActionListener(e -> {
             switch (type) {
                 case "sv" -> {
                     AddSvGUI addSvGUI = new AddSvGUI(this.viewPanel);
@@ -53,11 +57,11 @@ public class OptionGUI {
                 }
                 case "lop" -> {
                     ListGUI listGUI = new ListGUI(this.viewPanel);
-                    listGUI.init("get_lop", "get_sv", 0);
+                    listGUI.init("get_lop", "add_lop", 0);
                 }
             }
         });
-        updateBtn.addActionListener(e -> {
+        this.updateBtn.addActionListener(e -> {
             switch (type) {
                 case "sv" -> {
                     ListGUI listGUI = new ListGUI(this.viewPanel);
@@ -69,7 +73,7 @@ public class OptionGUI {
                 }
             }
         });
-        removeBtn.addActionListener(e -> {
+        this.removeBtn.addActionListener(e -> {
             switch (type) {
                 case "sv", "tkb" -> {
                     ListGUI listGUI = new ListGUI(this.viewPanel);

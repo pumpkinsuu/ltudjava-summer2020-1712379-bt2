@@ -3,6 +3,7 @@ package gui;
 import dbUtil.LopHocDAO;
 import pojo.LopHoc;
 import pojo.SinhVien;
+import util.LayoutSwitch;
 import util.MouseAction;
 import util.PopMenu;
 
@@ -12,6 +13,7 @@ import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
+import java.awt.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -67,12 +69,7 @@ public class MenuSvGUI {
             this.createDiem(list);
         }
 
-        this.frame.setTitle("Quản lý sinh viên");
-        this.frame.setContentPane(this.panel);
-        this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.frame.setSize(800, 600);
-        this.frame.setLocationRelativeTo(null);
-        this.frame.setVisible(true);
+        LayoutSwitch.setFrame(this.frame, this.panel, "Quản lý sinh viên", 800, 600);
     }
 
     private void createSv() {

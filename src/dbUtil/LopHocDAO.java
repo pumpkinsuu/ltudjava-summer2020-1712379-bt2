@@ -25,7 +25,8 @@ public class LopHocDAO {
         List<LopHoc> list = null;
         try(Session session = HibernateUtil.getSession()) {
             list = session.createQuery(hql).list();
-            Hibernate.initialize(list);
+            if (list != null)
+                Hibernate.initialize(list);
 
         } catch (Exception ex) {
             System.err.println(LopHoc.class + " DAO: " + ex.getMessage());
@@ -37,8 +38,8 @@ public class LopHocDAO {
         LopHoc lopHoc = null;
         try(Session session = HibernateUtil.getSession()) {
             lopHoc = session.get(LopHoc.class, maLopHoc);
-            Hibernate.initialize(lopHoc.getDiem());
-            Hibernate.initialize(lopHoc.getSinhVien());
+            if (lopHoc != null)
+                Hibernate.initialize(lopHoc);
 
         } catch (Exception ex) {
             System.err.println(LopHoc.class + " DAO: " + ex.getMessage());

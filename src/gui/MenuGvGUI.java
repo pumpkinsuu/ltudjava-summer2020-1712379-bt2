@@ -1,6 +1,9 @@
 package gui;
 
+import util.LayoutSwitch;
+
 import javax.swing.*;
+import java.awt.*;
 
 /**
  * PACKAGE_NAME
@@ -45,11 +48,6 @@ public class MenuGvGUI {
         OptionGUI diemOption = new OptionGUI(this.diemPanel, "diem");
         diemOption.init();
 
-        this.frame.setTitle("Quản lý sinh viên");
-        this.frame.setContentPane(panel);
-        this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.frame.setSize(800, 600);
-        this.frame.setLocationRelativeTo(null);
-        this.frame.setVisible(true);
+        LayoutSwitch.setFrame(this.frame, this.panel, "Quản lý sinh viên", 800, 600);
     }
 }

@@ -11,7 +11,6 @@ import javax.swing.*;
  */
 public class Main {
     public static void main(String[] args) {
-
         try {
             for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -21,7 +20,7 @@ public class Main {
             }
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ignored) { }
 
-        JFrame frame = new JFrame("Đăng nhập");
+        JFrame frame = new JFrame();
         LoginGUI loginGUI = new LoginGUI(frame);
         loginGUI.init();
     }
